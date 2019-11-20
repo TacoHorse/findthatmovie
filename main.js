@@ -21,7 +21,7 @@ function handleErrors(response) { // prepares error message for HTTP request err
 
 async function getMovieInfoByName(name) {
     let baseURL = "https://api.themoviedb.org/3/search/movie?";
-    let queryString = encodeQueryParams(buildMovieQueryParams(name));
+    let queryString = encodeQueryParams(buildMovieQueryParams(name, undefined, undefined));
     let requestURL = baseURL + queryString;
 
     let requestData = await fetch(requestURL)
@@ -70,20 +70,28 @@ function buildYouTubeQueryParams(movieTitle) {
     return params;
 }
 
-function buildMovieQueryParams(name, year) { // If this function is invoked without any parameters, it can be used for when the user searches genre to get the api_key and language parameters, genre search is determined by /genre/movie/list endpoint not query string
+function buildMovieQueryParams(name, year, genre) { // If this function is invoked without any parameters, it can be used for when the user searches genre to get the api_key and language parameters, genre search is determined by /genre/movie/list endpoint not query string
+
     let params = {
         api_key: "7658594a35b754254b048a6ac98e566d",
         language: "en-US"
     }
 
-    if (name) {
+    if (name != undefined) {
         params.query = name;
         params.include_adult = false;
     }
 
-    if (year) {
-        params.year = year;
+
+    if (year != undefined) {
+        params.primary_release_year = year;
     }
+
+    if (genre != undefined) {
+        params.with_genres = genre;
+    }
+
+
 
     return params;
 }
@@ -93,15 +101,36 @@ function getUserInput() {
         e.preventDefault();
         let inputObject = {};
         inputObject.name = $("input[name=user-search]").val();
+        inputObject.genre = $(".js-user-genre").val();
+        inputObject.year = $(".js-user-year").val();
 
-        displaySingleMovieResults(inputObject);
+        if (inputObject.name != '') {
+            displaySingleMovieResults(inputObject);
+        } else {
+            if (inputObject.year != '0000' && inputObject.genre != '00') {
+
+                console.log("both ran" + buildMovieQueryParams(undefined, inputObject.year, inputObject.genre));
+
+            } else {
+                if (inputObject.genre != '00') {
+                    console.log("genre ran" + buildMovieQueryParams(undefined, undefined, inputObject.genre));
+                }
+
+                if (inputObject.year != '0000') {
+
+                    console.log("year ran" + buildMovieQueryParams(undefined, inputObject.year, undefined));
+                }
+            }
+        }
+
+
     });
 }
 
 function displaySingleMovieResults(inputObject) {
 
     //     <iframe class="youtube-videos js-youtube-videos" id="movie-trailer" width="640" height="360" name="movie-trailer" src="https://www.youtube.com/embed/${responseObject[1].url}">
-    
+
     Promise.all([getMovieInfoByName(inputObject.name), getYouTubeTrailer(inputObject.name)])
         .then(responseObject => {
             let output = `
@@ -126,10 +155,12 @@ function displaySingleMovieResults(inputObject) {
 function displaySeach(formName) {
     let output = `
     <input type="text" name="user-search" id="user-search" class="user-search js-user-search" placeholder="Enter a movie">
+
+    <h3>Or search by...</h3>
     
     <div class="select-container js-select-container">
-    <select multiple name="user-year" id="user-year" class="user-year js-user-year">
-            <option value="0000">Year(s)</option>
+    <select name="user-year" id="user-year" class="user-year js-user-year">
+            <option value="0000">Year</option>
             <option value="2020">2020</option>
             <option value="2019">2019</option>
             <option value="2018">2018</option>
@@ -248,8 +279,8 @@ function displaySeach(formName) {
             <option value="1905">1905</option>
         </select>
 
-        <select multiple name="user-genre" id="user-genre" class="user-genre js-user-genre">
-            <option value="00">Genre(s)</option>
+        <select name="user-genre" id="user-genre" class="user-genre js-user-genre">
+            <option value="00">Genre</option>
             <option value="28">Action</option>
             <option value="12">Adventure</option>
             <option value="16">Animation</option>
