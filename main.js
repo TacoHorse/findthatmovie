@@ -21,25 +21,56 @@ function handleErrors(response) { // prepares error message for HTTP request err
 
 async function getMovieInfoByName(name) {
     let baseURL = "https://api.themoviedb.org/3/search/movie?";
-    let queryString = encodeQueryParams(buildQueryParams(name));
+    let queryString = encodeQueryParams(buildMovieQueryParams(name));
     let requestURL = baseURL + queryString;
 
     let requestData = await fetch(requestURL)
-    .then(response => handleErrors(response))
-    .then(responseJSON => {return responseJSON})
-    .catch(e => alert(e));
+        .then(response => handleErrors(response))
+        .then(responseJSON => {
+            return responseJSON
+        })
+        .catch(e => alert(e));
 
     let returnObject = {
         name: name,
         id: requestData.results[0].id,
         description: requestData.results[0].overview,
-        orig_release: requestData.results[0].release_date
+        orig_release: requestData.results[0].release_date,
+        poster: requestData.results[0].poster_path
     }
 
-    return displaySingleMovieResults(returnObject);
+    return returnObject;
 }
 
-function buildQueryParams(name, year) { // If this function is invoked without any parameters, it can be used for when the user searches genre to get the api_key and language parameters, genre search is determined by /genre/movie/list endpoint not query string
+async function getYouTubeTrailer(movieTitle) {
+    let baseURL = "https://www.googleapis.com/youtube/v3/search?"
+    let queryString = encodeQueryParams(buildYouTubeQueryParams(movieTitle + " trailer"));
+    let requestURL = baseURL + queryString;
+
+    let requestData = await fetch(requestURL)
+        .then(response => handleErrors(response))
+        .then(responseJSON => {
+            return responseJSON
+        })
+        .catch(e => alert(e));
+
+    let returnObject = {
+        url: requestData.items[0].id.videoId
+    }
+
+    return returnObject;
+}
+
+function buildYouTubeQueryParams(movieTitle) {
+    let params = {
+        key: "AIzaSyDDvSrO4-9C87TaVW3jodmB3UhiXhA66W0",
+        part: "snippet",
+        q: movieTitle
+    }
+    return params;
+}
+
+function buildMovieQueryParams(name, year) { // If this function is invoked without any parameters, it can be used for when the user searches genre to get the api_key and language parameters, genre search is determined by /genre/movie/list endpoint not query string
     let params = {
         api_key: "7658594a35b754254b048a6ac98e566d",
         language: "en-US"
@@ -63,27 +94,40 @@ function getUserInput() {
         let inputObject = {};
         inputObject.name = $("input[name=user-search]").val();
 
-        getMovieInfoByName(inputObject.name);
+        displaySingleMovieResults(inputObject);
     });
 }
 
-function displaySingleMovieResults(responseObject) {
-    let output = `
+function displaySingleMovieResults(inputObject) {
+
+    //     <iframe class="youtube-videos js-youtube-videos" id="movie-trailer" width="640" height="360" name="movie-trailer" src="https://www.youtube.com/embed/${responseObject[1].url}">
+    
+    Promise.all([getMovieInfoByName(inputObject.name), getYouTubeTrailer(inputObject.name)])
+        .then(responseObject => {
+            let output = `
     <div class="single-movie-results js-single-movie-results">
-    <h2>${responseObject.name}</h2>
-    <p>${responseObject.orig_release}</p>
-    <p>${responseObject.description}</p>
+        <h2>${responseObject[0].name + " (" + responseObject[0].orig_release.substring(0, 4) + ")"}</h2>
+        <iframe class="youtube-video js-youtube-video" src="//www.youtube.com/embed/${responseObject[1].url}" frameborder="0" allowfullscreen></iframe>
+
+        <div class="single-movie-info js-single-movie-info">
+            <img class="movie-poster js-movie-poster" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${responseObject[0].poster}">
+            <p>${responseObject[0].description}</p>
+        </div>
     </div>
     `;
 
-    $(".js-search-results").empty();
-    $(".js-search-results").append(output);
+            $(".js-search-results").empty();
+            $(".js-search-results").append(output);
+        });
+
+
 }
 
 function displaySeach(formName) {
     let output = `
-    <input type="text" size="30" name="user-search" id="user-search" class="user-search js-user-search" placeholder="Enter a movie">
+    <input type="text" name="user-search" id="user-search" class="user-search js-user-search" placeholder="Enter a movie">
     
+    <div class="select-container js-select-container">
     <select multiple name="user-year" id="user-year" class="user-year js-user-year">
             <option value="0000">Year(s)</option>
             <option value="2020">2020</option>
@@ -226,7 +270,7 @@ function displaySeach(formName) {
             <option value="10752">War</option>
             <option value="37">Western</option>
         </select>
-
+        </div>
         <input type="submit" name="user-submit" id="user-submit" class="submit-search js-submit-search">
     `
 
