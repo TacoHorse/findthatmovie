@@ -1,5 +1,7 @@
 'use strict'
 
+var currentSearchPage = 1;  // TheMovieDB API stores results in pages, this global variable will keep track of what page the user is on
+
 function initSite() { // Initializes the site
     displaySeach("js-search-form");
     getUserInput();
@@ -20,7 +22,7 @@ function handleErrors(response) { // prepares error message for HTTP request err
 }
 
 async function getMovieInfoByName(name) { // Searches for movie information by name
-    let baseURL = "https://api.themoviedb.org/3/search/movie?";
+    const baseURL = "https://api.themoviedb.org/3/search/movie?";
     let queryString = encodeQueryParams(buildMovieQueryParams(name, undefined, undefined));
     let requestURL = baseURL + queryString;
 
@@ -33,7 +35,6 @@ async function getMovieInfoByName(name) { // Searches for movie information by n
 
     let returnObject = {
         name: name,
-        id: requestData.results[0].id,
         description: requestData.results[0].overview,
         orig_release: requestData.results[0].release_date,
         poster: requestData.results[0].poster_path
@@ -42,12 +43,35 @@ async function getMovieInfoByName(name) { // Searches for movie information by n
     return returnObject;
 }
 
-async function getMovieByGenreOrYear(year = getYear(), genre) {
+async function getMovieByGenreOrYear(genre, year = getYear(), newPage = false) {  // Get a list of movies by year or by genre, or by both; if no year is entered default to current year
+    const baseURL = "https://api.themoviedb.org/3/discover/movie?";
+    let queryString = "";
+    if (newPage === false) {  // If newPage is false, then ensure the global page count variable is 0, and then begin GET request.
+        currentSearchPage = 1;
+    } else {  // If newPage is true, then incremenet the global page count variable by 1 and fetch new data.
+        currentSearchPage++;
+    }
 
+    if (genre != undefined) {  // If the user selects a genre, search for it
+        queryString = encodeQueryParams(buildMovieQueryParams(undefined, year, genre, currentSearchPage));
+    }   else {  // Otherwise just search by year only
+        queryString = encodeQueryParams(buildMovieQueryParams(undefined, year, undefined, currentSearchPage));
+    }
+
+    let requestURL = baseURL + queryString;
+
+    let requestData = await fetch(requestURL)
+    .then(response => handleErrors(response))
+    .then(responseJSON => {
+        return responseJSON
+    })
+    .catch(e => alert(e));
+
+    return requestData;
 }
 
 async function getYouTubeTrailer(movieTitle) { // Search for youtube-trailers by movie name and year
-    let baseURL = "https://www.googleapis.com/youtube/v3/search?"
+    const baseURL = "https://www.googleapis.com/youtube/v3/search?"
     let queryString = encodeQueryParams(buildYouTubeQueryParams(movieTitle + " trailer"));
     let requestURL = baseURL + queryString;
 
@@ -82,7 +106,7 @@ function buildYouTubeQueryParams(movieTitle) {
     return params;
 }
 
-function buildMovieQueryParams(name, year, genre) { // If this function is invoked without any parameters, it can be used for when the user searches genre to get the api_key and language parameters, genre search is determined by /genre/movie/list endpoint not query string
+function buildMovieQueryParams(name, year, genre, page) { // If this function is invoked without any parameters, it can be used for when the user searches genre to get the api_key and language parameters, genre search is determined by /genre/movie/list endpoint not query string
 
     let params = {
         api_key: "7658594a35b754254b048a6ac98e566d",
@@ -92,42 +116,50 @@ function buildMovieQueryParams(name, year, genre) { // If this function is invok
     if (name != undefined) {
         params.query = name;
         params.include_adult = false;
+    } else {
+        params.page = page;
+        if (year != undefined) {
+            params.primary_release_year = year;
+        }
+    
+        if (genre != undefined) {
+            params.with_genres = genre;
+        }
     }
-
-
-    if (year != undefined) {
-        params.primary_release_year = year;
-    }
-
-    if (genre != undefined) {
-        params.with_genres = genre;
-    }
-
-
 
     return params;
 }
 
-function getUserInput() {
+function getUserInput() {  // Get the user's search parameters when they hit submit
     $('.js-search-form').on("submit", e => {
         e.preventDefault();
-        let inputObject = {};
+        $(".js-search-results").empty();
+        let inputObject = {}; // Build user data object
         inputObject.name = $("input[name=user-search]").val();
         inputObject.genre = $(".js-user-genre").val();
         inputObject.year = $(".js-user-year").val();
 
-        if (inputObject.name != '') {
+        if (inputObject.name != '') { // If the user has entered a text query then search for that title, otherwise...
             displaySingleMovieResults(inputObject);
         } else {
-            if (inputObject.year != '0000' && inputObject.genre != '00') {
-                buildMovieQueryParams(undefined, inputObject.year, inputObject.genre);
-            } else {
-                if (inputObject.genre != '00') {
-                    buildMovieQueryParams(undefined, undefined, inputObject.genre);
+            if (inputObject.year != '0000' && inputObject.genre != '00') {  // If the user has entered both year and genre then perform the search
+                Promise.all([getMovieByGenreOrYear(inputObject.genre, inputObject.year)])
+                .then(responseData => { displayMovieList(responseData);
+
+                });
+            } else {  // Otherwise check which of the two they entered
+                if (inputObject.genre != '00') {  // Search by genre
+                    Promise.all([getMovieByGenreOrYear(inputObject.genre)])
+                    .then(responseData => { displayMovieList(responseData);
+    
+                    });
                 }
 
-                if (inputObject.year != '0000') {
-                    buildMovieQueryParams(undefined, inputObject.year, undefined);
+                if (inputObject.year != '0000') {  // Search by year
+                    Promise.all([getMovieByGenreOrYear(undefined, inputObject.year)])
+                    .then(responseData => { displayMovieList(responseData);
+    
+                    });
                 }
             }
         }
@@ -137,7 +169,6 @@ function getUserInput() {
 }
 
 function displaySingleMovieResults(inputObject) {
-        $(".js-search-results").empty();
         displaySingleMovieInfo(inputObject);
         $(".js-search-results").off().on("movieDataDone", function(event) {
             displayYouTubeTrailer();
@@ -162,9 +193,7 @@ function displaySingleMovieInfo(inputObject) {  // Displays the movie informatio
         let output = `
         <div class="single-movie-results js-single-movie-results">
             <h2>${movieTitle}</h2>
-            <div class="youtube-trailer-container js-youtube-trailer-container">
-            
-            </div>
+            <div class="youtube-trailer-container js-youtube-trailer-container"></div>
             <div class="single-movie-info js-single-movie-info">
                 <img class="movie-poster js-movie-poster" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${responseObject[0].poster}">
                 <p>${responseObject[0].description}</p>
@@ -174,6 +203,21 @@ function displaySingleMovieInfo(inputObject) {  // Displays the movie informatio
         $(".js-search-results").append(output);
         $(".js-search-results").trigger("movieDataDone");
     });
+}
+
+function displayMovieList(responseData) { // Insert a list of movie titles into the DOM
+
+    let output = ``;
+        for (let i = 0; i < responseData[0].results.length; i++) {
+        output += `<div class="multi-movie-result-item js-multi-movie-result-item>
+        <img class="movie-poster js-movie-poster" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${responseData[0].results[i].poster_path}">
+        <h3>${responseData[0].results[i].title}</h3>
+        <p>${responseData[0].results[i].release_date}</p>
+        <p>${responseData[0].results[i].overview}</p>
+        </div>`;
+    }
+
+    $(".js-search-results").append(output);
 }
 
 function displaySeach(formName) {
