@@ -19,7 +19,7 @@ function handleErrors(response) { // prepares error message for HTTP request err
     }
 }
 
-async function getMovieInfoByName(name) {
+async function getMovieInfoByName(name) { // Searches for movie information by name
     let baseURL = "https://api.themoviedb.org/3/search/movie?";
     let queryString = encodeQueryParams(buildMovieQueryParams(name, undefined, undefined));
     let requestURL = baseURL + queryString;
@@ -42,10 +42,16 @@ async function getMovieInfoByName(name) {
     return returnObject;
 }
 
-async function getYouTubeTrailer(movieTitle) {
+async function getMovieByGenreOrYear(year = getYear(), genre) {
+
+}
+
+async function getYouTubeTrailer(movieTitle) { // Search for youtube-trailers by movie name and year
     let baseURL = "https://www.googleapis.com/youtube/v3/search?"
     let queryString = encodeQueryParams(buildYouTubeQueryParams(movieTitle + " trailer"));
     let requestURL = baseURL + queryString;
+
+    console.log(requestURL);
 
     let requestData = await fetch(requestURL)
         .then(response => handleErrors(response))
@@ -61,11 +67,17 @@ async function getYouTubeTrailer(movieTitle) {
     return returnObject;
 }
 
+function getYear() {
+    return new Date().getFullYear();
+}
+
 function buildYouTubeQueryParams(movieTitle) {
     let params = {
         key: "AIzaSyDDvSrO4-9C87TaVW3jodmB3UhiXhA66W0",
         part: "snippet",
-        q: movieTitle
+        q: movieTitle,
+        type: "video",
+        videoDuration: "short"
     }
     return params;
 }
@@ -97,7 +109,7 @@ function buildMovieQueryParams(name, year, genre) { // If this function is invok
 }
 
 function getUserInput() {
-    $('.js-search-form').submit(e => {
+    $('.js-search-form').on("submit", e => {
         e.preventDefault();
         let inputObject = {};
         inputObject.name = $("input[name=user-search]").val();
@@ -108,17 +120,14 @@ function getUserInput() {
             displaySingleMovieResults(inputObject);
         } else {
             if (inputObject.year != '0000' && inputObject.genre != '00') {
-
-                console.log("both ran" + buildMovieQueryParams(undefined, inputObject.year, inputObject.genre));
-
+                buildMovieQueryParams(undefined, inputObject.year, inputObject.genre);
             } else {
                 if (inputObject.genre != '00') {
-                    console.log("genre ran" + buildMovieQueryParams(undefined, undefined, inputObject.genre));
+                    buildMovieQueryParams(undefined, undefined, inputObject.genre);
                 }
 
                 if (inputObject.year != '0000') {
-
-                    console.log("year ran" + buildMovieQueryParams(undefined, inputObject.year, undefined));
+                    buildMovieQueryParams(undefined, inputObject.year, undefined);
                 }
             }
         }
@@ -128,28 +137,43 @@ function getUserInput() {
 }
 
 function displaySingleMovieResults(inputObject) {
-
-    //     <iframe class="youtube-videos js-youtube-videos" id="movie-trailer" width="640" height="360" name="movie-trailer" src="https://www.youtube.com/embed/${responseObject[1].url}">
-
-    Promise.all([getMovieInfoByName(inputObject.name), getYouTubeTrailer(inputObject.name)])
-        .then(responseObject => {
-            let output = `
-    <div class="single-movie-results js-single-movie-results">
-        <h2>${responseObject[0].name + " (" + responseObject[0].orig_release.substring(0, 4) + ")"}</h2>
-        <iframe class="youtube-video js-youtube-video" src="//www.youtube.com/embed/${responseObject[1].url}" frameborder="0" allowfullscreen></iframe>
-
-        <div class="single-movie-info js-single-movie-info">
-            <img class="movie-poster js-movie-poster" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${responseObject[0].poster}">
-            <p>${responseObject[0].description}</p>
-        </div>
-    </div>
-    `;
-
-            $(".js-search-results").empty();
-            $(".js-search-results").append(output);
+        $(".js-search-results").empty();
+        displaySingleMovieInfo(inputObject);
+        $(".js-search-results").off().on("movieDataDone", function(event) {
+            displayYouTubeTrailer();
         });
+        
+}
 
+function displayYouTubeTrailer() {
+    let movTitle = $(".js-search-results").children();
+    let title = movTitle.prevObject[0].childNodes[1].childNodes[1].innerText;
+    Promise.all([getYouTubeTrailer(title)])
+    .then(returnObject => {
+        $(".js-search-results > div > div.js-youtube-trailer-container").after(`<iframe class="youtube-video js-youtube-video" src="https://www.youtube.com/embed/${returnObject[0].url}" frameborder="0" allowfullscreen></iframe>`);
+    });
+    
+}
 
+function displaySingleMovieInfo(inputObject) {  // Displays the movie information prior to finding YouTube trailer, so that the youtube trailer GET request can use the full movie name with year from the DOM
+    Promise.all([getMovieInfoByName(inputObject.name)])
+    .then(responseObject => {
+        let movieTitle = responseObject[0].name + " (" + responseObject[0].orig_release.substring(0, 4) + ")";
+        let output = `
+        <div class="single-movie-results js-single-movie-results">
+            <h2>${movieTitle}</h2>
+            <div class="youtube-trailer-container js-youtube-trailer-container">
+            
+            </div>
+            <div class="single-movie-info js-single-movie-info">
+                <img class="movie-poster js-movie-poster" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${responseObject[0].poster}">
+                <p>${responseObject[0].description}</p>
+            </div>
+        </div>
+        `;
+        $(".js-search-results").append(output);
+        $(".js-search-results").trigger("movieDataDone");
+    });
 }
 
 function displaySeach(formName) {
