@@ -5,6 +5,7 @@ var currentSearchPage = 1;  // TheMovieDB API stores results in pages, this glob
 function initSite() { // Initializes the site
     displaySeach("js-search-form");
     getUserInput();
+    watchUserInput();
 }
 
 function encodeQueryParams(params) { // Formats a given params object in the 'key=value&key=value' format
@@ -91,8 +92,39 @@ async function getYouTubeTrailer(movieTitle) { // Search for youtube-trailers by
     return returnObject;
 }
 
+async function getAutocompleteMovieList(input) {  // Gets a complete list of all movies for use with autocomplete
+    const baseURL = "https://api.themoviedb.org/3/search/movie?";
+    let queryString = encodeQueryParams(buildAutocompleteParams(input));
+    let requestURL = baseURL + queryString;
+
+    let requestData = await fetch(requestURL)
+    .then(response => handleErrors(response))
+    .then(responseJSON => {
+        return responseJSON;
+    })
+    .catch(e => alert(e));
+
+    let returnObject = {
+        titles: []
+    };
+
+    for (let i = 0; i < requestData.results.length; i++) {
+        returnObject.titles[i] = requestData.results[i].title;
+    }
+
+    displayAutocompleteOptions(returnObject);
+}
+
 function getYear() {
     return new Date().getFullYear();
+}
+
+function buildAutocompleteParams(typed) {
+    let params = {
+        api_key: "7658594a35b754254b048a6ac98e566d",
+        query: typed
+    }
+    return params;
 }
 
 function buildYouTubeQueryParams(movieTitle) {
@@ -130,14 +162,15 @@ function buildMovieQueryParams(name, year, genre, page) { // If this function is
     return params;
 }
 
-function getUserInput() {  // Get the user's search parameters when they hit submit
+function getUserInput() {  // Adds event listener to get results when user hits submit
     $('.js-search-form').on("submit", e => {
         e.preventDefault();
-        $(".js-search-results").empty();
+        $('.js-search-results').empty();
         let inputObject = {}; // Build user data object
         inputObject.name = $("input[name=user-search]").val();
         inputObject.genre = $(".js-user-genre").val();
         inputObject.year = $(".js-user-year").val();
+        $("input[name=user-search]").val('');
 
         if (inputObject.name != '') { // If the user has entered a text query then search for that title, otherwise...
             displaySingleMovieResults(inputObject);
@@ -163,9 +196,30 @@ function getUserInput() {  // Get the user's search parameters when they hit sub
                 }
             }
         }
+    });
+}
 
+function watchUserInput() { // Adds event listener for when user enters search query for AJAX autocomplete
+    $("#user-search").on("keyup", e => {
+        
+        let userInput = $('.js-user-search').val();
+        if (e.key != undefined) {
+            if (e.key.length === 1) {
+                getAutocompleteMovieList(userInput);
+             }
+        }
 
     });
+}
+
+function displayAutocompleteOptions(returnObject) { // Inserts auto-complete options into the DOM
+    $('.js-autocomplete-data').empty();
+    for (let i = 0; i < returnObject.titles.length; i++) {
+        let node = document.createElement("option");
+        let val = document.createTextNode(returnObject.titles[i]);
+        node.appendChild(val)
+        document.getElementById("js-autocomplete-data").appendChild(node);
+    }
 }
 
 function displaySingleMovieResults(inputObject) {
@@ -222,7 +276,9 @@ function displayMovieList(responseData) { // Insert a list of movie titles into 
 
 function displaySeach(formName) {
     let output = `
-    <input type="text" name="user-search" id="user-search" class="user-search js-user-search" placeholder="Enter a movie">
+    <input type="text" name="user-search" id="user-search" list="js-autocomplete-data" class="user-search js-user-search" placeholder="Enter a movie">
+    <datalist class="autocomplete-data js-autocomplete-data" id="js-autocomplete-data">
+    </datalist>
 
     <h3>Or search by...</h3>
     
