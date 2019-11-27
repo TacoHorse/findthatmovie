@@ -19,25 +19,43 @@ footer {
    background-color: darkgray;
 }
 
-.single-movie-results {
-    width: 100vw;
-}
-
 .single-movie-results > h2 {
     text-align: center;
 }
 
+.single-movie-info {
+    display: flex;
+    flex-direction: column;
+}
+
 .youtube-video {
-    width: 100%;
-    height: 300px;
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+}
+
+.youtube-trailer-container {
+    max-width: 100%;
+    overflow:hidden;
+    padding-bottom:56.25%;
+    position:relative;
+    height:0;
+}
+
+.multi-movie-result-item {
+    display: flex;
+    flex-direction: column;
 }
 
 .movie-poster {
-    width: 300px;
-    height: 475px;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
+}
+
+.movie-poster-search {
+    width: 100%;
 }
 
 .search-form {
@@ -49,4 +67,97 @@ footer {
 .select-container {
     display: flex;
     justify-content: space-evenly;
+}
+
+.search-results {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+@media screen and (min-width: 700px) {
+    .single-movie-info {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .single-movie-text {
+        width: 50%;
+        align-self: flex-start;
+    }
+
+    .movie-poster {
+        width: 50%;
+    }
+
+    .search-results-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 40%);
+        justify-content: space-around;
+    }
+}
+
+@media screen and (min-width: 1300px) {
+
+    .search-results-grid {
+        grid-template-columns: repeat(3, 30%);
+        justify-content: space-around;
+    }
+
+    .single-movie-text {
+        width: 40%;
+    }
+
+    .movie-poster {
+        width: 40%;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+
+    .search-results-grid {
+        grid-template-columns: repeat(4, 23%);
+        justify-content: space-around;
+    }
+
+    .single-movie-text {
+        width: 30%;
+    }
+
+    .movie-poster {
+        width: 30%;
+    }
+}
+
+@media screen and (min-width: 1900px) {
+
+    .search-results-grid {
+        grid-template-columns: repeat(5, 17%);
+        justify-content: space-around;
+    }
+}
+
+@media screen and (min-width: 2200px) {
+
+    .search-results-grid {
+        grid-template-columns: repeat(6, 14%);
+        justify-content: space-around;
+    }
+}
+
+@media screen and (min-width: 2500px) {
+
+    .search-results-grid {
+        grid-template-columns: repeat(7, 12%);
+        justify-content: space-around;
+    }
+}
+
+@media screen and (min-width: 3800px) {
+
+    .search-results-grid {
+        grid-template-columns: repeat(10, 9%);
+        justify-content: space-around;
+    }
 }
