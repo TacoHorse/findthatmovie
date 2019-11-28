@@ -175,14 +175,15 @@ function handleSubmitButton() { // Actions to perform when user hits submit butt
     if (inputObject.name != '') { // If the user has entered a text query then search for that title, otherwise...
         displaySingleMovieResults(inputObject);
     } else {
-        if (inputObject.year != '0000' && inputObject.genre != '00') { // If the user has entered both year and genre then perform the search
-            Promise.all([getMovieByGenreOrYear(inputObject.genre, inputObject.year)])
-                .then(responseData => {
-                    displayMovieList(responseData);
+        if (inputObject.name === '') {
+            if (inputObject.year != '0000' && inputObject.genre != '00') { // If the user has entered both year and genre then perform the search
+                Promise.all([getMovieByGenreOrYear(inputObject.genre, inputObject.year)])
+                    .then(responseData => {
+                        displayMovieList(responseData);
 
-                });
-        } else { // Otherwise check which of the two they entered
-            if (inputObject.genre != '00') { // Search by genre
+                    });
+            }
+            if (inputObject.genre != '00' && inputObject.year === '0000') { // Search by genre
                 Promise.all([getMovieByGenreOrYear(inputObject.genre)])
                     .then(responseData => {
                         displayMovieList(responseData);
@@ -190,8 +191,15 @@ function handleSubmitButton() { // Actions to perform when user hits submit butt
                     });
             }
 
-            if (inputObject.year != '0000') { // Search by year
+            if (inputObject.year != '0000' && inputObject.genre === '00') { // Search by year
                 Promise.all([getMovieByGenreOrYear(undefined, inputObject.year)])
+                    .then(responseData => {
+                        displayMovieList(responseData);
+
+                    });
+            }
+            if (inputObject.year === '0000' && inputObject.genre === '00') {
+                Promise.all([getMovieByGenreOrYear()])
                     .then(responseData => {
                         displayMovieList(responseData);
 
@@ -262,7 +270,6 @@ function displayYouTubeTrailer() {
         .then(returnObject => {
             $(".js-youtube-trailer-container").append(`<iframe width="360px" height="202.5px" class="youtube-video js-youtube-video" src="https://www.youtube.com/embed/${returnObject[0].url}" frameborder="0" allowfullscreen></iframe>`);
         });
-    handleFluidVideoWidth();
 }
 
 function displaySingleMovieInfo(inputObject) { // Displays the movie information prior to finding YouTube trailer, so that the youtube trailer GET request can use the full movie name with year from the DOM
@@ -287,7 +294,6 @@ function displaySingleMovieInfo(inputObject) { // Displays the movie information
 }
 
 function displayMovieList(responseData) { // Insert a list of movie titles into the DOM
-    console.log(responseData);
     let output = `<div class="search-results-grid js-search-results-grid">`;
     for (let i = 0; i < responseData[0].results.length; i++) {
         output += `<div class="multi-movie-result-item js-multi-movie-result-item">
@@ -304,6 +310,7 @@ function displayMovieList(responseData) { // Insert a list of movie titles into 
 }
 
 function displaySearch(formName) {
+    0
     let output = `
     <input type="text" name="user-search" id="user-search" list="js-autocomplete-data" class="user-search js-user-search" placeholder="Enter a movie">
 
