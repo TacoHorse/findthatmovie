@@ -10,6 +10,13 @@ header {
     justify-content: center;
 }
 
+.fixed-header {
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    background-color: white;
+}
+
 .container {
     min-height: 100vh;
 }
@@ -36,12 +43,47 @@ footer {
     position:absolute;
 }
 
+.youtube-reviews {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
 .youtube-trailer-container {
     max-width: 100%;
     overflow:hidden;
     padding-bottom:56.25%;
     position:relative;
     height:0;
+}
+
+.youtube-review-item {
+    display: grid;
+    grid-template-columns: 120px auto;
+}
+
+.youtube-review-thumbnail-container {
+    width: 120px;
+    height: 90px;
+    position: relative;
+}
+
+.youtube-review-thumbnail-duration-container {
+    width: 120px;
+    height: 90px;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    z-index: 5;
+}
+
+.youtube-review-thumbnail-duration {
+    position: absolute;
+    top: 65px;
+    right: 0px;
+    margin-left: auto;
+    max-width: min-content;
+    color: white;
+    background-color: black;
 }
 
 .multi-movie-result-item {
@@ -72,23 +114,32 @@ footer {
 .search-results {
     display: flex;
     flex-direction: column;
+    margin-top: 20vh;
 }
 
 
 
 @media screen and (min-width: 700px) {
     .single-movie-info {
-        flex-direction: row;
-        justify-content: space-around;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .youtube-reviews {
+        grid-area: reviews / 2 / 2;
     }
 
     .single-movie-text {
-        width: 50%;
-        align-self: flex-start;
+        width: 100%;
+        display: grid;
+        grid-template-rows: 50% 50%;
+        grid-template-columns: 200px auto;
     }
 
     .movie-poster {
-        width: 50%;
+        width: 200px;
+        height: 300px;
     }
 
     .search-results-grid {
@@ -100,17 +151,20 @@ footer {
 
 @media screen and (min-width: 1300px) {
 
+    .single-movie-info {
+        max-width: 50%;
+    }
+
+    .youtube-trailer-container{
+        max-width: 50%;
+        padding-bottom: 28.125%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .search-results-grid {
         grid-template-columns: repeat(3, 30%);
         justify-content: space-around;
-    }
-
-    .single-movie-text {
-        width: 40%;
-    }
-
-    .movie-poster {
-        width: 40%;
     }
 }
 
@@ -119,14 +173,6 @@ footer {
     .search-results-grid {
         grid-template-columns: repeat(4, 23%);
         justify-content: space-around;
-    }
-
-    .single-movie-text {
-        width: 30%;
-    }
-
-    .movie-poster {
-        width: 30%;
     }
 }
 
