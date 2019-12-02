@@ -2,6 +2,9 @@
 
 var userData = {
     currentSearchPage: 1, // TheMovieDB API stores results in pages, this global variable will keep track of what page the user is on
+    genre: '',
+    year: '',
+    asyncTrigCount: 0
 };
 
 function initSite() { // Initializes the site
@@ -245,12 +248,21 @@ function buildMovieQueryParams(name, year, genre, page) { // Prepare the paramet
     return params;
 }
 
-function handleSubmitButton() { // Actions to perform when user hits submit button, also called when user selects an autocomplete option  
+function handleSubmitButton() { // Actions to perform when user hits submit button, also called when user selects an autocomplete option
+    if (userData.currentSearchPage > 1) { // If the user has had infinite scroll results added during previous search bring them back to top of page
+        window.scrollTo(0, 0);
+    }  
     $('.js-search-results').empty();
+    userData.currentSearchPage = 1;
+    userData.genre = '';
+    userData.year = '';
+
     let inputObject = {}; // Build user data object
     inputObject.name = $("input[name=user-search]").val();
     inputObject.genre = $(".js-user-genre").val();
+    userData.genre = $(".js-user-genre").val();
     inputObject.year = $(".js-user-year").val();
+    userData.year = $(".js-user-year").val();
     $("input[name=user-search]").val('');
 
     if (inputObject.name != '') { // If the user has entered a text query then search for that title, otherwise...
@@ -333,20 +345,52 @@ function observerForResults() {
     let observer = new IntersectionObserver(
         (entries, observer) => {
             entries.forEach(entry => {
-                console.log(entry);
+                if (entry.isIntersecting === true ) {
+                    userData.asyncTrigCount++;
+
+                    observer.unobserve(document.querySelector(`.movie-list-end-${userData.asyncTrigCount - 1}`));
+                    if (userData.year != '0000' && userData.genre != '00') { // If the user has entered both year and genre then perform the search
+                        Promise.all([getMovieByGenreOrYear(userData.genre, userData.year, userData.currentSearchPage)])
+                            .then(responseData => {
+                                displayMovieList(responseData);
+                                
+                            });
+                    }
+                    if (userData.genre != '00' && userData.year === '0000') { // Search by genre
+                        Promise.all([getMovieByGenreOrYear(userData.genre, undefined, userData.currentSearchPage)])
+                            .then(responseData => {
+                                displayMovieList(responseData);
+        
+                            });
+                    }
+        
+                    if (userData.year != '0000' && userData.genre === '00') { // Search by year
+                        Promise.all([getMovieByGenreOrYear(undefined, userData.year, userData.currentSearchPage)])
+                            .then(responseData => {
+                                displayMovieList(responseData);
+        
+                            });
+                    }
+                    if (userData.year === '0000' && userData.genre === '00') {
+                        Promise.all([getMovieByGenreOrYear(undefined, undefined, userData.currentSearchPage)])
+                            .then(responseData => {
+                                displayMovieList(responseData);
+                            });
+                    }
+                }
             });
         },
-        {root: document.querySelector('#fixed-header'), rootMargin: "0px"}
+        {root: document.window, rootMargin: "0px"}
     );
 
-    observer.observe(document.querySelector("#box"));
+    observer.observe(document.querySelector(`.movie-list-end-${userData.asyncTrigCount}`));
 }
 
 function watchUserInput() { // Set up required event listeners for the application
     listenerForSubmitButton();
     listenerForAutocomplete();
     listenerForAutocompleteSelection();
-    listenerForScroll()
+    // listenerForScroll()
 }
 
 
@@ -447,7 +491,11 @@ function displayMovieList(responseData) { // Insert a list of movie titles into 
 
     let output = `<div class="search-results-grid js-search-results-grid">`;
     for (let i = 0; i < responseData[0].results.length; i++) {
-        output += `<div class="multi-movie-result-item js-multi-movie-result-item" id="movie-item-${handleMovieItemCount(userData.currentSearchPage, i)}">
+        let intersect;
+        if (i === 15) {
+            intersect = `movie-list-end-${userData.asyncTrigCount}`
+        } else intersect = '';
+        output += `<div class="multi-movie-result-item js-multi-movie-result-item ${intersect}" id="movie-item-${handleMovieItemCount(userData.currentSearchPage, i)}">
         <img class="movie-poster-search js-movie-poster-search" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseData[0].results[i].poster_path}">
             <div class="movie-search-info js-movie-search-info">
                 <h3>${responseData[0].results[i].title}</h3>
@@ -458,6 +506,7 @@ function displayMovieList(responseData) { // Insert a list of movie titles into 
     }
     output += `</div>`;
     $(".js-search-results").append(output);
+    observerForResults();
 }
 
 function displaySearch(formName) {
