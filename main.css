@@ -10,11 +10,17 @@ header {
     justify-content: center;
 }
 
+.twitter {
+    width: 100%;
+    height: 300px;
+}
+
 .fixed-header {
     width: 100%;
     position: fixed;
     top: 0px;
     background-color: white;
+    z-index: 10;
 }
 
 .container {
@@ -117,6 +123,13 @@ footer {
     margin-top: 20vh;
 }
 
+.tmdb-review-item {
+    margin-bottom: 15px;
+}
+
+.tmdb-hidden {
+    display: none;
+}
 
 
 @media screen and (min-width: 700px) {
@@ -133,7 +146,6 @@ footer {
     .single-movie-text {
         width: 100%;
         display: grid;
-        grid-template-rows: 50% 50%;
         grid-template-columns: 200px auto;
     }
 
