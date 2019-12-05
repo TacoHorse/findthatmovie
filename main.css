@@ -28,7 +28,8 @@ header {
 }
 
 footer {
-    margin-top: auto;
+    text-align: center;
+    margin-top: 20%;
    background-color: darkgray;
 }
 
@@ -36,9 +37,28 @@ footer {
     text-align: center;
 }
 
+.single-movie-results > h3 {
+    text-align: center;
+}
+
 .single-movie-info {
     display: flex;
     flex-direction: column;
+}
+
+.user-search {
+    width: 50%;
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-search::placeholder {
+    text-align: center;
+}
+
+.autocomplete-data {
+    text-align: center;
 }
 
 .youtube-video {
@@ -59,7 +79,6 @@ footer {
     overflow:hidden;
     padding-bottom:56.25%;
     position:relative;
-    height:0;
 }
 
 .youtube-review-item {
@@ -123,6 +142,10 @@ footer {
     margin-top: 20vh;
 }
 
+.submit-search {
+    width: 150px;
+}
+
 .tmdb-review-item {
     margin-bottom: 15px;
 }
@@ -139,14 +162,11 @@ footer {
         margin-right: auto;
     }
 
-    .youtube-reviews {
-        grid-area: reviews / 2 / 2;
-    }
-
     .single-movie-text {
         width: 100%;
         display: grid;
         grid-template-columns: 200px auto;
+        grid-template-rows: auto auto auto;
     }
 
     .movie-poster {

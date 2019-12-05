@@ -5,6 +5,7 @@ var userData = { // Store important userData for the duration of their session
     genre: '',
     year: '',
     asyncTrigCount: 0,
+    autoplay: false,
     youtube: {
         asyncTrig: 0,
         pageTokenVid: 0,
@@ -14,7 +15,10 @@ var userData = { // Store important userData for the duration of their session
 
 function initSite() { // Initializes the site
     displaySearch("js-search-form");
+    handleAutoplayCookie();
     watchUserInput();
+    console.log(document.cookie);
+    console.log(userData.autoplay);
 }
 
 function encodeQueryParams(params) { // Formats a given params object in the 'key=value&key=value' format
@@ -26,14 +30,6 @@ function encodeQueryParams(params) { // Formats a given params object in the 'ke
 function encodeTwitterKeys(key, secret) {
     const query = encodeURIComponent(key) + ":" + encodeURIComponent(secret);
     return query;
-}
-
-function handleErrors(response) { // prepares error message for HTTP request errors
-    if (response.ok === true) {
-        return response.json();
-    } else {
-        throw new Error("Code " + response.status + " Message: " + response.statusText)
-    }
 }
 
 async function getMovieInfoByName(name) { // Searches for movie information by name
@@ -310,6 +306,34 @@ function buildDetailedMovieParams() {
     return params;
 }
 
+function handleErrors(response) { // prepares error message for HTTP request errors
+    if (response.ok === true) {
+        return response.json();
+    } else {
+        throw new Error("Code " + response.status + " Message: " + response.statusText)
+    }
+}
+
+function handleAutoplay() {
+    userData.autoplay = $('.js-youtube-trailer-autoplay').is(':checked'); // Set autoplay property for embded trailer
+    console.log(userData.autoplay);
+    if (userData.autoplay === true) {
+    document.cookie = `autoplay=${userData.autoplay};`;
+    } else {
+    document.cookie = `autoplay=false`;
+    }
+}
+
+function handleAutoplayCookie() {
+    if (document.cookie.split(';').filter((item) => item.startsWith('autoplay=true')).length) {
+        userData.autoplay = true; // Set autoplay property for embded trailer
+        $('.js-youtube-trailer-autoplay').prop("checked", true);
+    } else {        
+        userData.autoplay = false; // Set autoplay property for embded trailer
+        $('.js-youtube-trailer-autoplay').prop("checked", false);
+    }
+}
+
 function handleCollapse(itemNumber) {
     let newText = $(`.js-tmdb-review-hidden-${itemNumber}`).text(); // Get the hidden text
     let oldText = $(`.tmdb-review-${itemNumber} > p`).text();  // Get the already visible text
@@ -508,10 +532,18 @@ function displaySingleMovieResults(inputObject) {
 function displayYouTubeTrailer() {
     let movTitle = $(".js-search-results").children();
     let title = movTitle.prevObject[0].childNodes[1].childNodes[1].innerText;
+
     Promise.all([getYouTubeVideos(title + " trailer", "short")])
-        .then(returnObject => {
-            $(".js-youtube-trailer-container").append(`<iframe width="1280px" height="720px" class="youtube-video js-youtube-video" src="https://www.youtube.com/embed/${returnObject[0].urls[0]}" frameborder="0" allowfullscreen></iframe>`);
-        });
+       .then(returnObject => {
+        let output = `<iframe width="1280px" height="720px" class="youtube-video js-youtube-video" src="https://www.youtube.com/embed/${returnObject[0].urls[0]}`;
+
+        if (userData.autoplay === true) {
+            output += `?mute=1&autoplay=1" frameborder="0" allowfullscreen></iframe>`;
+        } else {
+            output += `" frameborder="0" allowfullscreen></iframe>`;
+        }
+           $(".js-youtube-trailer-container").append(output);
+       });
 }
 
 function displaySingleMovieInfo(inputObject) { // Displays the movie information prior to finding YouTube trailer, so that the youtube trailer GET request can use the full movie name with year from the DOM
@@ -524,13 +556,15 @@ function displaySingleMovieInfo(inputObject) { // Displays the movie information
             let output = `
             <div class="single-movie-results js-single-movie-results">
                 <h2>${movieTitle}</h2>
+                <h3>${reviewResponse[0].tagline}</h3>
                 <div class="youtube-trailer-container js-youtube-trailer-container"></div>
                 <div class="single-movie-info js-single-movie-info">
                     <div class="single-movie-text js-single-movie-text">
-                        <img class="movie-poster js-movie-poster" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseObject[0].poster}">
+                        <div class="single-movie-budglength"><img class="movie-poster js-movie-poster" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseObject[0].poster}"><p>Budget: ${reviewResponse[0].budget}</p><p>Duration: ${reviewResponse[0].runtime} mins</p></div>
                             <p>${responseObject[0].description}</p>
+                            <div class="review-header"><h2>Reviews</h2></div><div class="placeholder"></div>
                             <div class="tmdb-reviews js-tmdb-reviews">`;
-                        
+                        console.log(reviewResponse[0]);
                         if (reviewResponse[0].reviews.length > 0) {
                             for (let i = 0; i < reviewResponse[0].reviews.length; i++) {
                                 output += `
@@ -610,7 +644,7 @@ function displayYouTubeReviews(movieTitle, vidLength, nextPageToken) {
                     </div>`;
                     $('.js-youtube-reviews').append(output); // Insert a complete review object into the DOM
                 }
-                observerForYouTubeReviews(); // Observer for async content fill
+                // observerForYouTubeReviews(); // Observer for async content fill
             });
         });
     
@@ -800,8 +834,11 @@ function displaySearch(formName) {
                 <option value="10752">War</option>
                 <option value="37">Western</option>
             </select>
+
+            <label for="youtube-trailer-autoplay"><input name="youtube-trailer-autoplay" id="youtube-trailer-autoplay" class="js-youtube-trailer-autoplay youtube-trailer-autoplay" type="checkbox" onclick="handleAutoplay()">Autoplay?</label>
+
+            <input type="submit" name="user-submit" id="user-submit" class="submit-search js-submit-search">
         </div>
-        <input type="submit" name="user-submit" id="user-submit" class="submit-search js-submit-search">
     `
 
     $(`.${formName}`).append(output);
