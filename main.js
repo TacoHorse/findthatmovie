@@ -17,8 +17,6 @@ function initSite() { // Initializes the site
     displaySearch("js-search-form");
     handleAutoplayCookie();
     watchUserInput();
-    console.log(document.cookie);
-    console.log(userData.autoplay);
 }
 
 function encodeQueryParams(params) { // Formats a given params object in the 'key=value&key=value' format
@@ -316,7 +314,6 @@ function handleErrors(response) { // prepares error message for HTTP request err
 
 function handleAutoplay() {
     userData.autoplay = $('.js-youtube-trailer-autoplay').is(':checked'); // Set autoplay property for embded trailer
-    console.log(userData.autoplay);
     if (userData.autoplay === true) {
     document.cookie = `autoplay=${userData.autoplay};`;
     } else {
@@ -338,9 +335,6 @@ function handleCollapse(itemNumber) {
     let newText = $(`.js-tmdb-review-hidden-${itemNumber}`).text(); // Get the hidden text
     let oldText = $(`.tmdb-review-${itemNumber} > p`).text();  // Get the already visible text
     let trimmed = oldText.slice(0, oldText.length - 12); // Trim ...Read more from existing text
-
-    console.log("OLD TEXT: " + trimmed);
-    console.log("NEW TEXT: " + newText);
 
     let fullText = trimmed + newText; // Build complete review text
     $(`.tmdb-review-${itemNumber} > p > button`).addClass("tmdb-hidden"); // Hide the button
@@ -564,7 +558,7 @@ function displaySingleMovieInfo(inputObject) { // Displays the movie information
                             <p>${responseObject[0].description}</p>
                             <div class="review-header"><h2>Reviews</h2></div><div class="placeholder"></div>
                             <div class="tmdb-reviews js-tmdb-reviews">`;
-                        console.log(reviewResponse[0]);
+
                         if (reviewResponse[0].reviews.length > 0) {
                             for (let i = 0; i < reviewResponse[0].reviews.length; i++) {
                                 output += `
