@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR|Poppins:500&display=swap');
+
+body {
+    background-color: #22252c;
+    color: #C0B3A0;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 22px;
+    line-height: 65px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+    margin: 0;
+}
+
+.youtube-review-thumbnail-duration {
+    color: white;
+    background-color: black;
+}
+
+.fixed-header {
+    background-color: #3f3250;
+}
+
+footer {
+    background-color: darkgray;
+}
+
+a {
+    color: rgb(138, 131, 120);
+}
+
+a:active {
+    color: #22252c;
+}
+
+a:hover {
+    color: #E14658;
+}
+
+.user-search {
+    background-color: #E14658;
+    border: 2px solid black;
+    color: black;
+    font-size: 24px;
+}
+
+.autocomplete-data {
+    background-color: #E14658;
+    border: 2px solid black;
+    color: black;
+    font-size: 24px;
+}
+
+.grid-inputs {
+    background-color: #C0B3A0;
+    border: 2px solid black;
+}
+
+.submit-search {
+    background-color: #22252c;
+    color:  #E14658;
+    border: 1px solid #E14658;
+}
+
+.submit-search:hover {
+    background-color: #791885;
+    text-decoration: underline;
+}
+
+.submit-search:active {
+    background-color: #22252c;
+}
+
+.tmdb-reviews {
+    line-height: 25px;
+}
+
+.youtube-reviews {
+    line-height: 25px;
+}
+
+.user-genre-custom-list {
+    margin: 0 auto;
+    font-family: 'Poppins', sans-serif;
+    border: 1px solid #E14658;
+    background-color: #22252c;
+    z-index: 10;
+  }
+  .user-genre-custom-list select {
+    line-height: 30px;
+    border: none;
+    outline: none;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    margin: 0;
+    padding: 15px 55px 15px 15px;
+    font-size: 18px;
+    color: #E14658;
+  }
+  .user-genre-custom-list:after {
+    padding-top: 7px;
+    line-height: 38px;
+    content: "∨";
+    text-align: center;
+    color: #E14658;
+    font-size: 24px;
+    border-left: 1px solid #3C1C78;
+    z-index: -1;
+  }
+
+  .user-year-custom-list {
+    margin: 0 auto;
+    font-family: 'Poppins', sans-serif;
+    border: 1px solid #E14658;
+    background-color: #22252c;
+    z-index: 10;
+  }
+  .user-year-custom-list select {
+    line-height: 30px;
+    border: none;
+    outline: none;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    margin: 0;
+    padding: 15px 55px 15px 15px;
+    font-size: 18px;
+    color: #E14658;
+  }
+  .user-year-custom-list:after {
+    padding-top: 7px;
+    line-height: 38px;
+    content: "∨";
+    text-align: center;
+    color: #E14658;
+    font-size: 24px;
+    border-left: 1px solid #3C1C78;
+    z-index: -1;
+  }

@@ -17,9 +17,9 @@ header {
 
 .fixed-header {
     width: 100%;
+    height: 255px;
     position: fixed;
     top: 0px;
-    background-color: white;
     z-index: 10;
 }
 
@@ -30,7 +30,10 @@ header {
 footer {
     text-align: center;
     margin-top: 20%;
-   background-color: darkgray;
+}
+
+.single-movie-results {
+    padding-top: 20px;
 }
 
 .single-movie-results > h2 {
@@ -44,17 +47,13 @@ footer {
 .single-movie-info {
     display: flex;
     flex-direction: column;
+    margin-top: 10px;
 }
 
-.user-search {
-    width: 50%;
-    height: 40px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.user-search::placeholder {
-    text-align: center;
+.single-movie-description {
+    display: block;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .autocomplete-data {
@@ -72,6 +71,7 @@ footer {
 .youtube-reviews {
     max-height: 500px;
     overflow-y: scroll;
+    padding: 20px;
 }
 
 .youtube-trailer-container {
@@ -79,11 +79,14 @@ footer {
     overflow:hidden;
     padding-bottom:56.25%;
     position:relative;
+    margin-top: 20px;
 }
 
 .youtube-review-item {
     display: grid;
     grid-template-columns: 120px auto;
+    margin-bottom: 20px;
+    margin-right: 20px;
 }
 
 .youtube-review-thumbnail-container {
@@ -107,8 +110,29 @@ footer {
     right: 0px;
     margin-left: auto;
     max-width: min-content;
-    color: white;
-    background-color: black;
+}
+
+.youtube-review-title-container {
+    padding: 0px 10px 10px 10px;
+}
+
+.youtube-trailer-autoplay {
+    display: none;
+}
+
+.youtube-trailer-autoplay:checked + label > .autoplay-off {
+    display: none;
+}
+
+.youtube-trailer-autoplay:not(:checked) + label > .autoplay-on {
+    display: none;
+}
+
+.autoplay-container {
+    grid-column: 3;
+    align-self: center;
+    max-height: 40px;
+
 }
 
 .multi-movie-result-item {
@@ -132,18 +156,51 @@ footer {
 }
 
 .select-container {
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+    justify-items: center;
+}
+
+.grid-inputs {
+    margin: 5px;
 }
 
 .search-results {
     display: flex;
     flex-direction: column;
-    margin-top: 20vh;
+    margin-top: 255px;
+}
+
+.search-results-grid {
+    padding-top: 15px;
 }
 
 .submit-search {
-    width: 150px;
+    width: 200px;
+    grid-row: 2;
+    grid-column: 3;
+    height: 65px;
+}
+
+.user-search {
+    width: 60%;
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.user-search::placeholder {
+    text-align: center;
+}
+
+.user-search-container {
+    width: 100%;
+    grid-row: 1;
+    grid-column-start: 1;
+    grid-column-end: 3;
 }
 
 .tmdb-review-item {
@@ -154,6 +211,49 @@ footer {
     display: none;
 }
 
+.review-header {
+    padding: 15px;
+}
+
+.user-genre-custom-list {
+    grid-row: 2;
+    position: relative;
+    display: block;
+    max-height: 63px;
+    max-width: 400px;
+    min-width: 180px;
+  }
+  .user-genre-custom-list select {
+    display: block;
+    width: 100%;
+  }
+  .user-genre-custom-list:after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50px;
+  }
+
+  .user-year-custom-list {
+    grid-row: 2;
+    position: relative;
+    display: block;
+    display: block;
+    max-height: 63px;
+    max-width: 400px;
+    min-width: 180px;
+  }
+  .user-year-custom-list select {
+    display: block;
+    width: 100%;
+  }
+  .user-year-custom-list:after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50px;
+    z-index: -1;
+  }
 
 @media screen and (min-width: 700px) {
     .single-movie-info {
@@ -184,12 +284,17 @@ footer {
 @media screen and (min-width: 1300px) {
 
     .single-movie-info {
-        max-width: 50%;
+        width: 50%;
     }
 
     .youtube-trailer-container{
         max-width: 50%;
         padding-bottom: 28.125%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .search-results {
         margin-left: auto;
         margin-right: auto;
     }
