@@ -16,6 +16,12 @@ h1 {
     margin: 0;
 }
 
+.fixed-header {
+    -webkit-box-shadow: 0px -23px 24px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px -23px 24px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px -23px 24px 0px rgba(0,0,0,0.75);
+}
+
 .youtube-review-thumbnail-duration {
     color: white;
     background-color: black;
@@ -81,6 +87,10 @@ a:hover {
 
 .youtube-reviews {
     line-height: 25px;
+}
+
+.search-results{
+    background-color: #22252c;
 }
 
 .user-genre-custom-list {
