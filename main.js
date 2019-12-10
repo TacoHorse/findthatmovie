@@ -430,6 +430,19 @@ function listenerForAutocomplete() { // Watches for what the user types in the s
     });
 }
 
+function listenerForClick() {
+    $('.js-search-results').on("click", e=> {
+        $('.js-search-results').empty();
+        console.log(e);
+        let arr = Object.values(e.target.classList);
+        if (arr.some(elem => elem === "js-multi-click")) {
+            let inputObject = {};
+            inputObject.name = e.target.name;
+            displaySingleMovieResults(inputObject);
+        }
+    });
+}
+
 function observerForResults() {
     let observer = new IntersectionObserver(
         (entries, observer) => {
@@ -501,6 +514,7 @@ function watchUserInput() { // Set up required event listeners for the applicati
     listenerForSubmitButton();
     listenerForAutocomplete();
     listenerForAutocompleteSelection();
+    listenerForClick();
 }
 
 
@@ -658,9 +672,9 @@ function displayMovieList(responseData) { // Insert a list of movie titles into 
             intersect = `movie-list-end-${userData.asyncTrigCount}`
         } else intersect = '';
         output += `<div class="multi-movie-result-item js-multi-movie-result-item ${intersect}" id="movie-item-${handleMovieItemCount(userData.currentSearchPage, i)}">
-        <img class="movie-poster-search js-movie-poster-search" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseData[0].results[i].poster_path}">
-            <div class="movie-search-info js-movie-search-info">
-                <h3>${responseData[0].results[i].title}</h3>
+        <a href="#top"><img class="movie-poster-search js-movie-poster-search js-multi-click" name="${responseData[0].results[i].title}" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseData[0].results[i].poster_path}"></a>
+            <div class="movie-search-info js-movie-search-info"></a>
+            <a href="#top"><h3 class="js-multi-click" name="${responseData[0].results[i].title}">${responseData[0].results[i].title}</h3>
                 <p>${responseData[0].results[i].release_date}</p>
                 <p>${responseData[0].results[i].overview}</p>
             </div>
@@ -672,11 +686,12 @@ function displayMovieList(responseData) { // Insert a list of movie titles into 
 }
 
 function displaySearch(formName) {
-    0
+    
     let output = `<div class="select-container js-select-container">
                     <div class="user-search-container">
                     <input type="text" name="user-search" id="user-search" list="js-autocomplete-data" class="user-search js-user-search" placeholder="Enter a movie">
-
+                    <input type="submit" name="user-submit" id="user-submit" class="submit-search js-submit-search grid-inputs">
+                    <div class="search-inner-border"></div>
                     <datalist class="autocomplete-data js-autocomplete-data" id="js-autocomplete-data">
 
                         <select class="autocomplete-select js-autocomplete-select" id="js-autocomplete-select">
@@ -684,7 +699,7 @@ function displaySearch(formName) {
 
                     </datalist>
                  </div>
-                <label class="user-year-custom-list" for="user-genre">
+                <label class="custom-list" for="user-year">
                     <select name="user-year" id="user-year" class="user-year js-user-year grid-inputs">
                             <option value="0000">Year</option>
                             <option value="2020">2020</option>
@@ -805,7 +820,7 @@ function displaySearch(formName) {
                             <option value="1905">1905</option>
                         </select>
                     </label>
-                    <label class="user-genre-custom-list" for="user-genre">
+                    <label class="custom-list" for="user-genre">
                         <select name="user-genre" id="user-genre" class="user-genre js-user-genre grid-inputs">
                             <option value="00">Genre</option>
                             <option value="28">Action</option>
@@ -838,7 +853,6 @@ function displaySearch(formName) {
                         </label>
                         
                     </div>
-                    <input type="submit" name="user-submit" id="user-submit" class="submit-search js-submit-search grid-inputs">
                 </div>
     `
 

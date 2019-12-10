@@ -49,9 +49,12 @@ a:hover {
 
 .user-search {
     background-color: #E14658;
-    border: 2px solid black;
     color: black;
     font-size: 24px;
+}
+
+.user-search-container {
+    background-color: #E14658;
 }
 
 .autocomplete-data {
@@ -61,15 +64,14 @@ a:hover {
     font-size: 24px;
 }
 
-.grid-inputs {
-    background-color: #C0B3A0;
-    border: 2px solid black;
-}
-
 .submit-search {
+    line-height: 40px;
     background-color: #22252c;
     color:  #E14658;
-    border: 1px solid #E14658;
+}
+
+.search-inner-border {
+    border: 1px solid black;
 }
 
 .submit-search:hover {
@@ -93,15 +95,14 @@ a:hover {
     background-color: #22252c;
 }
 
-.user-genre-custom-list {
-    margin: 0 auto;
+.custom-list {
     font-family: 'Poppins', sans-serif;
     border: 1px solid #E14658;
     background-color: #22252c;
     z-index: 10;
   }
-  .user-genre-custom-list select {
-    line-height: 30px;
+  .custom-list > select {
+    line-height: 36px;
     border: none;
     outline: none;
     background: transparent;
@@ -110,46 +111,13 @@ a:hover {
     appearance: none;
     border-radius: 0;
     margin: 0;
-    padding: 15px 55px 15px 15px;
+    padding: 0px 10px 0px 10px;
     font-size: 18px;
     color: #E14658;
   }
-  .user-genre-custom-list:after {
-    padding-top: 7px;
-    line-height: 38px;
+  .custom-list::after {
     content: "∨";
-    text-align: center;
-    color: #E14658;
-    font-size: 24px;
-    border-left: 1px solid #3C1C78;
-    z-index: -1;
-  }
-
-  .user-year-custom-list {
-    margin: 0 auto;
-    font-family: 'Poppins', sans-serif;
-    border: 1px solid #E14658;
-    background-color: #22252c;
-    z-index: 10;
-  }
-  .user-year-custom-list select {
-    line-height: 30px;
-    border: none;
-    outline: none;
-    background: transparent;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border-radius: 0;
-    margin: 0;
-    padding: 15px 55px 15px 15px;
-    font-size: 18px;
-    color: #E14658;
-  }
-  .user-year-custom-list:after {
-    padding-top: 7px;
-    line-height: 38px;
-    content: "∨";
+    line-height: 32px;
     text-align: center;
     color: #E14658;
     font-size: 24px;
