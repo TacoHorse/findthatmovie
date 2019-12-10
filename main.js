@@ -437,8 +437,13 @@ function listenerForClick() {
         let arr = Object.values(e.target.classList);
         if (arr.some(elem => elem === "js-multi-click")) {
             let inputObject = {};
+            if (e.target.name) {
             inputObject.name = e.target.name;
+            } else {
+                inputObject.name = e.target.outerText;
+            }
             displaySingleMovieResults(inputObject);
+            listenerForClick();
         }
     });
 }
