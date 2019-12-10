@@ -674,7 +674,7 @@ function displayMovieList(responseData) { // Insert a list of movie titles into 
         output += `<div class="multi-movie-result-item js-multi-movie-result-item ${intersect}" id="movie-item-${handleMovieItemCount(userData.currentSearchPage, i)}">
         <a href="#top"><img class="movie-poster-search js-movie-poster-search js-multi-click" name="${responseData[0].results[i].title}" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseData[0].results[i].poster_path}"></a>
             <div class="movie-search-info js-movie-search-info"></a>
-            <a href="#top"><h3 class="js-multi-click" name="${responseData[0].results[i].title}">${responseData[0].results[i].title}</h3>
+            <a href="#top"><h3 class="js-multi-click" name="${responseData[0].results[i].title}">${responseData[0].results[i].title}</h3></a>
                 <p>${responseData[0].results[i].release_date}</p>
                 <p>${responseData[0].results[i].overview}</p>
             </div>
