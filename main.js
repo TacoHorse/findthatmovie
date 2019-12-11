@@ -25,11 +25,6 @@ function encodeQueryParams(params) { // Formats a given params object in the 'ke
     return queryItems.join('&');
 }
 
-function encodeTwitterKeys(key, secret) {
-    const query = encodeURIComponent(key) + ":" + encodeURIComponent(secret);
-    return query;
-}
-
 async function getMovieInfoByName(name) { // Searches for movie information by name
     const baseURL = "https://api.themoviedb.org/3/search/movie?";
     let queryString = encodeQueryParams(buildMovieQueryParams(name, undefined, undefined));
@@ -151,7 +146,7 @@ async function getYouTubeVideos(searchQuery, vidLength, resultsPage) { // Search
     return returnObject;
 }
 
-async function getYouTubeVideoInfo(videoIDs, findPart) {
+async function getYouTubeVideoInfo(videoIDs, findPart) { // Gets info for the specified videos
     const baseURL = "https://www.googleapis.com/youtube/v3/videos?";
     let queryString = encodeQueryParams(buildYouTubeVideoQueryParams(videoIDs, findPart));
     let requestURL = baseURL + queryString;
@@ -253,9 +248,9 @@ function buildYouTubeQueryParams(searchQuery, vidLength, nextPageToken) { // Pre
     return params;
 }
 
-function buildYouTubeVideoQueryParams(videoIDs, findPart) {
+function buildYouTubeVideoQueryParams(videoIDs, findPart) { // Prepare the query information for finding YouTube videos
 
-    // findPart must be on of the following valid YouTube parts: contentDetails, fileDetails, id, liveStreamingDetails, localizations
+    // findPart must be one of the following valid YouTube parts: contentDetails, fileDetails, id, liveStreamingDetails, localizations
     // player, processingDetails, recordingDetails, snippet, statistic, status, suggestions, or topicDetails
 
     let params = {
@@ -295,7 +290,7 @@ function buildMovieQueryParams(name, year, genre, page) { // Prepare the paramet
     return params;
 }
 
-function buildDetailedMovieParams() {
+function buildDetailedMovieParams() {  // Prepare params for detailed movie information queries
     let params = {
         api_key: "7658594a35b754254b048a6ac98e566d",
         language: "en-US"
@@ -312,7 +307,7 @@ function handleErrors(response) { // prepares error message for HTTP request err
     }
 }
 
-function handleAutoplay() {
+function handleAutoplay() {  // Sets the internal autoplay variable for the app to use
     userData.autoplay = $('.js-youtube-trailer-autoplay').is(':checked'); // Set autoplay property for embded trailer
     if (userData.autoplay === true) {
     document.cookie = `autoplay=${userData.autoplay};`;
@@ -321,7 +316,7 @@ function handleAutoplay() {
     }
 }
 
-function handleAutoplayCookie() {
+function handleAutoplayCookie() {  // Stores cookie for the autoplay setting for the user's next visit
     if (document.cookie.split(';').filter((item) => item.startsWith('autoplay=true')).length) {
         userData.autoplay = true; // Set autoplay property for embded trailer
         $('.js-youtube-trailer-autoplay').prop("checked", true);
@@ -331,7 +326,7 @@ function handleAutoplayCookie() {
     }
 }
 
-function handleCollapse(itemNumber) {
+function handleCollapse(itemNumber) {  // Handles the expanding review items for TMDB reviews
     let newText = $(`.js-tmdb-review-hidden-${itemNumber}`).text(); // Get the hidden text
     let oldText = $(`.tmdb-review-${itemNumber} > p`).text();  // Get the already visible text
     let trimmed = oldText.slice(0, oldText.length - 12); // Trim ...Read more from existing text
@@ -430,7 +425,7 @@ function listenerForAutocomplete() { // Watches for what the user types in the s
     });
 }
 
-function listenerForClick() {
+function listenerForClick() {  // Watches for when the user clicks on a movie in the list of movies
     $('.js-search-results').on("click", e=> {
         $('.js-search-results').empty();
         console.log(e);
@@ -448,7 +443,7 @@ function listenerForClick() {
     });
 }
 
-function observerForResults() {
+function observerForResults() {  // Watches for when new movie results need to be added to the page
     let observer = new IntersectionObserver(
         (entries, observer) => {
             entries.forEach(entry => {
@@ -495,7 +490,7 @@ function observerForResults() {
     observer.observe(document.querySelector(`.movie-list-end-${userData.asyncTrigCount}`));
 }
 
-function observerForYouTubeReviews() {
+function observerForYouTubeReviews() {  // Watches for when new youtube reviews need to be added to the page
     let observer = new IntersectionObserver(
         (entries, observer) => {
             entries.forEach(entry => {
@@ -534,7 +529,7 @@ function displayAutocompleteOptions(returnObject) { // Inserts auto-complete opt
 
 }
 
-function displaySingleMovieResults(inputObject) {
+function displaySingleMovieResults(inputObject) {  // Display the search results for a single movie item
     displaySingleMovieInfo(inputObject);
     $(".js-search-results").off().on("movieDataDone", function (event) {
         displayYouTubeTrailer();
@@ -542,7 +537,7 @@ function displaySingleMovieResults(inputObject) {
 
 }
 
-function displayYouTubeTrailer() {
+function displayYouTubeTrailer() {   // Display an appropriate trailer
     let movTitle = $(".js-search-results").children();
     let title = movTitle.prevObject[0].childNodes[1].childNodes[1].innerText;
 
@@ -611,7 +606,7 @@ function displaySingleMovieInfo(inputObject) { // Displays the movie information
         });
 }
 
-function splitTmdbReviews(contentObject) {
+function splitTmdbReviews(contentObject) {  // Splits TMDB reviews into preview and full body segments
     let parts = [];
     parts[0] = contentObject.slice(0, 250);
     parts[1] = contentObject.slice(250, contentObject.length);
@@ -619,7 +614,7 @@ function splitTmdbReviews(contentObject) {
     return parts;
 }
 
-function displayYouTubeReviews(movieTitle, vidLength, nextPageToken) {
+function displayYouTubeReviews(movieTitle, vidLength, nextPageToken) {  // Display youtube review videos
     userData.youtube.query = movieTitle + " movie reviews";
     Promise.all([getYouTubeVideos(movieTitle + " movie reviews", vidLength, nextPageToken)]) // Perform the API query to get youtube review video IDs
         .then(responseObjectPrimary => {
@@ -657,7 +652,7 @@ function displayYouTubeReviews(movieTitle, vidLength, nextPageToken) {
                     </div>`;
                     $('.js-youtube-reviews').append(output); // Insert a complete review object into the DOM
                 }
-                // observerForYouTubeReviews(); // Observer for async content fill
+                observerForYouTubeReviews(); // Observer for async content fill
             });
         });
     
