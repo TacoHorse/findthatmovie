@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR|Poppins:500&display=swap');
+
+body {
+    background-color: #22252c;
+    color: #C0B3A0;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 22px;
+    line-height: 65px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+    margin: 0;
+}
+
+.fixed-header {
+    -webkit-box-shadow: 0px -23px 24px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px -23px 24px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px -23px 24px 0px rgba(0,0,0,0.75);
+}
+
+.youtube-review-thumbnail-duration {
+    color: white;
+    background-color: black;
+}
+
+.fixed-header {
+    background-color: #3f3250;
+}
+
+footer {
+    background-color: darkgray;
+}
+
+a {
+    color: rgb(138, 131, 120);
+}
+
+a:active {
+    color: #22252c;
+}
+
+a:hover {
+    color: #E14658;
+}
+
+.user-search {
+    background-color: #E14658;
+    color: black;
+    font-size: 24px;
+}
+
+.user-search-container {
+    background-color: #E14658;
+}
+
+.autocomplete-data {
+    background-color: #E14658;
+    border: 2px solid black;
+    color: black;
+    font-size: 24px;
+}
+
+.submit-search {
+    line-height: 40px;
+    background-color: #22252c;
+    color:  #E14658;
+}
+
+.search-inner-border {
+    border: 1px solid black;
+}
+
+.submit-search:hover {
+    background-color: #791885;
+    text-decoration: underline;
+}
+
+.submit-search:active {
+    background-color: #22252c;
+}
+
+.tmdb-reviews {
+    line-height: 25px;
+}
+
+.youtube-reviews {
+    line-height: 25px;
+}
+
+.search-results{
+    background-color: #22252c;
+}
+
+.custom-list {
+    font-family: 'Poppins', sans-serif;
+    border: 1px solid #E14658;
+    background-color: #22252c;
+    z-index: 10;
+  }
+  .custom-list > select {
+    line-height: 36px;
+    border: none;
+    outline: none;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    margin: 0;
+    padding: 0px 10px 0px 10px;
+    font-size: 18px;
+    color: #E14658;
+  }
+  .custom-list::after {
+    content: "∨";
+    line-height: 32px;
+    text-align: center;
+    color: #E14658;
+    font-size: 24px;
+    border-left: 1px solid #3C1C78;
+    z-index: -1;
+  }

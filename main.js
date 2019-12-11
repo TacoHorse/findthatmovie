@@ -25,11 +25,6 @@ function encodeQueryParams(params) { // Formats a given params object in the 'ke
     return queryItems.join('&');
 }
 
-function encodeTwitterKeys(key, secret) {
-    const query = encodeURIComponent(key) + ":" + encodeURIComponent(secret);
-    return query;
-}
-
 async function getMovieInfoByName(name) { // Searches for movie information by name
     const baseURL = "https://api.themoviedb.org/3/search/movie?";
     let queryString = encodeQueryParams(buildMovieQueryParams(name, undefined, undefined));
@@ -151,7 +146,7 @@ async function getYouTubeVideos(searchQuery, vidLength, resultsPage) { // Search
     return returnObject;
 }
 
-async function getYouTubeVideoInfo(videoIDs, findPart) {
+async function getYouTubeVideoInfo(videoIDs, findPart) { // Gets info for the specified videos
     const baseURL = "https://www.googleapis.com/youtube/v3/videos?";
     let queryString = encodeQueryParams(buildYouTubeVideoQueryParams(videoIDs, findPart));
     let requestURL = baseURL + queryString;
@@ -253,9 +248,9 @@ function buildYouTubeQueryParams(searchQuery, vidLength, nextPageToken) { // Pre
     return params;
 }
 
-function buildYouTubeVideoQueryParams(videoIDs, findPart) {
+function buildYouTubeVideoQueryParams(videoIDs, findPart) { // Prepare the query information for finding YouTube videos
 
-    // findPart must be on of the following valid YouTube parts: contentDetails, fileDetails, id, liveStreamingDetails, localizations
+    // findPart must be one of the following valid YouTube parts: contentDetails, fileDetails, id, liveStreamingDetails, localizations
     // player, processingDetails, recordingDetails, snippet, statistic, status, suggestions, or topicDetails
 
     let params = {
@@ -295,7 +290,7 @@ function buildMovieQueryParams(name, year, genre, page) { // Prepare the paramet
     return params;
 }
 
-function buildDetailedMovieParams() {
+function buildDetailedMovieParams() {  // Prepare params for detailed movie information queries
     let params = {
         api_key: "7658594a35b754254b048a6ac98e566d",
         language: "en-US"
@@ -312,7 +307,7 @@ function handleErrors(response) { // prepares error message for HTTP request err
     }
 }
 
-function handleAutoplay() {
+function handleAutoplay() {  // Sets the internal autoplay variable for the app to use
     userData.autoplay = $('.js-youtube-trailer-autoplay').is(':checked'); // Set autoplay property for embded trailer
     if (userData.autoplay === true) {
     document.cookie = `autoplay=${userData.autoplay};`;
@@ -321,7 +316,7 @@ function handleAutoplay() {
     }
 }
 
-function handleAutoplayCookie() {
+function handleAutoplayCookie() {  // Stores cookie for the autoplay setting for the user's next visit
     if (document.cookie.split(';').filter((item) => item.startsWith('autoplay=true')).length) {
         userData.autoplay = true; // Set autoplay property for embded trailer
         $('.js-youtube-trailer-autoplay').prop("checked", true);
@@ -331,7 +326,7 @@ function handleAutoplayCookie() {
     }
 }
 
-function handleCollapse(itemNumber) {
+function handleCollapse(itemNumber) {  // Handles the expanding review items for TMDB reviews
     let newText = $(`.js-tmdb-review-hidden-${itemNumber}`).text(); // Get the hidden text
     let oldText = $(`.tmdb-review-${itemNumber} > p`).text();  // Get the already visible text
     let trimmed = oldText.slice(0, oldText.length - 12); // Trim ...Read more from existing text
@@ -430,7 +425,25 @@ function listenerForAutocomplete() { // Watches for what the user types in the s
     });
 }
 
-function observerForResults() {
+function listenerForClick() {  // Watches for when the user clicks on a movie in the list of movies
+    $('.js-search-results').on("click", e=> {
+        $('.js-search-results').empty();
+        console.log(e);
+        let arr = Object.values(e.target.classList);
+        if (arr.some(elem => elem === "js-multi-click")) {
+            let inputObject = {};
+            if (e.target.name) {
+            inputObject.name = e.target.name;
+            } else {
+                inputObject.name = e.target.outerText;
+            }
+            displaySingleMovieResults(inputObject);
+            listenerForClick();
+        }
+    });
+}
+
+function observerForResults() {  // Watches for when new movie results need to be added to the page
     let observer = new IntersectionObserver(
         (entries, observer) => {
             entries.forEach(entry => {
@@ -477,7 +490,7 @@ function observerForResults() {
     observer.observe(document.querySelector(`.movie-list-end-${userData.asyncTrigCount}`));
 }
 
-function observerForYouTubeReviews() {
+function observerForYouTubeReviews() {  // Watches for when new youtube reviews need to be added to the page
     let observer = new IntersectionObserver(
         (entries, observer) => {
             entries.forEach(entry => {
@@ -501,6 +514,7 @@ function watchUserInput() { // Set up required event listeners for the applicati
     listenerForSubmitButton();
     listenerForAutocomplete();
     listenerForAutocompleteSelection();
+    listenerForClick();
 }
 
 
@@ -515,7 +529,7 @@ function displayAutocompleteOptions(returnObject) { // Inserts auto-complete opt
 
 }
 
-function displaySingleMovieResults(inputObject) {
+function displaySingleMovieResults(inputObject) {  // Display the search results for a single movie item
     displaySingleMovieInfo(inputObject);
     $(".js-search-results").off().on("movieDataDone", function (event) {
         displayYouTubeTrailer();
@@ -523,7 +537,7 @@ function displaySingleMovieResults(inputObject) {
 
 }
 
-function displayYouTubeTrailer() {
+function displayYouTubeTrailer() {   // Display an appropriate trailer
     let movTitle = $(".js-search-results").children();
     let title = movTitle.prevObject[0].childNodes[1].childNodes[1].innerText;
 
@@ -555,7 +569,7 @@ function displaySingleMovieInfo(inputObject) { // Displays the movie information
                 <div class="single-movie-info js-single-movie-info">
                     <div class="single-movie-text js-single-movie-text">
                         <div class="single-movie-budglength"><img class="movie-poster js-movie-poster" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseObject[0].poster}"><p>Budget: ${reviewResponse[0].budget}</p><p>Duration: ${reviewResponse[0].runtime} mins</p></div>
-                            <p>${responseObject[0].description}</p>
+                            <p class="single-movie-description">${responseObject[0].description}</p>
                             <div class="review-header"><h2>Reviews</h2></div><div class="placeholder"></div>
                             <div class="tmdb-reviews js-tmdb-reviews">`;
 
@@ -592,7 +606,7 @@ function displaySingleMovieInfo(inputObject) { // Displays the movie information
         });
 }
 
-function splitTmdbReviews(contentObject) {
+function splitTmdbReviews(contentObject) {  // Splits TMDB reviews into preview and full body segments
     let parts = [];
     parts[0] = contentObject.slice(0, 250);
     parts[1] = contentObject.slice(250, contentObject.length);
@@ -600,7 +614,7 @@ function splitTmdbReviews(contentObject) {
     return parts;
 }
 
-function displayYouTubeReviews(movieTitle, vidLength, nextPageToken) {
+function displayYouTubeReviews(movieTitle, vidLength, nextPageToken) {  // Display youtube review videos
     userData.youtube.query = movieTitle + " movie reviews";
     Promise.all([getYouTubeVideos(movieTitle + " movie reviews", vidLength, nextPageToken)]) // Perform the API query to get youtube review video IDs
         .then(responseObjectPrimary => {
@@ -638,7 +652,7 @@ function displayYouTubeReviews(movieTitle, vidLength, nextPageToken) {
                     </div>`;
                     $('.js-youtube-reviews').append(output); // Insert a complete review object into the DOM
                 }
-                // observerForYouTubeReviews(); // Observer for async content fill
+                observerForYouTubeReviews(); // Observer for async content fill
             });
         });
     
@@ -658,9 +672,9 @@ function displayMovieList(responseData) { // Insert a list of movie titles into 
             intersect = `movie-list-end-${userData.asyncTrigCount}`
         } else intersect = '';
         output += `<div class="multi-movie-result-item js-multi-movie-result-item ${intersect}" id="movie-item-${handleMovieItemCount(userData.currentSearchPage, i)}">
-        <img class="movie-poster-search js-movie-poster-search" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseData[0].results[i].poster_path}">
-            <div class="movie-search-info js-movie-search-info">
-                <h3>${responseData[0].results[i].title}</h3>
+        <a href="#top"><img class="movie-poster-search js-movie-poster-search js-multi-click" name="${responseData[0].results[i].title}" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseData[0].results[i].poster_path}"></a>
+            <div class="movie-search-info js-movie-search-info"></a>
+            <a href="#top"><h3 class="js-multi-click" name="${responseData[0].results[i].title}">${responseData[0].results[i].title}</h3></a>
                 <p>${responseData[0].results[i].release_date}</p>
                 <p>${responseData[0].results[i].overview}</p>
             </div>
@@ -672,167 +686,174 @@ function displayMovieList(responseData) { // Insert a list of movie titles into 
 }
 
 function displaySearch(formName) {
-    0
-    let output = `
-    <input type="text" name="user-search" id="user-search" list="js-autocomplete-data" class="user-search js-user-search" placeholder="Enter a movie">
-
-    <datalist class="autocomplete-data js-autocomplete-data" id="js-autocomplete-data">
-
-        <select class="autocomplete-select js-autocomplete-select" id="js-autocomplete-select">
-        </select>
-
-    </datalist>
-
-    <h3>Or search by...</h3>
     
-    <div class="select-container js-select-container">
-        <select name="user-year" id="user-year" class="user-year js-user-year">
-                <option value="0000">Year</option>
-                <option value="2020">2020</option>
-                <option value="2019">2019</option>
-                <option value="2018">2018</option>
-                <option value="2017">2017</option>
-                <option value="2016">2016</option>
-                <option value="2015">2015</option>
-                <option value="2014">2014</option>
-                <option value="2013">2013</option>
-                <option value="2012">2012</option>
-                <option value="2011">2011</option>
-                <option value="2010">2010</option>
-                <option value="2009">2009</option>
-                <option value="2008">2008</option>
-                <option value="2007">2007</option>
-                <option value="2006">2006</option>
-                <option value="2005">2005</option>
-                <option value="2004">2004</option>
-                <option value="2003">2003</option>
-                <option value="2002">2002</option>
-                <option value="2001">2001</option>
-                <option value="2000">2000</option>
-                <option value="1999">1999</option>
-                <option value="1998">1998</option>
-                <option value="1997">1997</option>
-                <option value="1996">1996</option>
-                <option value="1995">1995</option>
-                <option value="1994">1994</option>
-                <option value="1993">1993</option>
-                <option value="1992">1992</option>
-                <option value="1991">1991</option>
-                <option value="1990">1990</option>
-                <option value="1989">1989</option>
-                <option value="1988">1988</option>
-                <option value="1987">1987</option>
-                <option value="1986">1986</option>
-                <option value="1985">1985</option>
-                <option value="1984">1984</option>
-                <option value="1983">1983</option>
-                <option value="1982">1982</option>
-                <option value="1981">1981</option>
-                <option value="1980">1980</option>
-                <option value="1979">1979</option>
-                <option value="1978">1978</option>
-                <option value="1977">1977</option>
-                <option value="1976">1976</option>
-                <option value="1975">1975</option>
-                <option value="1974">1974</option>
-                <option value="1973">1973</option>
-                <option value="1972">1972</option>
-                <option value="1971">1971</option>
-                <option value="1970">1970</option>
-                <option value="1969">1969</option>
-                <option value="1968">1968</option>
-                <option value="1967">1967</option>
-                <option value="1966">1966</option>
-                <option value="1965">1965</option>
-                <option value="1964">1964</option>
-                <option value="1963">1963</option>
-                <option value="1962">1962</option>
-                <option value="1961">1961</option>
-                <option value="1960">1960</option>
-                <option value="1959">1959</option>
-                <option value="1958">1958</option>
-                <option value="1957">1957</option>
-                <option value="1956">1956</option>
-                <option value="1955">1955</option>
-                <option value="1954">1954</option>
-                <option value="1953">1953</option>
-                <option value="1952">1952</option>
-                <option value="1951">1951</option>
-                <option value="1950">1950</option>
-                <option value="1949">1949</option>
-                <option value="1948">1948</option>
-                <option value="1947">1947</option>
-                <option value="1946">1946</option>
-                <option value="1945">1945</option>
-                <option value="1944">1944</option>
-                <option value="1943">1943</option>
-                <option value="1942">1942</option>
-                <option value="1941">1941</option>
-                <option value="1940">1940</option>
-                <option value="1939">1939</option>
-                <option value="1938">1938</option>
-                <option value="1937">1937</option>
-                <option value="1936">1936</option>
-                <option value="1935">1935</option>
-                <option value="1934">1934</option>
-                <option value="1933">1933</option>
-                <option value="1932">1932</option>
-                <option value="1931">1931</option>
-                <option value="1930">1930</option>
-                <option value="1929">1929</option>
-                <option value="1928">1928</option>
-                <option value="1927">1927</option>
-                <option value="1926">1926</option>
-                <option value="1925">1925</option>
-                <option value="1924">1924</option>
-                <option value="1923">1923</option>
-                <option value="1922">1922</option>
-                <option value="1921">1921</option>
-                <option value="1920">1920</option>
-                <option value="1919">1919</option>
-                <option value="1918">1918</option>
-                <option value="1917">1917</option>
-                <option value="1916">1916</option>
-                <option value="1915">1915</option>
-                <option value="1914">1914</option>
-                <option value="1913">1913</option>
-                <option value="1912">1912</option>
-                <option value="1911">1911</option>
-                <option value="1910">1910</option>
-                <option value="1909">1909</option>
-                <option value="1908">1908</option>
-                <option value="1907">1907</option>
-                <option value="1906">1906</option>
-                <option value="1905">1905</option>
-            </select>
+    let output = `<div class="select-container js-select-container">
+                    <div class="user-search-container">
+                    <input type="text" name="user-search" id="user-search" list="js-autocomplete-data" class="user-search js-user-search" placeholder="Enter a movie">
+                    <input type="submit" name="user-submit" id="user-submit" class="submit-search js-submit-search grid-inputs">
+                    <div class="search-inner-border"></div>
+                    <datalist class="autocomplete-data js-autocomplete-data" id="js-autocomplete-data">
 
-            <select name="user-genre" id="user-genre" class="user-genre js-user-genre">
-                <option value="00">Genre</option>
-                <option value="28">Action</option>
-                <option value="12">Adventure</option>
-                <option value="16">Animation</option>
-                <option value="35">Comedy</option>
-                <option value="80">Crime</option>
-                <option value="99">Documentary</option>
-                <option value="18">Drama</option>
-                <option value="10751">Family</option>
-                <option value="14">Fantasy</option>
-                <option value="36">History</option>
-                <option value="27">Horror</option>
-                <option value="10402">Music</option>
-                <option value="9648">Mystery</option>
-                <option value="10749">Romance</option>
-                <option value="878">Science Fiction</option>
-                <option value="10770">TV Movie</option>
-                <option value="53">Thriller</option>
-                <option value="10752">War</option>
-                <option value="37">Western</option>
-            </select>
+                        <select class="autocomplete-select js-autocomplete-select" id="js-autocomplete-select">
+                        </select>
 
-            <label for="youtube-trailer-autoplay"><input name="youtube-trailer-autoplay" id="youtube-trailer-autoplay" class="js-youtube-trailer-autoplay youtube-trailer-autoplay" type="checkbox" onclick="handleAutoplay()">Autoplay?</label>
+                    </datalist>
+                 </div>
+                <label class="custom-list" for="user-year">
+                    <select name="user-year" id="user-year" class="user-year js-user-year grid-inputs">
+                            <option value="0000">Year</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                            <option value="2014">2014</option>
+                            <option value="2013">2013</option>
+                            <option value="2012">2012</option>
+                            <option value="2011">2011</option>
+                            <option value="2010">2010</option>
+                            <option value="2009">2009</option>
+                            <option value="2008">2008</option>
+                            <option value="2007">2007</option>
+                            <option value="2006">2006</option>
+                            <option value="2005">2005</option>
+                            <option value="2004">2004</option>
+                            <option value="2003">2003</option>
+                            <option value="2002">2002</option>
+                            <option value="2001">2001</option>
+                            <option value="2000">2000</option>
+                            <option value="1999">1999</option>
+                            <option value="1998">1998</option>
+                            <option value="1997">1997</option>
+                            <option value="1996">1996</option>
+                            <option value="1995">1995</option>
+                            <option value="1994">1994</option>
+                            <option value="1993">1993</option>
+                            <option value="1992">1992</option>
+                            <option value="1991">1991</option>
+                            <option value="1990">1990</option>
+                            <option value="1989">1989</option>
+                            <option value="1988">1988</option>
+                            <option value="1987">1987</option>
+                            <option value="1986">1986</option>
+                            <option value="1985">1985</option>
+                            <option value="1984">1984</option>
+                            <option value="1983">1983</option>
+                            <option value="1982">1982</option>
+                            <option value="1981">1981</option>
+                            <option value="1980">1980</option>
+                            <option value="1979">1979</option>
+                            <option value="1978">1978</option>
+                            <option value="1977">1977</option>
+                            <option value="1976">1976</option>
+                            <option value="1975">1975</option>
+                            <option value="1974">1974</option>
+                            <option value="1973">1973</option>
+                            <option value="1972">1972</option>
+                            <option value="1971">1971</option>
+                            <option value="1970">1970</option>
+                            <option value="1969">1969</option>
+                            <option value="1968">1968</option>
+                            <option value="1967">1967</option>
+                            <option value="1966">1966</option>
+                            <option value="1965">1965</option>
+                            <option value="1964">1964</option>
+                            <option value="1963">1963</option>
+                            <option value="1962">1962</option>
+                            <option value="1961">1961</option>
+                            <option value="1960">1960</option>
+                            <option value="1959">1959</option>
+                            <option value="1958">1958</option>
+                            <option value="1957">1957</option>
+                            <option value="1956">1956</option>
+                            <option value="1955">1955</option>
+                            <option value="1954">1954</option>
+                            <option value="1953">1953</option>
+                            <option value="1952">1952</option>
+                            <option value="1951">1951</option>
+                            <option value="1950">1950</option>
+                            <option value="1949">1949</option>
+                            <option value="1948">1948</option>
+                            <option value="1947">1947</option>
+                            <option value="1946">1946</option>
+                            <option value="1945">1945</option>
+                            <option value="1944">1944</option>
+                            <option value="1943">1943</option>
+                            <option value="1942">1942</option>
+                            <option value="1941">1941</option>
+                            <option value="1940">1940</option>
+                            <option value="1939">1939</option>
+                            <option value="1938">1938</option>
+                            <option value="1937">1937</option>
+                            <option value="1936">1936</option>
+                            <option value="1935">1935</option>
+                            <option value="1934">1934</option>
+                            <option value="1933">1933</option>
+                            <option value="1932">1932</option>
+                            <option value="1931">1931</option>
+                            <option value="1930">1930</option>
+                            <option value="1929">1929</option>
+                            <option value="1928">1928</option>
+                            <option value="1927">1927</option>
+                            <option value="1926">1926</option>
+                            <option value="1925">1925</option>
+                            <option value="1924">1924</option>
+                            <option value="1923">1923</option>
+                            <option value="1922">1922</option>
+                            <option value="1921">1921</option>
+                            <option value="1920">1920</option>
+                            <option value="1919">1919</option>
+                            <option value="1918">1918</option>
+                            <option value="1917">1917</option>
+                            <option value="1916">1916</option>
+                            <option value="1915">1915</option>
+                            <option value="1914">1914</option>
+                            <option value="1913">1913</option>
+                            <option value="1912">1912</option>
+                            <option value="1911">1911</option>
+                            <option value="1910">1910</option>
+                            <option value="1909">1909</option>
+                            <option value="1908">1908</option>
+                            <option value="1907">1907</option>
+                            <option value="1906">1906</option>
+                            <option value="1905">1905</option>
+                        </select>
+                    </label>
+                    <label class="custom-list" for="user-genre">
+                        <select name="user-genre" id="user-genre" class="user-genre js-user-genre grid-inputs">
+                            <option value="00">Genre</option>
+                            <option value="28">Action</option>
+                            <option value="12">Adventure</option>
+                            <option value="16">Animation</option>
+                            <option value="35">Comedy</option>
+                            <option value="80">Crime</option>
+                            <option value="99">Documentary</option>
+                            <option value="18">Drama</option>
+                            <option value="10751">Family</option>
+                            <option value="14">Fantasy</option>
+                            <option value="36">History</option>
+                            <option value="27">Horror</option>
+                            <option value="10402">Music</option>
+                            <option value="9648">Mystery</option>
+                            <option value="10749">Romance</option>
+                            <option value="878">Science Fiction</option>
+                            <option value="10770">TV Movie</option>
+                            <option value="53">Thriller</option>
+                            <option value="10752">War</option>
+                            <option value="37">Western</option>
+                        </select>
+                    </label>
 
-            <input type="submit" name="user-submit" id="user-submit" class="submit-search js-submit-search">
-        </div>
+                    <div class="autoplay-container">
+                        <input name="youtube-trailer-autoplay" id="youtube-trailer-autoplay" class="js-youtube-trailer-autoplay youtube-trailer-autoplay grid-inputs" type="checkbox" onclick="handleAutoplay()"> 
+                        <label for="youtube-trailer-autoplay" class="autoplay-off">
+                            <span class="autoplay-off"><img src="images/autoplay-off.png"></span>
+                            <span class="autoplay-on"><img src="images/autoplay-on.png"></span>
+                        </label>
+                        
+                    </div>
+                </div>
     `
 
     $(`.${formName}`).append(output);
