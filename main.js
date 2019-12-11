@@ -2,6 +2,7 @@
 
 var userData = { // Store important userData for the duration of their session
     currentSearchPage: 1,
+    autoCheck: Boolean,
     genre: '',
     year: '',
     asyncTrigCount: 0,
@@ -48,33 +49,32 @@ async function getMovieInfoByName(name) { // Searches for movie information by n
     return returnObject;
 }
 
-async function getDetailedMovieInfo(id) {  // Get more detailed information about the specified movie, needs ID passed from getMovieInfoByName()
+async function getDetailedMovieInfo(id) { // Get more detailed information about the specified movie, needs ID passed from getMovieInfoByName()
     const baseURLInfo = "https://api.themoviedb.org/3/movie/";
     let queryString = encodeQueryParams(buildDetailedMovieParams());
     let requestURLInfo = baseURLInfo + id + "?" + queryString;
     let requestURLReview = baseURLInfo + id + "/reviews?" + queryString;
 
     let requestDataInfo = await fetch(requestURLInfo)
-    .then (response => handleErrors(response))
-    .then(responseJSON => {
-        return responseJSON;
-    })
-    .catch(e => alert(e));
+        .then(response => handleErrors(response))
+        .then(responseJSON => {
+            return responseJSON;
+        })
+        .catch(e => alert(e));
 
     let requestDataReview = await fetch(requestURLReview)
-    .then (response => handleErrors(response))
-    .then(responseJSON => {
-        return responseJSON;
-    })
-    .catch(e => alert(e));
+        .then(response => handleErrors(response))
+        .then(responseJSON => {
+            return responseJSON;
+        })
+        .catch(e => alert(e));
 
     let returnObject = {
         budget: requestDataInfo.budget,
         tagline: requestDataInfo.tagline,
         runtime: requestDataInfo.runtime,
         backdrop_path: requestDataInfo.backdrop_path,
-        reviews: [
-        ]
+        reviews: []
     };
 
     requestDataReview.results.forEach((item, index) => {
@@ -90,7 +90,21 @@ async function getDetailedMovieInfo(id) {  // Get more detailed information abou
 
 }
 
-async function getMovieByGenreOrYear(genre, year = getYear(), newPage = false) { // Get a list of movies by year or by genre, or by both; if no year is entered default to current year
+async function getKeywordId(keyword) { // Get the id for keyword entered
+    const baseURL = "https://api.themoviedb.org/3/search/keyword?";
+    let queryString = encodeQueryParams(buildKeywordParams(keyword));
+    let requestURL = baseURL + queryString;
+
+    let requestData = await fetch(requestURL)
+    .then(response => handleErrors(response))
+    .then(responseJSON => {
+        return responseJSON;
+    })
+    .catch(e => alert(e));
+    return requestData;
+}
+
+async function getMovieList(genre, year = getYear(), newPage = false, keyword) { // Get a list of movies by year or by genre, or by both; if no year is entered default to current year
     const baseURL = "https://api.themoviedb.org/3/discover/movie?";
     let queryString = "";
     // currentSearchPage is used to keep a client-side record of what page - if any, they are on for search results //
@@ -100,15 +114,18 @@ async function getMovieByGenreOrYear(genre, year = getYear(), newPage = false) {
     } else { // If newPage is true, then incremenet the global page count variable by 1 and fetch new data.
         userData.currentSearchPage++;
     }
-
-    if (genre != undefined) { // If the user selects a genre, search for it
-        queryString = encodeQueryParams(buildMovieQueryParams(undefined, year, genre, userData.currentSearchPage));
-    } else { // Otherwise just search by year only
-        queryString = encodeQueryParams(buildMovieQueryParams(undefined, year, undefined, userData.currentSearchPage));
+    if (keyword) {
+        queryString = encodeQueryParams(buildMovieQueryParams(undefined, undefined, undefined, userData.currentSearchPage, keyword));
+        
+    } else {
+        if (genre != undefined) { // If the user selects a genre, search for it
+            queryString = encodeQueryParams(buildMovieQueryParams(undefined, year, genre, userData.currentSearchPage));
+        } else { // Otherwise just search by year only
+            queryString = encodeQueryParams(buildMovieQueryParams(undefined, year, undefined, userData.currentSearchPage));
+        }
     }
-
     let requestURL = baseURL + queryString;
-
+    console.log(requestURL);
     let requestData = await fetch(requestURL) // Fetch data
         .then(response => handleErrors(response)) // Check data
         .then(responseJSON => {
@@ -130,7 +147,7 @@ async function getYouTubeVideos(searchQuery, vidLength, resultsPage) { // Search
             return responseJSON // return JSON
         })
         .catch(e => alert(e));
-        
+
     userData.youtube.pageTokenVid = requestData.nextPageToken;
 
     let returnObject = { // build returnObject
@@ -161,7 +178,7 @@ async function getYouTubeVideoInfo(videoIDs, findPart) { // Gets info for the sp
     return requestData;
 }
 
-async function getAutocompleteMovieList(input) { // Gets a complete list of all movies for use with autocomplete
+async function getAutocompleteMovieList(input, finder = false) { // Gets a complete list of all movies for use with autocomplete
     const baseURL = "https://api.themoviedb.org/3/search/movie?";
     let queryString = encodeQueryParams(buildAutocompleteParams(input));
     let requestURL = baseURL + queryString;
@@ -180,8 +197,11 @@ async function getAutocompleteMovieList(input) { // Gets a complete list of all 
     for (let i = 0; i < requestData.results.length; i++) {
         returnObject.titles[i] = requestData.results[i].title;
     }
-
-    displayAutocompleteOptions(returnObject);
+    if (finder === false) {
+        displayAutocompleteOptions(returnObject);
+    } else {
+        return returnObject;
+    }
 }
 
 function getYear() { // Gets the current year whenever necessary
@@ -263,7 +283,7 @@ function buildYouTubeVideoQueryParams(videoIDs, findPart) { // Prepare the query
     return params;
 }
 
-function buildMovieQueryParams(name, year, genre, page) { // Prepare the parameters for TMDB API queries other than Autocomplete
+function buildMovieQueryParams(name, year, genre, page, keyword) { // Prepare the parameters for TMDB API queries other than Autocomplete
     let params = {
         api_key: "7658594a35b754254b048a6ac98e566d",
         language: "en-US"
@@ -287,13 +307,27 @@ function buildMovieQueryParams(name, year, genre, page) { // Prepare the paramet
         params.page = page;
     }
 
+    if (keyword) { // If a keyword search is performed
+        params.with_keywords = keyword;
+    }
+
     return params;
 }
 
-function buildDetailedMovieParams() {  // Prepare params for detailed movie information queries
+function buildDetailedMovieParams() { // Prepare params for detailed movie information queries
     let params = {
         api_key: "7658594a35b754254b048a6ac98e566d",
         language: "en-US"
+    }
+
+    return params;
+}
+
+function buildKeywordParams(keyword) { // Prepare params for keyword lookup
+    let params = {
+        api_key: "7658594a35b754254b048a6ac98e566d",
+        language: "en-US",
+        query: keyword
     }
 
     return params;
@@ -307,33 +341,33 @@ function handleErrors(response) { // prepares error message for HTTP request err
     }
 }
 
-function handleAutoplay() {  // Sets the internal autoplay variable for the app to use
+function handleAutoplay() { // Sets the internal autoplay variable for the app to use
     userData.autoplay = $('.js-youtube-trailer-autoplay').is(':checked'); // Set autoplay property for embded trailer
     if (userData.autoplay === true) {
-    document.cookie = `autoplay=${userData.autoplay};`;
+        document.cookie = `autoplay=${userData.autoplay};`;
     } else {
-    document.cookie = `autoplay=false`;
+        document.cookie = `autoplay=false`;
     }
 }
 
-function handleAutoplayCookie() {  // Stores cookie for the autoplay setting for the user's next visit
+function handleAutoplayCookie() { // Stores cookie for the autoplay setting for the user's next visit
     if (document.cookie.split(';').filter((item) => item.startsWith('autoplay=true')).length) {
         userData.autoplay = true; // Set autoplay property for embded trailer
         $('.js-youtube-trailer-autoplay').prop("checked", true);
-    } else {        
+    } else {
         userData.autoplay = false; // Set autoplay property for embded trailer
         $('.js-youtube-trailer-autoplay').prop("checked", false);
     }
 }
 
-function handleCollapse(itemNumber) {  // Handles the expanding review items for TMDB reviews
+function handleCollapse(itemNumber) { // Handles the expanding review items for TMDB reviews
     let newText = $(`.js-tmdb-review-hidden-${itemNumber}`).text(); // Get the hidden text
-    let oldText = $(`.tmdb-review-${itemNumber} > p`).text();  // Get the already visible text
+    let oldText = $(`.tmdb-review-${itemNumber} > p`).text(); // Get the already visible text
     let trimmed = oldText.slice(0, oldText.length - 12); // Trim ...Read more from existing text
 
     let fullText = trimmed + newText; // Build complete review text
     $(`.tmdb-review-${itemNumber} > p > button`).addClass("tmdb-hidden"); // Hide the button
-    
+
     $(`.tmdb-review-${itemNumber} > p`).text(fullText); // Insert full review text into DOM and let CSS transition handle the rest
 }
 
@@ -356,13 +390,26 @@ function handleSubmitButton() { // Actions to perform when user hits submit butt
     $("input[name=user-search]").val('');
 
     if (inputObject.name != '') { // If the user has entered a text query then search for that title, otherwise...
-        displaySingleMovieResults(inputObject);
+        if (userData.autoCheck === true) { // If the user has entered a query matching a movie title exactly
+            displaySingleMovieResults(inputObject);
+        } else { // Otherwise search by keyword and display results
+        Promise.all([getKeywordId(inputObject.name)])
+            .then(keywordResponse => {
+                Promise.all([getMovieList(undefined, undefined, false, keywordResponse[0].results[0].id)])  //TMDB doesn't support multi-keyword search so take the first one
+                    .then(responseData => {
+                        if (responseData[0].results.length > 0) {
+                            displayMovieList(responseData);
+                        } else console.log("nothing found");
+                    });
+            });
+
+        }
     } else {
         if (inputObject.name === '') {
             if (inputObject.year != '0000' && inputObject.genre != '00') { // If the user has entered both year and genre then perform the search
                 userData.currentSearchYear = inputObject.year;
                 userData.currentSearchGenre = inputObject.genre;
-                Promise.all([getMovieByGenreOrYear(inputObject.genre, inputObject.year)])
+                Promise.all([getMovieList(inputObject.genre, inputObject.year)])
                     .then(responseData => {
                         displayMovieList(responseData);
 
@@ -370,7 +417,7 @@ function handleSubmitButton() { // Actions to perform when user hits submit butt
             }
             if (inputObject.genre != '00' && inputObject.year === '0000') { // Search by genre
                 userData.currentSearchGenre = inputObject.genre;
-                Promise.all([getMovieByGenreOrYear(inputObject.genre)])
+                Promise.all([getMovieList(inputObject.genre)])
                     .then(responseData => {
                         displayMovieList(responseData);
 
@@ -379,14 +426,14 @@ function handleSubmitButton() { // Actions to perform when user hits submit butt
 
             if (inputObject.year != '0000' && inputObject.genre === '00') { // Search by year
                 userData.currentSearchYear = inputObject.year;
-                Promise.all([getMovieByGenreOrYear(undefined, inputObject.year)])
+                Promise.all([getMovieList(undefined, inputObject.year)])
                     .then(responseData => {
                         displayMovieList(responseData);
 
                     });
             }
             if (inputObject.year === '0000' && inputObject.genre === '00') {
-                Promise.all([getMovieByGenreOrYear()])
+                Promise.all([getMovieList()])
                     .then(responseData => {
                         displayMovieList(responseData);
 
@@ -399,7 +446,14 @@ function handleSubmitButton() { // Actions to perform when user hits submit butt
 function listenerForAutocompleteSelection() { // Watches for when the user selects an autocomplete option
     $(document).on('change', 'input', e => {
         if (e.target.className === 'user-search js-user-search') {
-            handleSubmitButton();
+            let val = $('.js-user-search').val();
+            getAutocompleteMovieList(val, true).then(returnObject => {
+                userData.autoCheck = returnObject.titles.includes(val);
+                if (userData.autoCheck === true) {
+                    handleSubmitButton();
+                } else {
+                }
+            });
         }
     });
 }
@@ -425,15 +479,14 @@ function listenerForAutocomplete() { // Watches for what the user types in the s
     });
 }
 
-function listenerForClick() {  // Watches for when the user clicks on a movie in the list of movies
-    $('.js-search-results').on("click", e=> {
+function listenerForClick() { // Watches for when the user clicks on a movie in the list of movies
+    $('.js-search-results').on("click", e => {
         $('.js-search-results').empty();
-        console.log(e);
         let arr = Object.values(e.target.classList);
         if (arr.some(elem => elem === "js-multi-click")) {
             let inputObject = {};
             if (e.target.name) {
-            inputObject.name = e.target.name;
+                inputObject.name = e.target.name;
             } else {
                 inputObject.name = e.target.outerText;
             }
@@ -443,7 +496,7 @@ function listenerForClick() {  // Watches for when the user clicks on a movie in
     });
 }
 
-function observerForResults() {  // Watches for when new movie results need to be added to the page
+function observerForResults() { // Watches for when new movie results need to be added to the page
     let observer = new IntersectionObserver(
         (entries, observer) => {
             entries.forEach(entry => {
@@ -452,14 +505,14 @@ function observerForResults() {  // Watches for when new movie results need to b
                     observer.unobserve(document.querySelector(`.movie-list-end-${userData.asyncTrigCount - 1}`));
 
                     if (userData.year != '0000' && userData.genre != '00') { // If the user has entered both year and genre then perform the search
-                        Promise.all([getMovieByGenreOrYear(userData.genre, userData.year, userData.currentSearchPage)])
+                        Promise.all([getMovieList(userData.genre, userData.year, userData.currentSearchPage)])
                             .then(responseData => {
                                 displayMovieList(responseData);
 
                             });
                     }
                     if (userData.genre != '00' && userData.year === '0000') { // Search by genre
-                        Promise.all([getMovieByGenreOrYear(userData.genre, undefined, userData.currentSearchPage)])
+                        Promise.all([getMovieList(userData.genre, undefined, userData.currentSearchPage)])
                             .then(responseData => {
                                 displayMovieList(responseData);
 
@@ -467,14 +520,14 @@ function observerForResults() {  // Watches for when new movie results need to b
                     }
 
                     if (userData.year != '0000' && userData.genre === '00') { // Search by year
-                        Promise.all([getMovieByGenreOrYear(undefined, userData.year, userData.currentSearchPage)])
+                        Promise.all([getMovieList(undefined, userData.year, userData.currentSearchPage)])
                             .then(responseData => {
                                 displayMovieList(responseData);
 
                             });
                     }
                     if (userData.year === '0000' && userData.genre === '00') {
-                        Promise.all([getMovieByGenreOrYear(undefined, undefined, userData.currentSearchPage)])
+                        Promise.all([getMovieList(undefined, undefined, userData.currentSearchPage)])
                             .then(responseData => {
                                 displayMovieList(responseData);
                             });
@@ -490,7 +543,7 @@ function observerForResults() {  // Watches for when new movie results need to b
     observer.observe(document.querySelector(`.movie-list-end-${userData.asyncTrigCount}`));
 }
 
-function observerForYouTubeReviews() {  // Watches for when new youtube reviews need to be added to the page
+function observerForYouTubeReviews() { // Watches for when new youtube reviews need to be added to the page
     let observer = new IntersectionObserver(
         (entries, observer) => {
             entries.forEach(entry => {
@@ -529,7 +582,7 @@ function displayAutocompleteOptions(returnObject) { // Inserts auto-complete opt
 
 }
 
-function displaySingleMovieResults(inputObject) {  // Display the search results for a single movie item
+function displaySingleMovieResults(inputObject) { // Display the search results for a single movie item
     displaySingleMovieInfo(inputObject);
     $(".js-search-results").off().on("movieDataDone", function (event) {
         displayYouTubeTrailer();
@@ -537,21 +590,21 @@ function displaySingleMovieResults(inputObject) {  // Display the search results
 
 }
 
-function displayYouTubeTrailer() {   // Display an appropriate trailer
+function displayYouTubeTrailer() { // Display an appropriate trailer
     let movTitle = $(".js-search-results").children();
     let title = movTitle.prevObject[0].childNodes[1].childNodes[1].innerText;
 
     Promise.all([getYouTubeVideos(title + " trailer", "short")])
-       .then(returnObject => {
-        let output = `<iframe width="1280px" height="720px" class="youtube-video js-youtube-video" src="https://www.youtube.com/embed/${returnObject[0].urls[0]}`;
+        .then(returnObject => {
+            let output = `<iframe width="1280px" height="720px" class="youtube-video js-youtube-video" src="https://www.youtube.com/embed/${returnObject[0].urls[0]}`;
 
-        if (userData.autoplay === true) {
-            output += `?mute=1&autoplay=1" frameborder="0" allowfullscreen></iframe>`;
-        } else {
-            output += `" frameborder="0" allowfullscreen></iframe>`;
-        }
-           $(".js-youtube-trailer-container").append(output);
-       });
+            if (userData.autoplay === true) {
+                output += `?mute=1&autoplay=1" frameborder="0" allowfullscreen></iframe>`;
+            } else {
+                output += `" frameborder="0" allowfullscreen></iframe>`;
+            }
+            $(".js-youtube-trailer-container").append(output);
+        });
 }
 
 function displaySingleMovieInfo(inputObject) { // Displays the movie information prior to finding YouTube trailer, so that the youtube trailer GET request can use the full movie name with year from the DOM
@@ -559,9 +612,9 @@ function displaySingleMovieInfo(inputObject) { // Displays the movie information
     Promise.all([getMovieInfoByName(inputObject.name)]) // Perform the API query to get movie info
         .then(responseObject => {
             Promise.all([getDetailedMovieInfo(responseObject[0].id)])
-            .then(reviewResponse => {
-                let movieTitle = responseObject[0].name + " (" + responseObject[0].orig_release.substring(0, 4) + ")";
-            let output = `
+                .then(reviewResponse => {
+                    let movieTitle = responseObject[0].name + " (" + responseObject[0].orig_release.substring(0, 4) + ")";
+                    let output = `
             <div class="single-movie-results js-single-movie-results">
                 <h2>${movieTitle}</h2>
                 <h3>${reviewResponse[0].tagline}</h3>
@@ -573,40 +626,40 @@ function displaySingleMovieInfo(inputObject) { // Displays the movie information
                             <div class="review-header"><h2>Reviews</h2></div><div class="placeholder"></div>
                             <div class="tmdb-reviews js-tmdb-reviews">`;
 
-                        if (reviewResponse[0].reviews.length > 0) {
-                            for (let i = 0; i < reviewResponse[0].reviews.length; i++) {
-                                output += `
+                    if (reviewResponse[0].reviews.length > 0) {
+                        for (let i = 0; i < reviewResponse[0].reviews.length; i++) {
+                            output += `
                                 <div class="tmdb-review-${i} tmdb-review-item">
                                     <h3>Review by: ${reviewResponse[0].reviews[i].author}</h3>`;
 
-                                    let parts = splitTmdbReviews(reviewResponse[0].reviews[i].content);
-                                output +=    `<p>${parts[0]}<button class="collapse-toggle-btn" onclick="handleCollapse(${i})">...Read more</button></p>
+                            let parts = splitTmdbReviews(reviewResponse[0].reviews[i].content);
+                            output += `<p>${parts[0]}<button class="collapse-toggle-btn" onclick="handleCollapse(${i})">...Read more</button></p>
                                     <div class="tmdb-hidden js-hidden js-tmdb-review-hidden-${i}">${parts[1]}</div>
                                     <a href="${reviewResponse[0].reviews[i].url}">View on TMDB.org</a>
                                 </div>`;
-                            }
-                        } else {
-                            output += `<div class="tmdb-review-0">
+                        }
+                    } else {
+                        output += `<div class="tmdb-review-0">
                                 <h3>No reviews to display</h3>
                             </div>`;
-                        }
-                    
-                    output +=    `</div>
+                    }
+
+                    output += `</div>
                         <div class="youtube-reviews js-youtube-reviews">         
                         </div>
                     </div>
                 </div>
             </div>
             `;
-            $(".js-search-results").append(output); // Display results for a single movie.
-            $(".js-search-results").trigger("movieDataDone"); //  Trigger custom event to know when search has occured
-            userData.youtube.query = movieTitle; // Store the movie title for use in async youtube queries
-            displayYouTubeReviews(movieTitle, "medium"); // Display the youtube reviews - calls another API query
-            });
+                    $(".js-search-results").append(output); // Display results for a single movie.
+                    $(".js-search-results").trigger("movieDataDone"); //  Trigger custom event to know when search has occured
+                    userData.youtube.query = movieTitle; // Store the movie title for use in async youtube queries
+                    displayYouTubeReviews(movieTitle, "medium"); // Display the youtube reviews - calls another API query
+                });
         });
 }
 
-function splitTmdbReviews(contentObject) {  // Splits TMDB reviews into preview and full body segments
+function splitTmdbReviews(contentObject) { // Splits TMDB reviews into preview and full body segments
     let parts = [];
     parts[0] = contentObject.slice(0, 250);
     parts[1] = contentObject.slice(250, contentObject.length);
@@ -614,7 +667,16 @@ function splitTmdbReviews(contentObject) {  // Splits TMDB reviews into preview 
     return parts;
 }
 
-function displayYouTubeReviews(movieTitle, vidLength, nextPageToken) {  // Display youtube review videos
+// function convertKeywords(requestData) {
+//     let keywordString = '';
+//     console.log(requestData[0].results);
+//     for (let i = 0; i < requestData[0].results.length; i++) {
+//         keywordString+= requestData[0].results[i].id + `,`;
+//     }
+//     return keywordString.slice(0, -1);
+// }
+
+function displayYouTubeReviews(movieTitle, vidLength, nextPageToken) { // Display youtube review videos
     userData.youtube.query = movieTitle + " movie reviews";
     Promise.all([getYouTubeVideos(movieTitle + " movie reviews", vidLength, nextPageToken)]) // Perform the API query to get youtube review video IDs
         .then(responseObjectPrimary => {
@@ -655,7 +717,7 @@ function displayYouTubeReviews(movieTitle, vidLength, nextPageToken) {  // Displ
                 observerForYouTubeReviews(); // Observer for async content fill
             });
         });
-    
+
 }
 
 function displayMovieList(responseData) { // Insert a list of movie titles into the DOM
@@ -682,11 +744,14 @@ function displayMovieList(responseData) { // Insert a list of movie titles into 
     }
     output += `</div>`;
     $(".js-search-results").append(output);
-    observerForResults();
+    if (responseData[0].results.length >= 15) {
+        observerForResults();
+    }
+
 }
 
 function displaySearch(formName) {
-    
+
     let output = `<div class="select-container js-select-container">
                     <div class="user-search-container">
                     <input type="text" name="user-search" id="user-search" list="js-autocomplete-data" class="user-search js-user-search" placeholder="Enter a movie">
