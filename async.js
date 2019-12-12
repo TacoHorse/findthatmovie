@@ -99,7 +99,7 @@ async function getMovieList(genre, year = getYear(), newPage = false, keyword) {
         }
     }
     let requestURL = baseURL + queryString;
-    console.log(requestURL);
+
     let requestData = await fetch(requestURL) // Fetch data
         .then(response => handleErrors(response)) // Check data
         .then(responseJSON => {
@@ -152,7 +152,8 @@ async function getYouTubeVideoInfo(videoIDs, findPart) { // Gets info for the sp
     return requestData;
 }
 
-async function getAutocompleteMovieList(input, finder = false) { // Gets a complete list of all movies for use with autocomplete
+async function getAutocompleteMovieList(input, finder = false) { // Gets a complete list of all movies for use with autocomplete when finder = false
+                                                                    // When finder = true it returns the object for use in other functions
     const baseURL = "https://api.themoviedb.org/3/search/movie?";
     let queryString = encodeQueryParams(buildAutocompleteParams(input));
     let requestURL = baseURL + queryString;

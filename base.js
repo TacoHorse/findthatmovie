@@ -74,3 +74,17 @@ function encodeQueryParams(params) { // Formats a given params object in the 'ke
         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
     return queryItems.join('&');
 }
+
+function createUserInputObject(inputObject) {
+    inputObject.name = $("input[name=user-search]").val();
+    inputObject.genre = $(".js-user-genre").val();
+    inputObject.year = $(".js-user-year").val();
+}
+
+function setDefaultUserSearchData() {
+    userData.currentSearchPage = 1;
+    userData.genre = '';
+    userData.year = '';
+    userData.genre = $(".js-user-genre").val();
+    userData.year = $(".js-user-year").val();
+}

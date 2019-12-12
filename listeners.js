@@ -1,24 +1,15 @@
 'use strict'
 
 function listenerForAutocompleteSelection() { // Watches for when the user selects an autocomplete option
-    $(document).on('change', 'input', e => {
-        if (e.target.className === 'user-search js-user-search') {
-            let val = $('.js-user-search').val();
-            getAutocompleteMovieList(val, true).then(returnObject => {
-                userData.autoCheck = returnObject.titles.includes(val);
-                if (userData.autoCheck === true) {
-                    handleSubmitButton();
-                } else {
-                }
-            });
-        }
+    $('.js-search-form').on('change', 'input', e => {
+        handleSubmitButton();
     });
 }
 
 function listenerForSubmitButton() { // Watches for when the user presses the submit button
     $('.js-search-form').on("submit", e => {
         e.preventDefault();
-        handleSubmitButton();
+        $('.js-user-search').trigger("change");
     });
 }
 
@@ -117,6 +108,8 @@ function observerForYouTubeReviews() { // Watches for when new youtube reviews n
 
     observer.observe(document.querySelector(`.js-youtube-async-${userData.youtube.asyncTrig}`));
 }
+
+
 
 function watchUserInput() { // Set up required event listeners for the application
     listenerForSubmitButton();

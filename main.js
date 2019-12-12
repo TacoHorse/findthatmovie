@@ -37,38 +37,48 @@ function handleCollapse(itemNumber) { // Handles the expanding review items for 
 }
 
 function handleSubmitButton() { // Actions to perform when user hits submit button, also called when user selects an autocomplete option
-
     if (userData.currentSearchPage > 1) { // If the user has had infinite scroll results added during previous search bring them back to top of page
         window.scrollTo(0, 0);
     }
     $('.js-search-results').empty();
-    userData.currentSearchPage = 1;
-    userData.genre = '';
-    userData.year = '';
-
+    setDefaultUserSearchData();
     let inputObject = {}; // Build user data object
-    inputObject.name = $("input[name=user-search]").val();
-    inputObject.genre = $(".js-user-genre").val();
-    userData.genre = $(".js-user-genre").val();
-    inputObject.year = $(".js-user-year").val();
-    userData.year = $(".js-user-year").val();
+    createUserInputObject(inputObject);
+
+    handleSubmitLogic(inputObject);
     $("input[name=user-search]").val('');
+}
 
+function handleSubmitLogic(inputObject) {
+    console.log(inputObject.name);
     if (inputObject.name != '') { // If the user has entered a text query then search for that title, otherwise...
-        if (userData.autoCheck === true) { // If the user has entered a query matching a movie title exactly
-            displaySingleMovieResults(inputObject);
-        } else { // Otherwise search by keyword and display results
-        Promise.all([getKeywordId(inputObject.name)])
-            .then(keywordResponse => {
-                Promise.all([getMovieList(undefined, undefined, false, keywordResponse[0].results[0].id)])  //TMDB doesn't support multi-keyword search so take the first one
-                    .then(responseData => {
-                        if (responseData[0].results.length > 0) {
-                            displayMovieList(responseData);
-                        } else console.log("nothing found");
-                    });
+        getAutocompleteMovieList(inputObject.name, true).then(autoCompletObj => {
+            let arr = Array.from(autoCompletObj.titles)
+            let compare = inputObject.name;
+            let map = arr.map(item => {
+                if (item.toLowerCase() === compare.toLowerCase()) {
+                    return true;
+                } else {
+                    return false;
+                }
             });
-
-        }
+            if (map.includes(true)) {
+                displaySingleMovieResults(inputObject);
+            } else { 
+                // Otherwise search by keyword and display results
+                Promise.all([getKeywordId(inputObject.name)])
+                    .then(keywordResponse => {
+                        if (keywordResponse[0].results.length > 0) {
+                            Promise.all([getMovieList(undefined, undefined, false, keywordResponse[0].results[0].id)]) //TMDB doesn't support multi-keyword search so take the first one
+                            .then(responseData => {
+                                if (responseData[0].results.length > 0) {
+                                    displayMovieList(responseData);
+                                } else $('.js-search-results').append(`<p>No results with that keyword could be found.  Please refine your search.</p>`);
+                            });
+                        } else $('.js-search-results').append(`<p>That is not a valid keyword on TMDB, please try a different search.</p>`);
+                    });
+            }
+        });
     } else {
         if (inputObject.name === '') {
             if (inputObject.year != '0000' && inputObject.genre != '00') { // If the user has entered both year and genre then perform the search
@@ -107,13 +117,4 @@ function handleSubmitButton() { // Actions to perform when user hits submit butt
         }
     }
 }
-
-// function convertKeywords(requestData) {
-//     let keywordString = '';
-//     console.log(requestData[0].results);
-//     for (let i = 0; i < requestData[0].results.length; i++) {
-//         keywordString+= requestData[0].results[i].id + `,`;
-//     }
-//     return keywordString.slice(0, -1);
-// }
 $(initSite);
