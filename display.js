@@ -14,7 +14,7 @@ function displayAutocompleteOptions(returnObject) { // Inserts auto-complete opt
 function displaySingleMovieResults(inputObject) { // Display the search results for a single movie item
     displaySingleMovieInfo(inputObject);
     $(".js-search-results").off().on("movieDataDone", function (event) {
-        displayYouTubeTrailer();
+        // displayYouTubeTrailer();
     });
 
 }
@@ -83,7 +83,7 @@ function displaySingleMovieInfo(inputObject) { // Displays the movie information
                     $(".js-search-results").append(output); // Display results for a single movie.
                     $(".js-search-results").trigger("movieDataDone"); //  Trigger custom event to know when search has occured
                     userData.youtube.query = movieTitle; // Store the movie title for use in async youtube queries
-                    displayYouTubeReviews(movieTitle, "medium"); // Display the youtube reviews - calls another API query
+                    // displayYouTubeReviews(movieTitle, "medium"); // Display the youtube reviews - calls another API query
                 });
         });
 }

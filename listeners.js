@@ -2,14 +2,28 @@
 
 function listenerForAutocompleteSelection() { // Watches for when the user selects an autocomplete option
     $('.js-search-form').on('change', 'input', e => {
-        handleSubmitButton();
+        getAutocompleteMovieList($('.js-user-search').val(), true).then(autoCompletObj => {
+            let arr = Array.from(autoCompletObj.titles)
+            let compare = $('.js-user-search').val();
+            let map = arr.map(item => {
+                if (item.toLowerCase() === compare.toLowerCase()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+            if (map.includes(true)) {
+                handleSubmitButton();
+            }
+        });
+
     });
 }
 
 function listenerForSubmitButton() { // Watches for when the user presses the submit button
     $('.js-search-form').on("submit", e => {
         e.preventDefault();
-        $('.js-user-search').trigger("change");
+        handleSubmitButton();
     });
 }
 

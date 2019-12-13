@@ -46,11 +46,10 @@ function handleSubmitButton() { // Actions to perform when user hits submit butt
     createUserInputObject(inputObject);
 
     handleSubmitLogic(inputObject);
-    $("input[name=user-search]").replace(`<input type="text" name="user-search" id="user-search" list="js-autocomplete-data" class="user-search js-user-search" placeholder="Enter a movie">`);
+    $('.js-user-search').val('');
 }
 
 function handleSubmitLogic(inputObject) {
-    console.log(inputObject);
     if (inputObject.name != '') { // If the user has entered a text query then search for that title, otherwise...
         getAutocompleteMovieList(inputObject.name, true).then(autoCompletObj => {
             let arr = Array.from(autoCompletObj.titles)
