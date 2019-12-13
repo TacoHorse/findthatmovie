@@ -2,21 +2,22 @@
 
 function listenerForAutocompleteSelection() { // Watches for when the user selects an autocomplete option
     $('.js-search-form').on('change', 'input', e => {
-        getAutocompleteMovieList($('.js-user-search').val(), true).then(autoCompletObj => {
-            let arr = Array.from(autoCompletObj.titles)
-            let compare = $('.js-user-search').val();
-            let map = arr.map(item => {
-                if (item.toLowerCase() === compare.toLowerCase()) {
-                    return true;
-                } else {
-                    return false;
+        if (Array.from(e.target.classList).find(elem => elem === 'youtube-trailer-autoplay') != "youtube-trailer-autoplay") {
+            getAutocompleteMovieList($('.js-user-search').val(), true).then(autoCompletObj => {
+                let arr = Array.from(autoCompletObj.titles)
+                let compare = $('.js-user-search').val();
+                let map = arr.map(item => {
+                    if (item.toLowerCase() === compare.toLowerCase()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+                if (map.includes(true)) {
+                    handleSubmitButton();
                 }
             });
-            if (map.includes(true)) {
-                handleSubmitButton();
-            }
-        });
-
+        }
     });
 }
 
@@ -43,7 +44,7 @@ function listenerForAutocomplete() { // Watches for what the user types in the s
 
 function listenerForClick() { // Watches for when the user clicks on a movie in the list of movies
     $('.js-search-results').on("click", e => {
-        $('.js-search-results').empty();
+        console.log("clicked");
         let arr = Object.values(e.target.classList);
         if (arr.some(elem => elem === "js-multi-click")) {
             let inputObject = {};
@@ -52,6 +53,7 @@ function listenerForClick() { // Watches for when the user clicks on a movie in 
             } else {
                 inputObject.name = e.target.outerText;
             }
+            $('.js-search-results').empty();
             displaySingleMovieResults(inputObject);
             listenerForClick();
         }

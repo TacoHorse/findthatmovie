@@ -14,7 +14,7 @@ function displayAutocompleteOptions(returnObject) { // Inserts auto-complete opt
 function displaySingleMovieResults(inputObject) { // Display the search results for a single movie item
     displaySingleMovieInfo(inputObject);
     $(".js-search-results").off().on("movieDataDone", function (event) {
-        // displayYouTubeTrailer();
+        displayYouTubeTrailer();
     });
 
 }
@@ -43,43 +43,56 @@ function displaySingleMovieInfo(inputObject) { // Displays the movie information
             Promise.all([getDetailedMovieInfo(responseObject[0].id)])
                 .then(reviewResponse => {
                     let movieTitle = responseObject[0].name + " (" + responseObject[0].orig_release.substring(0, 4) + ")";
+                    let formatBudget = "$" + reviewResponse[0].budget.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                     let output = `
             <div class="single-movie-results js-single-movie-results">
                 <h2>${movieTitle}</h2>
                 <h3>${reviewResponse[0].tagline}</h3>
                 <div class="youtube-trailer-container js-youtube-trailer-container"></div>
-                <div class="single-movie-info js-single-movie-info">
-                    <div class="single-movie-text js-single-movie-text">
-                        <div class="single-movie-budglength"><img class="movie-poster js-movie-poster" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseObject[0].poster}"><p>Budget: ${reviewResponse[0].budget}</p><p>Duration: ${reviewResponse[0].runtime} mins</p></div>
-                            <p class="single-movie-description">${responseObject[0].description}</p>
-                            <div class="review-header"><h2>Reviews</h2></div><div class="placeholder"></div>
-                            <div class="tmdb-reviews js-tmdb-reviews">`;
+                <div class="single-movie-budglength"><p class="budget-para">${formatBudget}</p><p class="budget-para"> <img class="runtime-icon js-runtime-icon" src="images/runtimeicon.png" alt="runtime">${reviewResponse[0].runtime} mins</p></div>
+                    <div class="single-movie-info js-single-movie-info">
+                        <div class="single-movie-text js-single-movie-text">
+                            <img class="movie-poster js-movie-poster" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseObject[0].poster}">
+                                <p class="single-movie-description">${responseObject[0].description}</p>
+                                <div class="cast-list js-cast-list">`;
+                                for (let i = 0; i < reviewResponse[0].cast.length; i++) {
+                                output += `
+                                        <img src="https://image.tmdb.org/t/p/w500/${reviewResponse[0].cast[i].url}">
+                                        <p>${reviewResponse[0].cast[i].actor}</p>
+                                        <p>${reviewResponse[0].cast[i].character}</p>
+                                    `};
+                                output += `
+                                </div>
+                                        <div class="review-header"><h2>Reviews</h2></div> <div class="placeholder"></div>
+                                            <div class="review-container js-review-container">
+                                                <div class="tmdb-reviews js-tmdb-reviews">`;
 
-                    if (reviewResponse[0].reviews.length > 0) {
-                        for (let i = 0; i < reviewResponse[0].reviews.length; i++) {
-                            output += `
-                                <div class="tmdb-review-${i} tmdb-review-item">
-                                    <h3>Review by: ${reviewResponse[0].reviews[i].author}</h3>`;
+                                                if (reviewResponse[0].reviews.length > 0) {
+                                                    for (let i = 0; i < reviewResponse[0].reviews.length; i++) {
+                                                        output += `
+                                                            <div class="tmdb-review-${i} tmdb-review-item">
+                                                                <h3>Review by: ${reviewResponse[0].reviews[i].author}</h3>`;
 
-                            let parts = splitTmdbReviews(reviewResponse[0].reviews[i].content);
-                            output += `<p>${parts[0]}<button class="collapse-toggle-btn" onclick="handleCollapse(${i})">...Read more</button></p>
-                                    <div class="tmdb-hidden js-hidden js-tmdb-review-hidden-${i}">${parts[1]}</div>
-                                    <a href="${reviewResponse[0].reviews[i].url}">View on TMDB.org</a>
-                                </div>`;
-                        }
-                    } else {
-                        output += `<div class="tmdb-review-0">
-                                <h3>No reviews to display</h3>
-                            </div>`;
-                    }
+                                                        let parts = splitTmdbReviews(reviewResponse[0].reviews[i].content);
+                                                        output += `<p>${parts[0]}<button class="collapse-toggle-btn" onclick="handleCollapse(${i})">...Read more</button></p>
+                                                                <div class="tmdb-hidden js-hidden js-tmdb-review-hidden-${i}">${parts[1]}</div>
+                                                                <a href="${reviewResponse[0].reviews[i].url}">View on TMDB.org</a>
+                                                            </div>`;
+                                                    }
+                                                } else {
+                                                    output += `<div class="tmdb-review-0">
+                                                            <h3>No reviews to display</h3>
+                                                        </div>`;
+                                                }
 
-                    output += `</div>
-                        <div class="youtube-reviews js-youtube-reviews">         
-                        </div>
-                    </div>
-                </div>
-            </div>
-            `;
+                                                output += `</div>
+                                                    <div class="youtube-reviews js-youtube-reviews">         
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    `;
                     $(".js-search-results").append(output); // Display results for a single movie.
                     $(".js-search-results").trigger("movieDataDone"); //  Trigger custom event to know when search has occured
                     userData.youtube.query = movieTitle; // Store the movie title for use in async youtube queries
@@ -166,17 +179,17 @@ function displaySearch(formName) {
 
     let output = `<div class="select-container js-select-container">
                     <div class="user-search-container">
-                    <input type="text" name="user-search" id="user-search" list="js-autocomplete-data" class="user-search js-user-search" placeholder="Enter a movie">
-                    <input type="submit" name="user-submit" id="user-submit" class="submit-search js-submit-search grid-inputs">
-                    <div class="search-inner-border"></div>
-                    <datalist class="autocomplete-data js-autocomplete-data" id="js-autocomplete-data">
+                        <input type="text" name="user-search" id="user-search" list="js-autocomplete-data" class="user-search js-user-search" placeholder="Enter a movie">
+                        <input type="submit" name="user-submit" id="user-submit" class="submit-search js-submit-search grid-inputs">
+                        <div class="search-inner-border"></div>
+                        <datalist class="autocomplete-data js-autocomplete-data" id="js-autocomplete-data">
 
-                        <select class="autocomplete-select js-autocomplete-select" id="js-autocomplete-select">
-                        </select>
+                            <select class="autocomplete-select js-autocomplete-select" id="js-autocomplete-select">
+                            </select>
 
-                    </datalist>
-                 </div>
-                <label class="custom-list" for="user-year">
+                        </datalist>
+                    </div>
+                    <label class="custom-list year-custom-list" for="user-year">
                     <select name="user-year" id="user-year" class="user-year js-user-year grid-inputs">
                             <option value="0000">Year</option>
                             <option value="2020">2020</option>
@@ -297,7 +310,7 @@ function displaySearch(formName) {
                             <option value="1905">1905</option>
                         </select>
                     </label>
-                    <label class="custom-list" for="user-genre">
+                    <label class="custom-list genre-custom-list" for="user-genre">
                         <select name="user-genre" id="user-genre" class="user-genre js-user-genre grid-inputs">
                             <option value="00">Genre</option>
                             <option value="28">Action</option>
@@ -325,8 +338,8 @@ function displaySearch(formName) {
                     <div class="autoplay-container">
                         <input name="youtube-trailer-autoplay" id="youtube-trailer-autoplay" class="js-youtube-trailer-autoplay youtube-trailer-autoplay grid-inputs" type="checkbox" onclick="handleAutoplay()"> 
                         <label for="youtube-trailer-autoplay" class="autoplay-off">
-                            <span class="autoplay-off"><img src="images/autoplay-off.png"></span>
-                            <span class="autoplay-on"><img src="images/autoplay-on.png"></span>
+                            <span class="autoplay-off"><div class="autoplay-button js-autoplay-button">Autoplay &#9746</div></span>
+                            <span class="autoplay-on"><div class="autoplay-button js-autoplay-button">Autoplay &#9745</div></span>
                         </label>
                         
                     </div>

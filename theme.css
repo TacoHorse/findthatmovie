@@ -4,8 +4,8 @@ body {
     background-color: #22252c;
     color: #C0B3A0;
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 22px;
-    line-height: 65px;
+    font-size: 18px;
+    line-height: 47px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -64,10 +64,25 @@ a:hover {
     font-size: 24px;
 }
 
-.submit-search {
+.submit-search, .autoplay-button {
     line-height: 40px;
     background-color: #22252c;
     color:  #E14658;
+}
+
+.autoplay-button {
+    border-left: 1px solid #E14658;
+    border-right: 1px solid #E14658;
+    border-bottom: 1px solid #E14658;
+}
+
+.autoplay-button:hover {
+    background-color: #791885;
+    text-decoration: underline;
+}
+
+.autoplay-button:active {
+    background-color: #22252c;
 }
 
 .search-inner-border {
@@ -97,7 +112,8 @@ a:hover {
 
 .custom-list {
     font-family: 'Poppins', sans-serif;
-    border: 1px solid #E14658;
+    border-left: 1px solid #E14658;
+    border-bottom: 1px solid #E14658;
     background-color: #22252c;
     z-index: 10;
   }

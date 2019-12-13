@@ -28,10 +28,12 @@ async function getDetailedMovieInfo(id) { // Get more detailed information about
     let queryString = encodeQueryParams(buildDetailedMovieParams());
     let requestURLInfo = baseURLInfo + id + "?" + queryString;
     let requestURLReview = baseURLInfo + id + "/reviews?" + queryString;
+    let requestURLCast = baseURLInfo + id + "/credits?" + queryString;
 
     let requestDataInfo = await fetch(requestURLInfo)
         .then(response => handleErrors(response))
         .then(responseJSON => {
+
             return responseJSON;
         })
         .catch(e => alert(e));
@@ -43,12 +45,20 @@ async function getDetailedMovieInfo(id) { // Get more detailed information about
         })
         .catch(e => alert(e));
 
+    let requestDataCast = await fetch(requestURLCast)
+        .then(response => handleErrors(response))
+        .then(responseJSON => {
+            return responseJSON
+        })
+        .catch(e => alert(e));
+
     let returnObject = {
         budget: requestDataInfo.budget,
         tagline: requestDataInfo.tagline,
         runtime: requestDataInfo.runtime,
         backdrop_path: requestDataInfo.backdrop_path,
-        reviews: []
+        reviews: [],
+        cast: []
     };
 
     requestDataReview.results.forEach((item, index) => {
@@ -59,6 +69,20 @@ async function getDetailedMovieInfo(id) { // Get more detailed information about
         }
         returnObject.reviews.push(obj);
     });
+    console.log(requestDataCast.cast);
+
+    (function() {
+
+        for (let i = 0; i <= 6; i++) {
+            let obj = {};
+            obj.character = requestDataCast.cast[i].character;
+            obj.actor = requestDataCast.cast[i].name;
+            obj.url = requestDataCast.cast[i].profile_path;
+            returnObject.cast.push(obj);
+        }
+        
+        console.log(returnObject.cast);
+      })();
 
     return returnObject;
 
@@ -70,11 +94,11 @@ async function getKeywordId(keyword) { // Get the id for keyword entered
     let requestURL = baseURL + queryString;
 
     let requestData = await fetch(requestURL)
-    .then(response => handleErrors(response))
-    .then(responseJSON => {
-        return responseJSON;
-    })
-    .catch(e => alert(e));
+        .then(response => handleErrors(response))
+        .then(responseJSON => {
+            return responseJSON;
+        })
+        .catch(e => alert(e));
     return requestData;
 }
 
@@ -90,7 +114,7 @@ async function getMovieList(genre, year = getYear(), newPage = false, keyword) {
     }
     if (keyword) {
         queryString = encodeQueryParams(buildMovieQueryParams(undefined, undefined, undefined, userData.currentSearchPage, keyword));
-        
+
     } else {
         if (genre != undefined) { // If the user selects a genre, search for it
             queryString = encodeQueryParams(buildMovieQueryParams(undefined, year, genre, userData.currentSearchPage));
@@ -153,7 +177,7 @@ async function getYouTubeVideoInfo(videoIDs, findPart) { // Gets info for the sp
 }
 
 async function getAutocompleteMovieList(input, finder = false) { // Gets a complete list of all movies for use with autocomplete when finder = false
-                                                                    // When finder = true it returns the object for use in other functions
+    // When finder = true it returns the object for use in other functions
     const baseURL = "https://api.themoviedb.org/3/search/movie?";
     let queryString = encodeQueryParams(buildAutocompleteParams(input));
     let requestURL = baseURL + queryString;
