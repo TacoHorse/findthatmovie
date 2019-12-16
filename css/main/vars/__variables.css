@@ -1,0 +1,55 @@
+/* Main variable definitions */
+
+:root {
+
+    /* --main-allElem- */
+    --main-allElem-box-sizing: border-box;
+    --main-allElem-padding: 0px;
+    --main-allElem-margin: 0px;
+    --main-allElem-border: 0px;
+
+    /* --main-container- */
+    --main-container-min-height: 100vh;
+    --main-container-heigh: 100vh;
+    --main-container-overflow-x: hidden;
+    --main-container-overflow-y: auto;
+    --main-container-perspective: 2px;
+    --main-container-z-index: 3;
+
+    /* --main-header- */
+    --main-header-display: flex;
+    --main-header-justfy-content: center;
+
+    /* --main-fixed-header- */
+    --main-fixed-header-width: 100%;
+    --main-fixed-header-padding-top: 10px;
+    --main-fixed-header-position: relative;
+    --main-fixed-header-top: 0px;
+
+    /* --main-fixed-parallax- */
+    --main-fixed-parallax-height: 60vh;
+
+    /* --main-fixed-parallax-before-pseudo- */
+    --main-fixed-parallax-before-pseudo-content: " ";
+    --main-fixed-parallax-before-pseudo-positon: absolute;
+    --main-fixed-parallax-before-pseudo-top: 0px;
+    --main-fixed-parallax-before-pseudo-right: 0px;
+    --main-fixed-parallax-before-pseudo-bottom: 0px;
+    --main-fixed-parallax-before-pseudo-left: 0px;
+    --main-fixed-parallax-before-pseudo-transform: translateZ(-1px) scale(1.5);
+    --main-fixed-parallax-before-pseudo-background-size: 100%;
+    --main-fixed-parallax-before-pseudo-z-index: -1;
+    --main-fixed-parallax-before-pseudo-background-image: url('images/bg.jpg');
+
+    /* --main-footer- */
+    --main-footer-text-align: center;
+    
+    /* --main-search-results- */
+    --main-search-results-height: 100vh;
+    --main-search-results-position: relative;
+    --main-search-results-display: flex;
+    --main-search-results-flex-direction: column;
+
+    /* --main-search-results-grid- */
+    --main-search-results-grid-padding-top: 15px;
+}

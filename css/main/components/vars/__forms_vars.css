@@ -1,0 +1,54 @@
+/* Form Component Variable Declarations */
+:root {
+    /* --main_components_form-search-form- */
+    --main_components_form-search-form-display: flex;
+    --main_components_form-search-form-flex-direction: column;
+    --main_components_form-search-form-text-align: center;
+    --main_components_form-search-form-margin-top: 10px;
+
+    /* --main_components_form-select-container- */
+    --main_components_form-select-container-display: grid;
+    --main_components_form-select-container-grid-template-columns: repeat(2, auto) 102px;
+    --main_components_form-select-container-grid-template-rows: repeat(3, auto);
+    --main_components_form-select-container-padding-bottom: 20px;
+    
+    /* --main_components_form-user-search-container- */
+    --main_components_form-user-search-container-position: relative;
+    --main_components_form-user-search-container-height: 42px;
+    --main_components_form-user-search-container-grid-column-start: 1;
+    --main_components_form-user-search-container-grid-column-end: 4;
+    
+    /* --main_components_form-user-search- */
+    --main_components_form-user-search-position: absolute;
+    --main_components_form-user-search-right: 102px;
+    --main_components_form-user-search-left: 2px;
+    --main_components_form-user-search-top: 2px;
+    --main_components_form-user-search-height: 38px;
+    --main_components_form-user-search-z-index: 2;
+    --main_components_form-user-search-display: block;
+    --main_components_form-user-search-min-width: 50%;
+    --main_components_form-user-search-max-width: 75%;
+
+
+    /* --main_components_form-submit-search- */
+    --main_components_form-submit-search-position: absolute;
+    --main_components_form-submit-search-top: 1px;
+    --main_components_form-submit-search-right: 1px;
+    --main_components_form-submit-search-width: 100px;
+    --main_components_form-submit-search-height: 40px;
+    --main_components_form-submit-search-margin: 0px;
+    --main_components_form-submit-search-z-index: 2;
+    --main_components_form-submit-search-display: block;
+
+    /* --main_components_form-autocomplete-data- */
+    --main_components_form-autocomplete-data-text-align: center;
+
+    /* --main_components_form-search-inner-border- */
+    --main_components_form-search-inner-border-position: absolute;
+    --main_components_form-search-inner-border-z-index: 1;
+    --main_components_form-search-inner-border-top: 1px;
+    --main_components_form-search-inner-border-left: 1px;
+    --main_components_form-search-inner-border-right: 1px;
+    --main_components_form-search-inner-border-bottom: 1px;
+    --main_components_form-search-inner-border-margin: 0px;
+}

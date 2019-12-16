@@ -1,0 +1,29 @@
+/* Min Width 1300 PX Media Query Variables */
+
+:root {
+    /* --main_media_queries__min_1300-single-movie-info- */
+    --main_media_queries__min_1300-single-movie-info-width: 100%;
+
+    /* --main_media_queries__min_1300-youtube-trailer-container- */
+    --main_media_queries__min_1300-youtube-trailer-container-max-width: 50%;
+    --main_media_queries__min_1300-youtube-trailer-container-padding-bottom: 28.125%;
+    --main_media_queries__min_1300-youtube-trailer-container-margin-left: auto;
+    --main_media_queries__min_1300-youtube-trailer-container-margin-right: auto;
+
+    /* --main_media_queries__min_1300-search-results- */
+    --main_media_queries__min_1300-search-results-margin-left: auto;
+    --main_media_queries__min_1300-search-results-margin-right: auto;
+
+    /* --main_media_queries__min_1300-search-results-grid- */
+    --main_media_queries__min_1300-search-results-grid-grid-template-columns: repeat(3, 30%);
+    --main_media_queries__min_1300-search-results-grid-justify-content: space-around;
+
+    /* --main_media_queries__min_1300-submit-search- */
+    --main_media_queries__min_1300-submit-search-grid-row: 2;
+    --main_media_queries__min_1300-submit-search-grid-column: 3;
+
+    /* --main_media_queries__min_1300-select-container- */
+    --main_media_queries__min_1300-select-container-width: 50%;
+    --main_media_queries__min_1300-select-container-margin-left: auto;
+    --main_media_queries__min_1300-select-container-margin-right: auto;
+}

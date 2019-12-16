@@ -1,0 +1,16 @@
+/* YouTube Component Variables */
+:root {
+    /* --main_components_youtube-youtube-reviews- */
+    --main_components_youtube-youtube-reviews-max-height: 500px;
+    --main_components_youtube-youtube-reviews-overflow-y: scroll;
+    --main_components_youtube-youtube-reviews-padding: 20px;
+
+    /* --main_components_youtube-youtube-review-item- */
+    --main_components_youtube-youtube-review-item-display: grid;
+    --main_components_youtube-youtube-review-item-grid-template-columns: 120px auto;
+    --main_components_youtube-youtube-review-item-margin-bottom: 20px;
+    --main_components_youtube-youtube-review-item-margin-right: 20px;
+
+    /* --main_components_youtube-youtube-review-title-container- */
+    --main_components_youtube-youtube-review-title-container-padding: 0px 10px 10px 10px;
+}

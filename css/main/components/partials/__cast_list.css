@@ -1,0 +1,11 @@
+/* Cast List Partial Component Configuration */
+.cast-list {
+    display: grid;
+    grid-template-columns: 60px auto auto;
+   }
+   
+.cast-list > p {
+       margin: 10px;
+       display: flex;
+       align-items: center;
+   }

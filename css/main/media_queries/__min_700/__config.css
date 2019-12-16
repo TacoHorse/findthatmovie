@@ -1,0 +1,41 @@
+/* Min Width 700 PX Media Query Configuration */
+
+@media screen and (min-width: 700px) {
+    .single-movie-info {
+        display: var(--main_media_queries__min_700-single-movie-info-display);
+        margin-left: var(--main_media_queries__min_700-single-movie-info-margin-left);
+        margin-right: var(--main_media_queries__min_700-single-movie-info-margin-right);
+    }
+
+    .single-movie-text {
+        width: var(--main_media_queries__min_700-single-movie-text-width);
+        display: var(--main_media_queries__min_700-single-movie-text-display);
+        grid-template-columns: var(--main_media_queries__min_700-single-movie-text-grid-template-columns);
+        grid-template-rows: var(--main_media_queries__min_700-single-movie-text-grid-template-rows);
+    }
+
+    .cast-list {
+        grid-column-start: var(--main_media_queries__min_700-cast-list-grid-column-start);
+        grid-column-end: var(--main_media_queries__min_700-cast-list-grid-column-end);
+    }
+
+    .review-container {
+        display: var(--main_media_queries__min_700-review-container-display);
+        grid-template-columns: var(--main_media_queries__min_700-review-container-grid-template-columns);
+        grid-column-start: var(--main_media_queries__min_700-review-container-grid-column-start);
+        grid-column-end: var(--main_media_queries__min_700-review-container-grid-column-end);
+    }
+
+    .movie-poster {
+        width: var(--main_media_queries__min_700-movie-poster-width);
+        max-width: var(--main_media_queries__min_700-movie-poster-max-width);
+        margin-left: var(--main_media_queries__min_700-movie-poster-margin-left);
+        margin-right: var(--main_media_queries__min_700-movie-poster-margin-right);
+    }
+
+    .search-results-grid {
+        display: var(--main_media_queries__min_700-search-results-grid-display);
+        grid-template-columns: var(--main_media_queries__min_700-search-results-grid-grid-template-columns);
+        justify-content: var(--main_media_queries__min_700-search-results-grid-justify-content);
+    }
+}

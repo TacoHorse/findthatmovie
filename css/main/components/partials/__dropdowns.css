@@ -1,0 +1,31 @@
+/* Dropdown List Component */
+
+.custom-list {
+    position: var(--main_components_partials_dropdown-custom-list-position);
+    display: var(--main_components_partials_dropdown-custom-list-display);
+    max-height: var(--main_components_partials_dropdown-custom-list-max-height);
+}
+
+.custom-list > select {
+    display: var(--main_components_partials_dropdown-custom-list-select-display);
+    width: var(--main_components_partials_dropdown-custom-list-select-width);
+}
+
+.custom-list:after {
+    position: var(--main_components_partials_dropdown-custom-list-after-pseudo-position);
+    right: var(--main_components_partials_dropdown-custom-list-after-pseudo-right);
+    top: var(--main_components_partials_dropdown-custom-list-after-pseudo-top);
+    width: var(--main_components_partials_dropdown-custom-list-after-pseudo-width);
+  }
+
+.genre-custom-list {
+    grid-row: var(--main_components_partials_dropdown-genre-custom-list-grid-row);
+    grid-column-start: var(--main_components_partials_dropdown-genre-custom-list-grid-column-start);
+    grid-column-end: var(--main_components_partials_dropdown-genre-custom-list-grid-column-end);
+}
+
+.year-custom-list {
+    grid-row: var(--main_components_partials_dropdown-year-custom-list-grid-row);
+    grid-column-start: var(--main_components_partials_dropdown-year-custom-list-grid-column-start);
+    grid-column-end: var(--main_components_partials_dropdown-year-custom-list-grid-column-end);
+}

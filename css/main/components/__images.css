@@ -1,0 +1,27 @@
+/* Images Component Configuration */
+.logo {
+    width: var(--main_components_images-logo-width);
+    height: var(--main_components_images-logo-height);
+}
+
+.cast-list > img {
+    margin: var(--main_components_images-cast-picture-margin);
+    max-width: var(--main_components_images-cast-picture-max-width);
+    height: var(--main_components_images-cast-picture-height);
+}
+
+.runtime-icon {
+    width: var(--main_components_images-runtime-icon-width);
+    height: var(--main_components_images-runtime-icon-height);
+}
+
+.movie-poster {
+    display: var(--main_components_images-movie-poster-display);
+    max-width: var(--main_components_images-movie-poster-max-width);
+    margin-left: var(--main_components_images-movie-poster-margin-left);
+    margin-right: var(--main_components_images-movie-poster-margin-right);
+}
+
+.movie-poster-search {
+    width: var(--main_components_images-movie-poster-search-width);
+}

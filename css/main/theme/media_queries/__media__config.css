@@ -1,0 +1,29 @@
+/* Media Query Configuration */
+
+/* Min Resolution 700px */
+@import url('__min_700/__vars.css');
+@import url('__min_700/__config.css');
+
+/* Min Resolution 1300px */
+@import url('__min_1300/__vars.css');
+@import url('__min_1300/__config.css');
+
+/* Min Resolution 1600px */
+@import url('__min_1300/__vars.css');
+@import url('__min_1600/__config.css');
+
+/* Min Resolution 1900px */
+@import url('__min_1300/__vars.css');
+@import url('__min_1900/__config.css');
+
+/* Min Resolution 2200px */
+@import url('__min_1300/__vars.css');
+@import url('__min_2200/__config.css');
+
+/* Min Resolution 2500px */
+@import url('__min_1300/__vars.css');
+@import url('__min_2500/__config.css');
+
+/* Min Resolution 3800px */
+@import url('__min_1300/__vars.css');
+@import url('__min_3800/__config.css');

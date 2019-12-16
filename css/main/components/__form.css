@@ -1,0 +1,59 @@
+/* Form Configuration */
+
+.search-form {
+    display: var(--main_components_form-search-form-display);
+    flex-direction: var(--main_components_form-search-form-flex-direction);
+    text-align: var(--main_components_form-search-form-text-align);
+    margin-top: var(--main_components_form-search-form-margin-top);
+}
+
+.select-container {
+    display: var(--main_components_form-select-container-display);
+    grid-template-columns: var(--main_components_form-select-container-grid-template-columns);
+    grid-template-rows: var(--main_components_form-select-container-grid-template-rows);
+    padding-bottom: var(--main_components_form-select-container-padding-bottom);
+}
+
+.user-search-container {
+    position: var(--main_components_form-user-search-container-position);
+    height: var(--main_components_form-user-search-container-height);
+    grid-column-start: var(--main_components_form-user-search-container-grid-column-start);
+    grid-column-end: var(--main_components_form-user-search-container-grid-column-end);
+}
+
+.user-search {
+    position: var(--main_components_form-user-search-position);
+    right: var(--main_components_form-user-search-right);
+    left: var(--main_components_form-user-search-left);
+    top: var(--main_components_form-user-search-top);
+    height: var(--main_components_form-user-search-height);
+    z-index: var(--main_components_form-user-search-z-index);
+    display: var(--main_components_form-user-search-display);
+    min-width: var(--main_components_form-user-search-min-width);
+    max-width: var(--main_components_form-user-search-max-width);
+}
+
+.submit-search {
+    position: var(--main_components_form-submit-search-position);
+    top: var(--main_components_form-submit-search-top);
+    right: var(--main_components_form-submit-search-right);
+    width: var(--main_components_form-submit-search-width);
+    height: var(--main_components_form-submit-search-height);
+    margin: var(--main_components_form-submit-search-margin);
+    z-index: var(--main_components_form-submit-search-z-index);
+    display: var(--main_components_form-submit-search-display);
+}
+
+.autocomplete-data {
+    text-align: var(--main_components_form-autocomplete-data-text-align);
+}
+
+.search-inner-border{
+    position: var(--main_components_form-search-inner-border-position);
+    z-index: var(--main_components_form-search-inner-border-z-index);
+    top: var(--main_components_form-search-inner-border-top);
+    left: var(--main_components_form-search-inner-border-left);
+    right: var(--main_components_form-search-inner-border-right);
+    bottom: var(--main_components_form-search-inner-border-bottom);
+    margin: var(--main_components_form-search-inner-border-margin);
+}

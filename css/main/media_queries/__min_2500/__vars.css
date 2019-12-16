@@ -1,0 +1,7 @@
+/* Min Width 2500 PX Media Query Variables */
+
+:root {
+    /* --main_media_queries__min_2500-search-results-grid- */
+    --main_media_queries__min_2500-search-results-grid-grid-template-columns: repeat(7, 12%);
+    --main_media_queries__min_2500-search-results-grid-justify-content: space-around;
+}

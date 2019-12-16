@@ -1,0 +1,12 @@
+/* Cast List Partial Component Variables */
+
+:root {
+    /* --main_components_partials_cast_list-cast-list- */
+    --main_components_partials_cast_list-cast-list-display: grid;
+    --main_components_partials_cast_list-cast-list-grid-template-columns: 60px auto auto;
+
+    /* --main_components_partials_cast_list-cast-list-p- */
+    --main_components_partials_cast_list-cast-list-p-margin: 10px;
+    --main_components_partials_cast_list-cast-list-p-display: flex;
+    --main_components_partials_cast_list-cast-list-p-align-items: center;
+}

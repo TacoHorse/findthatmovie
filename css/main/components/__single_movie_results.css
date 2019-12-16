@@ -1,0 +1,33 @@
+/* Single Movie Results Component Configuration */
+
+.single-movie-results {
+    padding-top: var(--main_components_single_movie_results-single-movie-results-padding-top);
+}
+
+.single-movie-results > h2 {
+    text-align: var(--main_components_single_movie_results-single-movie-results-h2);
+}
+
+.single-movie-results > h3 {
+    text-align: var(--main_components_single_movie_results-single-movie-results-h3);
+}
+
+.single-movie-info {
+    display: var(--main_components_single_movie_results-single-movie-info-display);
+    flex-direction: var(--main_components_single_movie_results-single-movie-info-flex-direction);
+    margin-top: var(--main_components_single_movie_results-single-movie-info-margin-top);
+}
+
+.single-movie-description {
+    display: var(--main_components_single_movie_results-single-movie-description-display);
+    padding-left: var(--main_components_single_movie_results-single-movie-description-padding-left);
+    padding-right: var(--main_components_single_movie_results-single-movie-description-padding-right);
+}
+
+.single-movie-budglength {
+    display: var(--main_components_single_movie_results-single-movie-budglength-display);
+    justify-content: var(--main_components_single_movie_results-single-movie-budglength-justify-content);
+    align-items: var(--main_components_single_movie_results-single-movie-budglength-align-items);
+    padding-left: var(--main_components_single_movie_results-single-movie-budglength-padding-left);
+    padding-right: var(--main_components_single_movie_results-single-movie-budglength-padding-right);
+}

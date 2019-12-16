@@ -1,0 +1,7 @@
+/* Min Width 3800 PX Media Query Variables */
+
+:root {
+    /* --main_media_queries__min_3800-search-results-grid- */
+    --main_media_queries__min_3800-search-results-grid-grid-template-columns: repeat(10, 9%);
+    --main_media_queries__min_3800-search-results-grid-justify-content: space-around;
+}

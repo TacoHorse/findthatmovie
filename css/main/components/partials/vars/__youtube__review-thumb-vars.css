@@ -1,0 +1,23 @@
+/* YouTube Review Thumbnail Variables */
+
+:root {
+    /* --main_components_partials_youtube-review-thumb-container- */
+    --main_components_partials_youtube-review-thumb-container-width: 120px;
+    --main_components_partials_youtube-review-thumb-container-height: 90px;
+    --main_components_partials_youtube-review-thumb-container-position: relative;
+
+    /* --main_components_partials_youtube-review-thumb-duration-container- */
+    --main_components_partials_youtube-review-thumb-duration-container-width: 120px;
+    --main_components_partials_youtube-review-thumb-duration-container-height: 90px;
+    --main_components_partials_youtube-review-thumb-duration-container-position: relative;
+    --main_components_partials_youtube-review-thumb-duration-container-left: 0px;
+    --main_components_partials_youtube-review-thumb-duration-container-top: 0px;
+    --main_components_partials_youtube-review-thumb-duration-container-z-index: 5;
+
+    /* --main_components_partials_youtube-review-thumb-duration- */
+    --main_components_partials_youtube-review-thumb-duration-position: absolute;
+    --main_components_partials_youtube-review-thumb-duration-top: 65px;
+    --main_components_partials_youtube-review-thumb-duration-right: 0px;
+    --main_components_partials_youtube-review-thumb-duration-margin-left: auto;
+    --main_components_partials_youtube-review-thumb-duration-max-width: min-content;
+}

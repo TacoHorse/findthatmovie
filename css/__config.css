@@ -1,0 +1,25 @@
+/* Primary CSS Configuration file */
+
+/* Dependencies */
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR|Poppins:500&display=swap');
+
+/* Resets */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css');
+
+
+/* __config.main.css */
+/* Components */
+@import url('main/components/__comp_config.css');
+
+/* Variables */
+@import url('main/vars/__variables.css');
+
+/* Configurations */
+@import url('main/__main.css');
+
+/* Media Queries */
+@import url('main/media_queries/__media__config.css');
+
+/* Themes */
+/*Dark Theme */
+@import url('theme/__config.css');

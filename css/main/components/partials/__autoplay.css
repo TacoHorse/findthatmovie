@@ -1,0 +1,28 @@
+/* Autoplay component selectors */
+
+.autoplay-container {
+    grid-column-start: var(--main_components_partials_autoplay-container-grid-column-start);
+    grid-column-end: var(--main_components_partials_autoplay-container-grid-column-end);
+    grid-row: var(--main_components_partials_autoplay-container-grid-row);
+    max-height: var(--main_components_partials_autoplay-container-max-height);
+    margin-left: var(--main_components_partials_autoplay-container-margin-left);
+    margin-bottom: var(--main_components_partials_autoplay-container-margin-bottom);
+}
+
+.autoplay-button {
+    width: var(--main_components_partials_autoplay-button-width);
+    height: var(--main_components_partials_autoplay-button-height);
+    margin: var(--main_components_partials_autoplay-button-margin);
+}
+
+.youtube-trailer-autoplay {
+    display: var(--main_components_partials_autoplay-youtube-trailer-display);
+}
+
+.youtube-trailer-autoplay:checked + label > .autoplay-off {
+    display: var(--main_components_partials_autoplay-youtube-trailer-checked-display);
+}
+
+.youtube-trailer-autoplay:not(:checked) + label > .autoplay-on {
+    display: var(--main_components_partials_autoplay-youtube-trailer-not-checked-display);
+}

@@ -1,0 +1,67 @@
+/* Defines base selectors for initial page elements */
+
+/* Main selector structure */
+*{
+    box-sizing: var(--main-allElem-box-sizing); 
+    padding: var(--main-allElem-padding);
+    margin: var(--main-allElem-margin);
+    border: var(--main-allElem-border);
+}
+
+.container {
+    min-height: var(--main-container-min-height);
+    height: var(--main-container-height);
+    overflow-x: var(--main-container-overflow-x);
+    overflow-y: var(--main-container-overflow-y);
+    perspective: var(--main-container-perspective);
+    z-index: var(--main-container-z-index);
+}
+
+header {
+    display: var(--main-header-display);
+    justify-content: var(--main-header-justfy-content);
+}
+
+.fixed-header {
+    width: var(--main-fixed-header-width);
+    padding-top: var(--main-fixed-header-padding-top);
+    position: var(--main-fixed-header-position);
+    top: var(--main-fixed-header-top);
+}
+
+
+
+.parallax {
+    height: var(--main-fixed-parallax-height);
+}
+
+.parallax::before {
+
+    content: var(--main-fixed-parallax-before-pseudo-content);
+    position: var(--main-fixed-parallax-before-pseudo-position);
+    top: var(--main-fixed-parallax-before-pseudo-top);
+    right: var(--main-fixed-parallax-before-pseudo-right);
+    bottom: var(--main-fixed-parallax-before-pseudo-bottom);
+    left: var(--main-fixed-parallax-before-pseudo-left);
+    transform:  var(--main-fixed-parallax-before-pseudo-transform);
+    /* Force the background image to fill the whole element. */
+    background-size:  var(--main-fixed-parallax-before-pseudo-background-size);
+    /* Keep the image from overlapping sibling elements.  */
+    z-index: var(--main-fixed-parallax-before-pseudo-z-index);
+    background-image:  var(--main-fixed-parallax-before-pseudo-background-image);
+  }
+
+footer {
+    text-align: var(--main-footer-text-align);
+}
+
+.search-results {
+    height: var(--main-search-results-height);
+    position: var(--main-search-results-position);
+    display: var(--main-search-results-display);
+    flex-direction: var(--main-search-results-flex-direction);
+}
+
+.search-results-grid {
+    padding-top: var(--main-search-results-grid-padding-top);
+}

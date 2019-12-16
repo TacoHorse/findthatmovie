@@ -1,0 +1,7 @@
+/* Multi Movie Result Item Partial Component Variables */
+
+:root {
+    /* --main_components_partials_multi_movie_result_item- */
+    --main_components_partials_multi_movie_result_item-display: flex;
+    --main_components_partials_multi_movie_result_item-flex-direction: column;
+}

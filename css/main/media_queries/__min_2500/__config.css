@@ -1,0 +1,9 @@
+/* Min Width 2500 PX Media Query Configuration */
+
+@media screen and (min-width: 2500px) {
+
+    .search-results-grid {
+        grid-template-columns: var(--main_media_queries__min_2500-search-results-grid-grid-template-columns);
+        justify-content: var(--main_media_queries__min_2500-search-results-grid-justify-content);
+    }
+}

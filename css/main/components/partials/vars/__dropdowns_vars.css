@@ -1,0 +1,29 @@
+/* Dropdown List Partial Component Variables */
+
+
+:root {
+    /* --main_components_partials_dropdown-custom-list- */
+    --main_components_partials_dropdown-custom-list-position: relative;
+    --main_components_partials_dropdown-custom-list-display: block;
+    --main_components_partials_dropdown-custom-list-max-height: 40px;
+
+    /* --main_components_partials_dropdown-custom-list-select- */
+    --main_components_partials_dropdown-custom-list-select-display: block;
+    --main_components_partials_dropdown-custom-list-select-width: 100%;
+
+    /* --main_components_partials_dropdown-custom-list-after-pseudo- */
+    --main_components_partials_dropdown-custom-list-after-pseudo-position: absolute;
+    --main_components_partials_dropdown-custom-list-after-pseudo-right: 0px;
+    --main_components_partials_dropdown-custom-list-after-pseudo-top: 0px;
+    --main_components_partials_dropdown-custom-list-after-pseudo-width: 30px;
+
+    /* --main_components_partials_dropdown-genre-custom-list- */
+    --main_components_partials_dropdown-genre-custom-list-grid-row: 2;
+    --main_components_partials_dropdown-genre-custom-list-grid-column-start: 2;
+    --main_components_partials_dropdown-genre-custom-list-grid-column-end: 3;
+
+    /* --main_components_partials_dropdown-year-custom-list- */
+    --main_components_partials_dropdown-year-custom-list-grid-row: 2;
+    --main_components_partials_dropdown-year-custom-list-grid-column-start: 1;
+    --main_components_partials_dropdown-year-custom-list-grid-column-end: 2;
+}

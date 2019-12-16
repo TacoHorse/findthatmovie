@@ -1,0 +1,12 @@
+/* TMDB Reviews Partial Component Configuration */
+.tmdb-review-item {
+    margin-bottom: var(--main_components_partials_tmdb_reviews-tmdb-review-item-margin-bottom);
+}
+
+.tmdb-hidden {
+    display: var(--main_components_partials_tmdb_reviews-tmdb-hidden-display);
+}
+
+.review-header {
+    padding: var(--main_components_partials_tmdb_reviews-review-header-padding);
+}

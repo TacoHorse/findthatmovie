@@ -1,0 +1,17 @@
+/* YouTube Trailer Partial Component Configuration */
+
+.youtube-video {
+    left: var(--main_components_partials-youtube-trailers-youtube-video-left);
+    top: var(--main_components_partials-youtube-trailers-youtube-video-top);
+    height: var(--main_components_partials-youtube-trailers-youtube-video-height);
+    width: var(--main_components_partials-youtube-trailers-youtube-video-width);
+    position: var(--main_components_partials-youtube-trailers-youtube-video-position);
+}
+
+.youtube-trailer-container {
+    max-width: var(--main_components_partials-youtube-trailers-youtube-trailer-container-max-width);
+    overflow: var(--main_components_partials-youtube-trailers-youtube-trailer-container-overflow);
+    padding-bottom: var(--main_components_partials-youtube-trailers-youtube-trailer-container-padding-bottom);
+    position: var(--main_components_partials-youtube-trailers-youtube-trailer-container-position);
+    margin-top: var(--main_components_partials-youtube-trailers-youtube-trailer-container-margin-top);
+}

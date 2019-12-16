@@ -1,0 +1,9 @@
+/* Min Width 1900 PX Media Query Configuration */
+
+@media screen and (min-width: 1900px) {
+
+    .search-results-grid {
+        grid-template-columns: var(--main_components__min_1900-search-results-grid-grid-template-columns);
+        justify-content: var(--main_components__min_1900-search-results-grid-justify-content);
+    }
+}

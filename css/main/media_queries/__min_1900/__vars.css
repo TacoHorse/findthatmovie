@@ -1,0 +1,7 @@
+/* Min Width 1900 PX Media Query Variables */
+
+:root {
+    /* --main_components__min_1900-search-results-grid- */
+    --main_components__min_1900-search-results-grid-grid-template-columns: repeat(5, 17%);
+    --main_components__min_1900-search-results-grid-justify-content: space-around;
+}

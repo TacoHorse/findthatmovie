@@ -1,0 +1,7 @@
+/* Config for Dark Theme */
+
+/* Variables */
+@import url('__variables.css');
+
+/* Media Queries */
+@import url('media_queries/__media__config.css');

@@ -1,0 +1,24 @@
+/* Images Component Variables */
+:root {
+    /* --main_components_images-logo- */
+    --main_components_images-logo-width: 301px;
+    --main_components_images-logo-height: 222px;
+
+    /* --main_components_images-cast-picture- */
+    --main_components_images-cast-picture-margin: 5px;
+    --main_components_images-cast-picture-max-width: 50px;
+    --main_components_images-cast-picture-height: auto;
+
+    /* --main_components_images-runtime-icon- */
+    --main_components_images-runtime-icon-width: 24px;
+    --main_components_images-runtime-icon-height: 24px;
+
+    /* --main_components_images-movie-poster- */
+    --main_components_images-movie-poster-display: block;
+    --main_components_images-movie-poster-max-width: 60%;
+    --main_components_images-movie-poster-margin-left: auto;
+    --main_components_images-movie-poster-margin-right: auto;
+
+    /* --main_components_images-movie-poster-search- */
+    --main_components_images-movie-poster-search-width: 100%;
+}

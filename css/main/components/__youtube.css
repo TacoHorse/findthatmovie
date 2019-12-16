@@ -1,0 +1,17 @@
+/* Youtube Component Configuration */
+.youtube-reviews {
+    max-height: var(--main_components_youtube-youtube-reviews-max-height);
+    overflow-y: var(--main_components_youtube-youtube-reviews-overflow-y);
+    padding: var(--main_components_youtube-youtube-reviews-padding);
+}
+
+.youtube-review-item {
+    display: var(--main_components_youtube-youtube-review-item-display);
+    grid-template-columns: var(--main_components_youtube-youtube-review-item-grid-template-columns);
+    margin-bottom: var(--main_components_youtube-youtube-review-item-margin-bottom);
+    margin-right: var(--main_components_youtube-youtube-review-item-margin-right);
+}
+
+.youtube-review-title-container {
+    padding: var(--main_components_youtube-youtube-review-title-container-padding);
+}

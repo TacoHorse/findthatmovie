@@ -1,0 +1,36 @@
+/* Min Width 1300 PX Media Query Configuration */
+
+@media screen and (min-width: 1300px) {
+
+    .single-movie-info {
+        width: var(--main_media_queries__min_1300-single-movie-info-width);
+    }
+
+    .youtube-trailer-container{
+        max-width: var(--main_media_queries__min_1300-youtube-trailer-container-max-width);
+        padding-bottom: var(--main_media_queries__min_1300-youtube-trailer-container-padding-bottom);
+        margin-left: var(--main_media_queries__min_1300-youtube-trailer-container-margin-left);
+        margin-right: var(--main_media_queries__min_1300-youtube-trailer-container-margin-right);
+    }
+
+    .search-results {
+        margin-left: var(--main_media_queries__min_1300-search-results-margin-left);
+        margin-right: var(--main_media_queries__min_1300-search-results-margin-right);
+    }
+
+    .search-results-grid {
+        grid-template-columns: var(--main_media_queries__min_1300-search-results-grid-grid-template-columns);
+        justify-content: var(--main_media_queries__min_1300-search-results-grid-justify-content);
+    }
+
+    .submit-search {
+        grid-row: var(--main_media_queries__min_1300-submit-search-grid-row);
+        grid-column: var(--main_media_queries__min_1300-submit-search-grid-column);
+    }
+
+    .select-container {
+        width: var(--main_media_queries__min_1300-select-container-width);
+        margin-left: var(--main_media_queries__min_1300-select-container-margin-left);
+        margin-right: var(--main_media_queries__min_1300-select-container-margin-right);
+    }
+}

@@ -1,0 +1,24 @@
+/* YouTube Review Thumbnail Configuration */
+
+.youtube-review-thumbnail-container {
+    width: var(--main_components_partials_youtube-review-thumb-container-width);
+    height: var(--main_components_partials_youtube-review-thumb-container-height);
+    position: var(--main_components_partials_youtube-review-thumb-container-position);
+}
+
+.youtube-review-thumbnail-duration-container {
+    width: var(--main_components_partials_youtube-review-thumb-duration-container-width);
+    height: var(--main_components_partials_youtube-review-thumb-duration-container-height);
+    position: var(--main_components_partials_youtube-review-thumb-duration-container-position);
+    left: var(--main_components_partials_youtube-review-thumb-duration-container-left);
+    top: var(--main_components_partials_youtube-review-thumb-duration-container-top);
+    z-index: var(--main_components_partials_youtube-review-thumb-duration-container-z-index);
+}
+
+.youtube-review-thumbnail-duration {
+    position: var(--main_components_partials_youtube-review-thumb-duration-position);
+    top: var(--main_components_partials_youtube-review-thumb-duration-top);
+    right: var(--main_components_partials_youtube-review-thumb-duration-right);
+    margin-left: var(--main_components_partials_youtube-review-thumb-duration-margin-left);
+    max-width: var(--main_components_partials_youtube-review-thumb-duration-max-width);
+}

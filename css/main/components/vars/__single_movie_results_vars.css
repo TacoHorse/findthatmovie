@@ -1,0 +1,28 @@
+/* Single Movie Results Component Variables */
+:root {
+    /* --main_components_single_movie_results-single-movie-results- */
+    --main_components_single_movie_results-single-movie-results-padding-top: 20px;
+
+    /* --main_components_single_movie_results-single-movie-results-h2- */
+    --main_components_single_movie_results-single-movie-results-h2: center;
+
+    /* --main_components_single_movie_results-single-movie-results-h3- */
+    --main_components_single_movie_results-single-movie-results-h3: center;
+
+    /* --main_components_single_movie_results-single-movie-info- */
+    --main_components_single_movie_results-single-movie-info-display: flex;
+    --main_components_single_movie_results-single-movie-info-flex-direction: column;
+    --main_components_single_movie_results-single-movie-info-margin-top: 10px;
+
+    /* --main_components_single_movie_results-single-movie-description- */
+    --main_components_single_movie_results-single-movie-description-display: block;
+    --main_components_single_movie_results-single-movie-description-padding-left: 5px;
+    --main_components_single_movie_results-single-movie-description-padding-right: 5px;
+
+    /* --main_components_single_movie_results-single-movie-budglength- */
+    --main_components_single_movie_results-single-movie-budglength-display: flex;
+    --main_components_single_movie_results-single-movie-budglength-justify-content: space-evenly;
+    --main_components_single_movie_results-single-movie-budglength-align-items: center;
+    --main_components_single_movie_results-single-movie-budglength-padding-left: 5px;
+    --main_components_single_movie_results-single-movie-budglength-padding-right: 5px;
+}

@@ -1,0 +1,17 @@
+/* YouTube Trailer Component Variables */
+
+:root {
+    /* --main_components_partials-youtube-trailers-youtube-video- */
+    --main_components_partials-youtube-trailers-youtube-video-left: 0px;
+    --main_components_partials-youtube-trailers-youtube-video-top: 0px;
+    --main_components_partials-youtube-trailers-youtube-video-height: 100%;
+    --main_components_partials-youtube-trailers-youtube-video-width: 100%;
+    --main_components_partials-youtube-trailers-youtube-video-position: absolute;
+
+    /* --main_components_partials-youtube-trailers-youtube-trailer-container- */
+    --main_components_partials-youtube-trailers-youtube-trailer-container-max-width: 100%;
+    --main_components_partials-youtube-trailers-youtube-trailer-container-overflow: hidden;
+    --main_components_partials-youtube-trailers-youtube-trailer-container-padding-bottom: 56.25%;
+    --main_components_partials-youtube-trailers-youtube-trailer-container-position: relative;
+    --main_components_partials-youtube-trailers-youtube-trailer-container-margin-top: 20px;
+}

@@ -1,0 +1,23 @@
+/* Defines the individual component files */
+/* Components Listing */
+
+/* Layout Components */
+
+/* Load partials */
+@import url('partials/__partials__config.css');
+
+/* Images Component */
+@import url('vars/__images_vars.css');
+@import url('__images.css');
+
+/* Form Component */
+@import url('vars/__forms_vars.css');
+@import url('__form.css');
+
+/* YouTube Component */
+@import url('vars/__youtube_vars.css');
+@import url('__youtube.css');
+
+/* Single Movie Results Component */
+@import url('vars/__single_movie_results_vars.css');
+@import url('__single_movie_results.css');
