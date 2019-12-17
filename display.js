@@ -96,7 +96,7 @@ function displaySingleMovieInfo(inputObject) { // Displays the movie information
                     $(".js-search-results").append(output); // Display results for a single movie.
                     $(".js-search-results").trigger("movieDataDone"); //  Trigger custom event to know when search has occured
                     userData.youtube.query = movieTitle; // Store the movie title for use in async youtube queries
-                    // displayYouTubeReviews(movieTitle, "medium"); // Display the youtube reviews - calls another API query
+                    displayYouTubeReviews(movieTitle, "medium"); // Display the youtube reviews - calls another API query
                 });
         });
 }

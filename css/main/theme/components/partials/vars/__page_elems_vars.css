@@ -1,0 +1,22 @@
+/* Page Elements Partial Component Variables */
+
+:root {
+    /* --theme_componenets_partials_vars-fixed-header- */
+    --theme_componenets_partials_vars-fixed-header-webkit-box-shadow: 0px -23px 24px 0px rgba(0, 0, 0, 0.75);
+    --theme_componenets_partials_vars-fixed-header-moz-box-shadow: 0px -23px 24px 0px rgba(0, 0, 0, 0.75);
+    --theme_componenets_partials_vars-fixed-header-box-shadow: 0px -23px 24px 0px rgba(0, 0, 0, 0.75);
+    --theme_componenets_partials_vars-fixed-header-background-color: #3F353F;
+
+    /* --theme_componenets_partials_vars-youtube-review-thumbnail-duration- */
+    --theme_componenets_partials_vars-youtube-review-thumbnail-duration-color: white;
+    --theme_componenets_partials_vars-youtube-review-thumbnail-duration-background-color: black;
+
+    /* --theme_componenets_partials_vars-footer- */
+    --theme_componenets_partials_vars-footer-background-color: darkgray;
+
+    /* --theme_componenets_partials_vars-tmdb-reviews- */
+    --theme_componenets_partials_vars-tmdb-reviews-line-height: 25px;
+
+    /* --theme_componenets_partials_vars-youtube-reviews- */
+    --theme_componenets_partials_vars-youtube-reviews-line-height: 25px;
+}

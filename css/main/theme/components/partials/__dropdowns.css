@@ -1,0 +1,34 @@
+/* Dropdowns Partial Component Configuration */
+
+.custom-list {
+    font-family: var(--theme_components_partials_vars-custom-list-font-family);
+    border-left: var(--theme_components_partials_vars-custom-list-border-left);
+    border-bottom: var(--theme_components_partials_vars-custom-list-border-bottom);
+    background-color: var(--theme_components_partials_vars-custom-list-background-color);
+    z-index: var(--theme_components_partials_vars-custom-list-z-index);
+}
+
+.custom-list>select {
+    line-height: var(--theme_components_partials_vars-custom-list-select-line-height);
+    border: var(--theme_components_partials_vars-custom-list-select-border);
+    outline: var(--theme_components_partials_vars-custom-list-select-outline);
+    background: var(--theme_components_partials_vars-custom-list-select-background);
+    -webkit-appearance: var(--theme_components_partials_vars-custom-list-select-webkit-appearance);
+    -moz-appearance: var(--theme_components_partials_vars-custom-list-select-moz-appearance);
+    appearance: var(--theme_components_partials_vars-custom-list-select-appearance);
+    border-radius: var(--theme_components_partials_vars-custom-list-select-border-radius);
+    margin: var(--theme_components_partials_vars-custom-list-select-margin);
+    padding: var(--theme_components_partials_vars-custom-list-select-padding);
+    font-size: var(--theme_components_partials_vars-custom-list-select-font-size);
+    color: var(--theme_components_partials_vars-custom-list-select-color);
+}
+
+.custom-list::after {
+    content: var(--theme_components_partials_vars-custom-list-after-content);
+    line-height: var(--theme_components_partials_vars-custom-list-after-line-height);
+    text-align: var(--theme_components_partials_vars-custom-list-after-text-align);
+    color: var(--theme_components_partials_vars-custom-list-after-color);
+    font-size: var(--theme_components_partials_vars-custom-list-after-font-size);
+    border-left: var(--theme_components_partials_vars-custom-list-after-border-left);
+    z-index: var(--theme_components_partials_vars-custom-list-after-z-index);
+}

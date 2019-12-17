@@ -25,4 +25,9 @@
     --main_components_single_movie_results-single-movie-budglength-align-items: center;
     --main_components_single_movie_results-single-movie-budglength-padding-left: 5px;
     --main_components_single_movie_results-single-movie-budglength-padding-right: 5px;
+
+    /* --main_components_single_movie_results-budget-para- */
+    --main_components_single_movie_results-budget-para-display: flex;
+    --main_components_single_movie_results-budget-para-justify-content: space-evenly;
+    --main_components_single_movie_results-budget-para-align-items: center;
 }

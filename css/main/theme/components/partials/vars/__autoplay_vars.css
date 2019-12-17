@@ -1,0 +1,18 @@
+/* Theme Autoplay Partial Component Variabls */
+
+:root {
+    /* --theme_components_partials_vars-autoplay-button- */
+    --theme_components_partials_vars-autoplay-button-border-left: 1px solid #E14658;
+    --theme_components_partials_vars-autoplay-button-border-right: 1px solid #E14658;
+    --theme_components_partials_vars-autoplay-button-border-bottom: 1px solid #E14658;
+    --theme_components_partials_vars-autoplay-button-line-height: 40px;
+    --theme_components_partials_vars-autoplay-button-background-color: #22252c;
+    --theme_components_partials_vars-autoplay-button-color: #E14658;
+
+    /* --theme_components_partials_vars-autoplay-button-hover- */
+    --theme_components_partials_vars-autoplay-button-hover-background-color: #791885;
+    --theme_components_partials_vars-autoplay-button-hover-text-decoration: underline;
+
+    /* --theme_components_partials_vars-autoplay-button-active- */
+    --theme_components_partials_vars-autoplay-button-active-background-color: #22252c;
+}

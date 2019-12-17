@@ -1,0 +1,41 @@
+/* Form Theme Component Configuration */
+
+.submit-search {
+    line-height: var(--theme_vars-submit-search-line-height);
+    background-color: var(--theme_vars-submit-search-background-color);
+    color:  var(--theme_vars-submit-search-color);
+}
+
+.autocomplete-data {
+    background-color: var(--theme_vars-autocomplete-data-background-color);
+    border: var(--theme_vars-autocomplete-data-border);
+    color: var(--theme_vars-autocomplete-data-color);
+    font-size: var(--theme_vars-autocomplete-data-font-size);
+}
+
+.user-search {
+    background-color: var(--theme_vars-user-search-background-color);
+    color: var(--theme_vars-user-search-color);
+    font-size: var(--theme_vars-user-search-font-size);
+}
+
+.user-search-container {
+    background-color: var(--theme_vars-user-search-container-background-color);
+}
+
+.search-inner-border {
+    border: var(--theme_vars-search-inner-border-border);
+}
+
+.submit-search:hover {
+    background-color: var(--theme_vars-submit-search-hover-background-color);
+    text-decoration: var(--theme_vars-submit-search-hover-text-decoration);
+}
+
+.submit-search:active {
+    background-color: var(--theme_vars-submit-search-active-background-color);
+}
+
+.search-results{
+    background-color: var(--theme_vars-search-results-background-color);
+}

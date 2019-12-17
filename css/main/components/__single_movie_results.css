@@ -31,3 +31,9 @@
     padding-left: var(--main_components_single_movie_results-single-movie-budglength-padding-left);
     padding-right: var(--main_components_single_movie_results-single-movie-budglength-padding-right);
 }
+
+.budget-para {
+    display: var(--main_components_single_movie_results-budget-para-display);
+    justify-content: var(--main_components_single_movie_results-budget-para-justify-content);
+    align-items: var(--main_components_single_movie_results-budget-para-align-items);
+}

@@ -5,3 +5,36 @@
 
 /* Media Queries */
 @import url('media_queries/__media__config.css');
+
+/* Components */
+@import url('components/__comp_config.css');
+
+/* theme.__config.css */
+
+body {
+    background-color: var(--theme_vars-body-background-color);
+    color: var(--theme_vars-body-color);
+    font-family: var(--theme_vars-body-font-family);
+    font-size: var(--theme_vars-body-font-size);
+    line-height: var(--theme_vars-body-line-height);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--theme_vars-heading-all-font-family);
+}
+
+h1 {
+    margin: var(--theme_vars-heading-one-margin);
+}
+
+a {
+    color: var(--theme_vars-a-color);
+}
+
+a:active {
+    color: var(--theme_vars-a-active-color);
+}
+
+a:hover {
+    color: var(--theme_vars-a-hover-color);
+}

@@ -1,0 +1,35 @@
+/* Form Theme Component Variables */
+
+:root {
+    /* --theme_vars-submit-search- */
+    --theme_vars-submit-search-line-height: 40px;
+    --theme_vars-submit-search-background-color: #22252c;
+    --theme_vars-submit-search-color: #E14658;
+
+    /* --theme_vars-autocomplete-data- */
+    --theme_vars-autocomplete-data-background-color: #E14658;
+    --theme_vars-autocomplete-data-border: 2px solid black;
+    --theme_vars-autocomplete-data-color: black;
+    --theme_vars-autocomplete-data-font-size: 24px;
+
+    /* --theme_vars-user-search- */
+    --theme_vars-user-search-background-color: #E14658;
+    --theme_vars-user-search-color: black;
+    --theme_vars-user-search-font-size: 24px;
+
+    /* --theme_vars-user-search-container- */
+    --theme_vars-user-search-container-background-color: #E14658;
+
+    /* --theme_vars-search-inner-border- */
+    --theme_vars-search-inner-border-border: 1px solid black;
+
+    /* --theme_vars-submit-search-hover- */
+    --theme_vars-submit-search-hover-background-color: #791885;
+    --theme_vars-submit-search-hover-text-decoration: underline;
+
+    /* --theme_vars-submit-search-active- */
+    --theme_vars-submit-search-active-background-color: #22252c;
+
+    /* --theme_vars-search-results- */
+    --theme_vars-search-results-background-color: #22252c;
+}

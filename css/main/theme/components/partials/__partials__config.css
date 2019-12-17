@@ -1,0 +1,13 @@
+/* Partials Components Listing */
+
+/* Autoplay */
+@import url('vars/__autoplay_vars.css');
+@import url('__autoplay.css');
+
+/* Dropdowns */
+@import url('vars/__dropdowns_vars.css');
+@import url('__dropdowns.css');
+
+/* Page Elements */
+@import url('vars/__page_elems_vars.css');
+@import url('__page_elems.css');

@@ -7,7 +7,7 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css');
 
 
-/* __config.main.css */
+/* main.__config.css */
 /* Components */
 @import url('main/components/__comp_config.css');
 
@@ -22,4 +22,4 @@
 
 /* Themes */
 /*Dark Theme */
-@import url('theme/__config.css');
+@import url('main/theme/__config.css');

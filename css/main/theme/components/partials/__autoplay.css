@@ -1,0 +1,19 @@
+/* Theme Autoplay Partial Component Configuration */
+
+.autoplay-button {
+    border-left: var(--theme_components_partials_vars-autoplay-button-border-left);
+    border-right: var(--theme_components_partials_vars-autoplay-button-border-right);
+    border-bottom: var(--theme_components_partials_vars-autoplay-button-border-bottom);
+    line-height: var(--theme_components_partials_vars-autoplay-button-line-height);
+    background-color: var(--theme_components_partials_vars-autoplay-button-background-color);
+    color: var(--theme_components_partials_vars-autoplay-button-color);
+}
+
+.autoplay-button:hover {
+    background-color: var(--theme_components_partials_vars-autoplay-button-hover-background-color);
+    text-decoration: var(--theme_components_partials_vars-autoplay-button-hover-text-decoration);
+}
+
+.autoplay-button:active {
+    background-color: var(--theme_components_partials_vars-autoplay-button-active-background-color);
+}

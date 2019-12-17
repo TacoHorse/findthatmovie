@@ -1,0 +1,25 @@
+/* Page Elements Partial Component Configuration */
+
+.fixed-header {
+    -webkit-box-shadow: var(--theme_componenets_partials_vars-fixed-header-webkit-box-shadow);
+    -moz-box-shadow: var(--theme_componenets_partials_vars-fixed-header-moz-box-shadow);
+    box-shadow: var(--theme_componenets_partials_vars-fixed-header-box-shadow);
+    background-color: var(--theme_componenets_partials_vars-fixed-header-background-color);
+}
+
+.youtube-review-thumbnail-duration {
+    color: var(--theme_componenets_partials_vars-youtube-review-thumbnail-duration-color);
+    background-color: var(--theme_componenets_partials_vars-youtube-review-thumbnail-duration-background-color);
+}
+
+footer {
+    background-color: var(--theme_componenets_partials_vars-footer-background-color);
+}
+
+.tmdb-reviews {
+    line-height: var(--theme_componenets_partials_vars-tmdb-reviews-line-height);
+}
+
+.youtube-reviews {
+    line-height: var(--theme_componenets_partials_vars-youtube-reviews-line-height);
+}

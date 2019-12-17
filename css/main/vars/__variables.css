@@ -10,7 +10,7 @@
 
     /* --main-container- */
     --main-container-min-height: 100vh;
-    --main-container-heigh: 100vh;
+    --main-container-height: 100vh;
     --main-container-overflow-x: hidden;
     --main-container-overflow-y: auto;
     --main-container-perspective: 2px;
@@ -18,7 +18,7 @@
 
     /* --main-header- */
     --main-header-display: flex;
-    --main-header-justfy-content: center;
+    --main-header-justify-content: center;
 
     /* --main-fixed-header- */
     --main-fixed-header-width: 100%;
@@ -39,7 +39,7 @@
     --main-fixed-parallax-before-pseudo-transform: translateZ(-1px) scale(1.5);
     --main-fixed-parallax-before-pseudo-background-size: 100%;
     --main-fixed-parallax-before-pseudo-z-index: -1;
-    --main-fixed-parallax-before-pseudo-background-image: url('images/bg.jpg');
+    --main-fixed-parallax-before-pseudo-background-image: url('https://seancowan-dev.github.io/findthatmovie/images/bg.jpg');
 
     /* --main-footer- */
     --main-footer-text-align: center;

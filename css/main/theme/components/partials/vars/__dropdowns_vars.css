@@ -1,0 +1,33 @@
+/* Dropdowns Partial Component Variables */
+
+:root {
+    /* --theme_components_partials_vars-custom-list- */
+    --theme_components_partials_vars-custom-list-font-family: 'Poppins', sans-serif;
+    --theme_components_partials_vars-custom-list-border-left: 1px solid #e14658;
+    --theme_components_partials_vars-custom-list-border-bottom: 1px solid #e14658;
+    --theme_components_partials_vars-custom-list-background-color: #22252c;
+    --theme_components_partials_vars-custom-list-z-index: 10;
+
+    /* --theme_components_partials_vars-custom-list-select- */
+    --theme_components_partials_vars-custom-list-select-line-height: 36px;
+    --theme_components_partials_vars-custom-list-select-border: none;
+    --theme_components_partials_vars-custom-list-select-outline: none;
+    --theme_components_partials_vars-custom-list-select-background: transparent;
+    --theme_components_partials_vars-custom-list-select-webkit-appearance: none;
+    --theme_components_partials_vars-custom-list-select-moz-appearance: none;
+    --theme_components_partials_vars-custom-list-select-appearance: none;
+    --theme_components_partials_vars-custom-list-select-border-radius: 0;
+    --theme_components_partials_vars-custom-list-select-margin: 0;
+    --theme_components_partials_vars-custom-list-select-padding: 0px 10px 0px 10px;
+    --theme_components_partials_vars-custom-list-select-font-size: 18px;
+    --theme_components_partials_vars-custom-list-select-color: #e14658;
+
+    /* --theme_components_partials_vars-custom-list-after- */
+    --theme_components_partials_vars-custom-list-after-content: "V";
+    --theme_components_partials_vars-custom-list-after-line-height: 32px;
+    --theme_components_partials_vars-custom-list-after-text-align: center;
+    --theme_components_partials_vars-custom-list-after-color: #e14658;
+    --theme_components_partials_vars-custom-list-after-font-size: 24px;
+    --theme_components_partials_vars-custom-list-after-border-left: 1px solid #3c1c78;
+    --theme_components_partials_vars-custom-list-after-z-index: -1;
+}

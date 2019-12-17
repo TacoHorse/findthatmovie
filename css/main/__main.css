@@ -19,7 +19,7 @@
 
 header {
     display: var(--main-header-display);
-    justify-content: var(--main-header-justfy-content);
+    justify-content: var(--main-header-justify-content);
 }
 
 .fixed-header {
@@ -29,8 +29,6 @@ header {
     top: var(--main-fixed-header-top);
 }
 
-
-
 .parallax {
     height: var(--main-fixed-parallax-height);
 }
@@ -38,7 +36,7 @@ header {
 .parallax::before {
 
     content: var(--main-fixed-parallax-before-pseudo-content);
-    position: var(--main-fixed-parallax-before-pseudo-position);
+    position: var(--main-fixed-parallax-before-pseudo-positon);
     top: var(--main-fixed-parallax-before-pseudo-top);
     right: var(--main-fixed-parallax-before-pseudo-right);
     bottom: var(--main-fixed-parallax-before-pseudo-bottom);

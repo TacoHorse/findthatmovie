@@ -1,5 +1,25 @@
 /* Variable definitions for Dark Theme */
 
 :root {
-    
+    /* --theme_vars-body- */
+    --theme_vars-body-background-color: #22252c;
+    --theme_vars-body-color: #C0B3A0;
+    --theme_vars-body-font-family: 'Noto Sans KR', sans-serif;
+    --theme_vars-body-font-size: 18px;
+    --theme_vars-body-line-height: 47px;
+
+    /* --theme_vars-heading-all- */
+    --theme_vars-heading-all-font-family: 'Poppins', sans-serif;
+
+    /* --theme_vars-heading-one- */
+    --theme_vars-heading-one-margin: 0;
+
+    /* --theme_vars-a- */
+    --theme_vars-a-color: rgb(138, 131, 120);
+
+    /* --theme_vars-a-active- */
+    --theme_vars-a-active-color: #22252c;
+
+    /* --theme_vars-a-hover- */
+    --theme_vars-a-hover-color: #e14658;
 }

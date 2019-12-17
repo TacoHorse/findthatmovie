@@ -26,4 +26,4 @@
 
 /* TMDB Reviews */
 @import url('vars/__tmdb_reviews_vars.css');
-@import url(__tmdb_reviews.css);
+@import url('__tmdb_reviews.css');
