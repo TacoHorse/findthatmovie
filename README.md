@@ -2,7 +2,7 @@
 
 Access the site here: https://seancowan-dev.github.io/findthatmovie/
 
-This application allows users to search for a movie and retrieve trailers, reviews, tweets, and full cast and synopsis information in one place.  Findthatmovie was developed for the Bloc/Thinkful Web Developer API Hack Capstone.  The purpose of this application is to demonstrate my knowledge of RESTful APIs and their implementation in a meaningful way.  
+This application allows users to search for a movie and retrieve trailers, reviews, tweets, and full cast and synopsis information in one place.  Findthatmovie was developed for the Bloc/Thinkful Web Developer API Hack Capstone.  The purpose of this application is to demonstrate my knowledge of RESTful APIs and their implementation in a meaningful way.  It is also intended to show a client-side only implementation.  
 
 ### Why This App Was Made
 
@@ -15,6 +15,10 @@ This app is to solve this process.  Instead of doing all that you can open this 
 This is terminology used by Bloc/Thinkful to denote a sizeable in-curriculum project which focuses on the use of RESTful APIs and their implementation with jQuery and asynchronous JavaScript.  This is a precursor to the curriculum on using React.js to develop dynamic web applications.  The 'Hack' component of API Hack is refering to building composite information based on multiple API endpoints to provide coherent and useful information to the user.
 
 # Changelog
+
+### Version 1.0
+
+Barebones unstyled version for testing purposes.  Twitter API features were initially planned for this version but were not implemented because the Twitter API requires server-side authentication.
 
 ### Version 1.1
 
