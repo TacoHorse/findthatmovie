@@ -49,14 +49,8 @@ header {
     background-image:  var(--main-fixed-parallax-before-pseudo-background-image);
   }
 
-footer {
-    text-align: var(--main-footer-text-align);
-    position: absolute;
-    bottom: 0px;
-}
-
 .search-results {
-    height: var(--main-search-results-height);
+    min-height: var(--main-search-results-min-height);
     position: var(--main-search-results-position);
     display: var(--main-search-results-display);
     flex-direction: var(--main-search-results-flex-direction);

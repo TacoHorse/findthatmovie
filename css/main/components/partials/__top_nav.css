@@ -1,0 +1,22 @@
+/* Top Nav Partial Component Configuration */
+
+.top-nav {
+    position: var(--main_components_partials-vars-top-nav-position);
+    left: var(--main_components_partials-vars-top-nav-left);
+    right: var(--main_components_partials-vars-top-nav-right);
+    z-index: var(--main_components_partials-vars-top-nav-z-index);
+    height: var(--main_components_partials-vars-top-nav-height);
+    background-color: var(--main_components_partials-vars-top-nav-background-color);
+    line-height: var(--main_components_partials-vars-top-nav-line-height);
+    -webkit-box-shadow: var(--main_components_partials-vars-top-nav-webkit-shadow);
+    -moz-box-shadow: var(--main_components_partials-vars-top-nav-moz-shadow);
+    box-shadow: var(--main_components_partials-vars-top-nav-box-shadow);
+    display: var(--main_components_partials-vars-top-nav-display);
+    justify-content: var(--main_components_partials-vars-top-nav-justify-content);
+    padding-left: var(--main_components_partials-vars-top-nav-padding-left);
+    padding-right: var(--main_components_partials-vars-top-nav-padding-right);
+}
+
+.top-nav-about {
+    margin-left: var(--main_components_partials-vars-top-nav-about-margin-left);
+}

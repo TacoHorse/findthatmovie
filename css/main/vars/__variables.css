@@ -41,11 +41,8 @@
     --main-fixed-parallax-before-pseudo-z-index: -1;
     --main-fixed-parallax-before-pseudo-background-image: url('https://seancowan-dev.github.io/findthatmovie/images/bg.jpg');
 
-    /* --main-footer- */
-    --main-footer-text-align: center;
-    
     /* --main-search-results- */
-    --main-search-results-height: 100vh;
+    --main-search-results-min-height: 40%;
     --main-search-results-position: relative;
     --main-search-results-display: flex;
     --main-search-results-flex-direction: column;

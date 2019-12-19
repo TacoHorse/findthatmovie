@@ -1,0 +1,23 @@
+/* Top Nav Partial Component Variables */
+
+:root {
+    /* --main_components_partials-vars-top-nav- */
+    --main_components_partials-vars-top-nav-position: fixed;
+    --main_components_partials-vars-top-nav-left: 0;
+    --main_components_partials-vars-top-nav-right: 0;
+    --main_components_partials-vars-top-nav-z-index: 15;
+    --main_components_partials-vars-top-nav-height: 30px;
+    --main_components_partials-vars-top-nav-line-height: 30px;
+    --main_components_partials-vars-top-nav-background-color: rgba(0, 0, 0, 0.7);
+    --main_components_partials-vars-top-nav-webkit-shadow: 0px 6px 9px -6px rgba(230,230,230,1);
+    --main_components_partials-vars-top-nav-moz-shadow: 0px 6px 9px -6px rgba(230,230,230,1);
+    --main_components_partials-vars-top-nav-box-shadow: 0px 6px 9px -6px rgba(230,230,230,1);
+    --main_components_partials-vars-top-nav-display: flex;
+    --main_components_partials-vars-top-nav-justify-content: flex-start;
+    --main_components_partials-vars-top-nav-padding-left: 20px;
+    --main_components_partials-vars-top-nav-padding-right: 20px;
+
+    /* --main_components_partials-vars-top-nav-about- */
+    --main_components_partials-vars-top-nav-about-margin-left: auto;
+
+}
