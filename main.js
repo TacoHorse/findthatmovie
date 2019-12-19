@@ -65,7 +65,6 @@ function handleSubmitLogic(inputObject) {
                 displaySingleMovieResults(inputObject);
             } else { 
                 // Otherwise search by keyword and display results
-                console.log("ran");
                 Promise.all([getKeywordId(inputObject.name)])
                     .then(keywordResponse => {
                         if (keywordResponse[0].results.length > 0) {

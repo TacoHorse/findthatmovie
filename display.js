@@ -55,37 +55,38 @@ function displaySingleMovieInfo(inputObject) { // Displays the movie information
                             <img class="movie-poster js-movie-poster" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseObject[0].poster}">
                                 <p class="single-movie-description">${responseObject[0].description}</p>
                                 <div class="cast-list js-cast-list">`;
-                                for (let i = 0; i < reviewResponse[0].cast.length; i++) {
-                                output += `
+                    for (let i = 0; i < reviewResponse[0].cast.length; i++) {
+                        output += `
                                         <img src="https://image.tmdb.org/t/p/w500/${reviewResponse[0].cast[i].url}">
                                         <p>${reviewResponse[0].cast[i].actor}</p>
                                         <p>${reviewResponse[0].cast[i].character}</p>
-                                    `};
-                                output += `
+                                    `
+                    };
+                    output += `
                                 </div>
                                         <div class="review-header"><h2>Reviews</h2></div> <div class="placeholder"></div>
                                             <div class="review-container js-review-container">
                                                 <div class="tmdb-reviews js-tmdb-reviews">`;
 
-                                                if (reviewResponse[0].reviews.length > 0) {
-                                                    for (let i = 0; i < reviewResponse[0].reviews.length; i++) {
-                                                        output += `
+                    if (reviewResponse[0].reviews.length > 0) {
+                        for (let i = 0; i < reviewResponse[0].reviews.length; i++) {
+                            output += `
                                                             <div class="tmdb-review-${i} tmdb-review-item">
                                                                 <h3>Review by: ${reviewResponse[0].reviews[i].author}</h3>`;
 
-                                                        let parts = splitTmdbReviews(reviewResponse[0].reviews[i].content);
-                                                        output += `<p>${parts[0]}<button class="collapse-toggle-btn" onclick="handleCollapse(${i})">...Read more</button></p>
+                            let parts = splitTmdbReviews(reviewResponse[0].reviews[i].content);
+                            output += `<p>${parts[0]}<button class="collapse-toggle-btn" onclick="handleCollapse(${i})">...Read more</button></p>
                                                                 <div class="tmdb-hidden js-hidden js-tmdb-review-hidden-${i}">${parts[1]}</div>
                                                                 <a href="${reviewResponse[0].reviews[i].url}">View on TMDB.org</a>
                                                             </div>`;
-                                                    }
-                                                } else {
-                                                    output += `<div class="tmdb-review-0">
+                        }
+                    } else {
+                        output += `<div class="tmdb-review-0">
                                                             <h3>No reviews to display</h3>
                                                         </div>`;
-                                                }
+                    }
 
-                                                output += `</div>
+                    output += `</div>
                                                     <div class="youtube-reviews js-youtube-reviews">         
                                                     </div>
                                                 </div>
@@ -147,32 +148,62 @@ function displayYouTubeReviews(movieTitle, vidLength, nextPageToken) { // Displa
 
 function displayMovieList(responseData) { // Insert a list of movie titles into the DOM
     function handleMovieItemCount(currentSearchPage, i) {
-        if (currentSearchPage > 1) {
-            return i + 1;
-        } else return i;
+        return i + 1 + (19 * currentSearchPage);
     }
+    if ($('.js-search-results-grid').length <= 0) {
+        let output = `<div class="search-results-grid js-search-results-grid">`;
+        for (let i = 0; i < responseData[0].results.length; i++) {
+            let intersect;
+            if (i === 15) {
+                intersect = `movie-list-end-${userData.asyncTrigCount}`
+            } else intersect = '';
+            output += `<div class="multi-movie-result-item js-multi-movie-result-item ${intersect}" id="movie-item-${handleMovieItemCount(userData.currentSearchPage, i)}">
+                        <div class="user-rating-container js-user-rating-container">
+                            <div class="user-rating js-user-rating js-multi-click" name="${responseData[0].results[i].title}"><p class="inner-user-rating js-inner-user-rating"></p></div>
+                            <img class="movie-poster-search js-movie-poster-search" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseData[0].results[i].poster_path}">
+                        </div>
+                    </div>`;
+        }
+        output += `</div>`;
+        $(".js-search-results").append(output);
+        let childNodes = document.getElementsByClassName('js-multi-movie-result-item');
+        
+        for (let i = 0; i < childNodes.length; i++) {
+            Promise.all([getMovieInfoByName(childNodes[i].children[0].firstElementChild.getAttribute('name'))])
+                .then(returnObject => {
+                    childNodes[i].children[0].firstElementChild.children[0].innerText = returnObject[0].rating + "/10";
+                });
+        }
+        if (responseData[0].results.length >= 15) {
+            observerForResults();
+        }
+    } else {
+        let output = ``;
+        for (let i = 0; i < responseData[0].results.length; i++) {
+            let intersect;
+            if (i === 15) {
+                intersect = `movie-list-end-${userData.asyncTrigCount}`
+            } else intersect = '';
+            output += `<div class="multi-movie-result-item js-multi-movie-result-item ${intersect}" id="movie-item-${handleMovieItemCount(userData.currentSearchPage, i)}">
+                        <div class="user-rating-container js-user-rating-container">
+                            <div class="user-rating js-user-rating js-multi-click" name="${responseData[0].results[i].title}"><p class="inner-user-rating js-inner-user-rating"></p></div>
+                            <img class="movie-poster-search js-movie-poster-search" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseData[0].results[i].poster_path}">
+                        </div>
+                    </div>`;
+        }
+        $(".js-search-results-grid").append(output);
+        let childNodes = document.getElementsByClassName('js-multi-movie-result-item');
 
-    let output = `<div class="search-results-grid js-search-results-grid">`;
-    for (let i = 0; i < responseData[0].results.length; i++) {
-        let intersect;
-        if (i === 15) {
-            intersect = `movie-list-end-${userData.asyncTrigCount}`
-        } else intersect = '';
-        output += `<div class="multi-movie-result-item js-multi-movie-result-item ${intersect}" id="movie-item-${handleMovieItemCount(userData.currentSearchPage, i)}">
-        <a href="#top"><img class="movie-poster-search js-movie-poster-search js-multi-click" name="${responseData[0].results[i].title}" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseData[0].results[i].poster_path}"></a>
-            <div class="movie-search-info js-movie-search-info"></a>
-            <a href="#top"><h3 class="js-multi-click" name="${responseData[0].results[i].title}">${responseData[0].results[i].title}</h3></a>
-                <p>${responseData[0].results[i].release_date}</p>
-                <p>${responseData[0].results[i].overview}</p>
-            </div>
-        </div>`;
+        for (let i = 0; i < childNodes.length; i++) {
+            Promise.all([getMovieInfoByName(childNodes[i].children[0].firstElementChild.getAttribute('name'))])
+                .then(returnObject => {
+                    childNodes[i].children[0].firstElementChild.children[0].innerText = returnObject[0].rating + "/10";
+                });
+        }
+        if (responseData[0].results.length >= 15) {
+            observerForResults();
+        }
     }
-    output += `</div>`;
-    $(".js-search-results").append(output);
-    if (responseData[0].results.length >= 15) {
-        observerForResults();
-    }
-
 }
 
 function displaySearch(formName) {

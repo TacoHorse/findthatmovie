@@ -1,0 +1,42 @@
+/* User Rating Partial Component Variables */
+
+:root {
+    /* --main_components_partials-vars-user-rating-container- */
+    --main_components_partials-vars-user-rating-container-position: relative;
+    --main_components_partials-vars-user-rating-container-content: content;
+
+    /* --main_components_partials-vars-user-rating-container-hover- */
+    --main_components_partials-vars-user-rating-container-hover-cursor: pointer;
+
+    /* --main_components_partials-vars-user-rating-container-hover-user-rating- */
+    --main_components_partials-vars-user-rating-container-hover-user-rating-background-color: rgba(0, 0, 0, 0.5);
+
+    /* --main_components_partials-vars-user-rating-container-hover-inner-user-rating- */
+    --main_components_partials-vars-user-rating-container-hover-inner-user-rating-background-color:rgba(225, 70, 88, 1.0);
+    --main_components_partials-vars-user-rating-container-hover-inner-user-rating-color: rgba(255, 255, 255, 1.0);
+
+    /* --main_components_partials-vars-user-rating- */
+    --main_components_partials-vars-user-rating-color: white;
+    --main_components_partials-vars-user-rating-position: absolute;
+    --main_components_partials-vars-user-rating-background-color:rgba(0, 0, 0, 0.0);
+    --main_components_partials-vars-user-rating-left: 0px;
+    --main_components_partials-vars-user-rating-right: 0px;
+    --main_components_partials-vars-user-rating-bottom: 0px;
+    --main_components_partials-vars-user-rating-top: 0px;
+    --main_components_partials-vars-user-rating-transition: .5s ease;
+    --main_components_partials-vars-user-rating-display: flex;
+    --main_components_partials-vars-user-rating-flex-direction: column;
+    --main_components_partials-vars-user-rating-align-items: center;
+    --main_components_partials-vars-user-rating-text-align: center;
+
+    /* --main_components_partials-vars-inner-user-rating- */
+    --main_components_partials-vars-inner-user-rating-background-color:rgba(225, 70, 88, 0.0);
+    --main_components_partials-vars-inner-user-rating-line-height: 45px;
+    --main_components_partials-vars-inner-user-rating-vertical-align: middle;
+    --main_components_partials-vars-inner-user-rating-height: 45px;
+    --main_components_partials-vars-inner-user-rating-width: 65px;
+    --main_components_partials-vars-inner-user-rating-position: absolute;
+    --main_components_partials-vars-inner-user-rating-bottom: 45%;
+    --main_components_partials-vars-inner-user-rating-border-radius: 5px;
+    --main_components_partials-vars-inner-user-rating-color:rgba(255, 255, 255, 0.0);
+}

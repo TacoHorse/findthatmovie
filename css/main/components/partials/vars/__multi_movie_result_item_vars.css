@@ -4,4 +4,5 @@
     /* --main_components_partials_multi_movie_result_item- */
     --main_components_partials_multi_movie_result_item-display: flex;
     --main_components_partials_multi_movie_result_item-flex-direction: column;
+    --main_components_partials_multi_movie_result_item-margin-bottom: 15px;
 }

@@ -44,15 +44,11 @@ function listenerForAutocomplete() { // Watches for what the user types in the s
 
 function listenerForClick() { // Watches for when the user clicks on a movie in the list of movies
     $('.js-search-results').on("click", e => {
-        console.log("clicked");
         let arr = Object.values(e.target.classList);
+
         if (arr.some(elem => elem === "js-multi-click")) {
             let inputObject = {};
-            if (e.target.name) {
-                inputObject.name = e.target.name;
-            } else {
-                inputObject.name = e.target.outerText;
-            }
+            inputObject.name = e.target.attributes.name.value;
             $('.js-search-results').empty();
             displaySingleMovieResults(inputObject);
             listenerForClick();

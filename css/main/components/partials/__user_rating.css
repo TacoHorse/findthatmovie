@@ -1,0 +1,45 @@
+/* User Rating Partial Component Configuration */
+
+.user-rating-container{
+    position: var(--main_components_partials-vars-user-rating-container-position);
+    max-width: var(--main_components_partials-vars-user-rating-container-content);
+}
+
+.user-rating-container:hover {
+    cursor: var(--main_components_partials-vars-user-rating-container-hover-cursor);
+}
+
+.user-rating-container:hover .user-rating{
+    background-color: var(--main_components_partials-vars-user-rating-container-hover-user-rating-background-color);
+}
+.user-rating-container:hover .inner-user-rating{
+    background-color: var(--main_components_partials-vars-user-rating-container-hover-inner-user-rating-background-color);
+    color: var(--main_components_partials-vars-user-rating-container-hover-inner-user-rating-color);
+}
+
+.user-rating {
+    color: var(--main_components_partials-vars-user-rating-color);
+    position: var(--main_components_partials-vars-user-rating-position);
+    background-color: var(--main_components_partials-vars-user-rating-background-color);
+    left: var(--main_components_partials-vars-user-rating-left);
+    top: var(--main_components_partials-vars-user-rating-right);
+    right: var(--main_components_partials-vars-user-rating-bottom);
+    bottom: var(--main_components_partials-vars-user-rating-top);
+    transition: var(--main_components_partials-vars-user-rating-transition);
+    display: var(--main_components_partials-vars-user-rating-display);
+    flex-direction: var(--main_components_partials-vars-user-rating-flex-direction);
+    align-items: var(--main_components_partials-vars-user-rating-align-items);
+    text-align: var(--main_components_partials-vars-user-rating-text-align);
+}
+
+.inner-user-rating {
+    background-color: var(--main_components_partials-vars-inner-user-rating-background-color);
+    line-height: var(--main_components_partials-vars-inner-user-rating-line-height);
+    vertical-align: var(--main_components_partials-vars-inner-user-rating-vertical-align);
+    height: var(--main_components_partials-vars-inner-user-rating-height);
+    width: var(--main_components_partials-vars-inner-user-rating-width);
+    position: var(--main_components_partials-vars-inner-user-rating-position);
+    bottom: var(--main_components_partials-vars-inner-user-rating-bottom);
+    border-radius: var(--main_components_partials-vars-inner-user-rating-border-radius);
+    color: var(--main_components_partials-vars-inner-user-rating-color);
+}

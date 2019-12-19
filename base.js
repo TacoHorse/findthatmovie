@@ -82,7 +82,7 @@ function createUserInputObject(inputObject) {
 }
 
 function setDefaultUserSearchData() {
-    userData.currentSearchPage = 1;
+    userData.currentSearchPage = 0;
     userData.genre = '';
     userData.year = '';
     userData.genre = $(".js-user-genre").val();

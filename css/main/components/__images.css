@@ -24,4 +24,5 @@
 
 .movie-poster-search {
     width: var(--main_components_images-movie-poster-search-width);
+    display: block;
 }

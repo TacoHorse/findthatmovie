@@ -49,7 +49,6 @@ function buildMovieQueryParams(name, year, genre, page, keyword) { // Prepare th
         params.query = name;
         params.include_adult = false;
     } else { // If no title then check for year or genre selections
-        params.page = page;
         if (year != undefined) {
             params.primary_release_year = year;
         }
@@ -59,7 +58,7 @@ function buildMovieQueryParams(name, year, genre, page, keyword) { // Prepare th
         }
     }
 
-    if (page) { // If a specific query page is requested
+    if (page > 0) { // If a specific query page is requested
         params.page = page;
     }
 

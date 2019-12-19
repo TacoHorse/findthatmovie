@@ -3,4 +3,5 @@
 .multi-movie-result-item {
     display: var(--main_components_partials_multi_movie_result_item-display);
     flex-direction: var(--main_components_partials_multi_movie_result_item-flex-direction);
+    margin-bottom: var(--main_components_partials_multi_movie_result_item-margin-bottom);
 }
