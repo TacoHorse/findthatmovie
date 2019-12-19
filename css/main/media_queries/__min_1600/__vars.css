@@ -4,4 +4,23 @@
     /* --main_media_queries__min_1600-search-results-grid- */
     --main_media_queries__min_1600-search-results-grid-grid-template-columns: repeat(4, 23%);
     --main_media_queries__min_1600-search-results-grid-justify-content: space-around;
+
+    /* --main_media_queries__min_1600-movie-poster- */
+    --main_media_queries__min_1600-movie-poster-grid-column: 1;
+    --main_media_queries__min_1600-movie-poster-grid-row: 1;
+
+    /* --main_media_queries__min_1600-single-movie-text- */
+    --main_media_queries__min_1600-single-movie-text-grid-template-columns: 200px 30% auto;
+
+    /* --main_media_queries__min_1600-single-movie-description- */
+    --main_media_queries__min_1600-single-movie-description-grid-row: 1;
+    --main_media_queries__min_1600-single-movie-description-grid-column: 2;
+
+    /* --main_media_queries__min_1600-cast-list- */
+    --main_media_queries__min_1600-cast-list-grid-row:1;
+    --main_media_queries__min_1600-cast-list-grid-column: 3;
+
+    /* --main_media_queries__min_1600-review-container- */
+    --main_media_queries__min_1600-review-container-grid-column-start: 1;
+    --main_media_queries__min_1600-review-container-grid-column-end: 4;
 }

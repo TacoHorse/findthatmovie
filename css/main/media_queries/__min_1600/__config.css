@@ -5,4 +5,28 @@
         grid-template-columns: var(--main_media_queries__min_1600-search-results-grid-grid-template-columns);
         justify-content: var(--main_media_queries__min_1600-search-results-grid-justify-content);
     }
+
+    .movie-poster {
+        grid-column: var(--main_media_queries__min_1600-movie-poster-grid-column);
+        grid-row: var(--main_media_queries__min_1600-movie-poster-grid-row);
+    }
+
+    .single-movie-text {
+        grid-template-columns: var(--main_media_queries__min_1600-single-movie-text-grid-template-columns);
+    }
+
+    .single-movie-description {
+        grid-row: var(--main_media_queries__min_1600-single-movie-description-grid-row);
+        grid-column: var(--main_media_queries__min_1600-single-movie-description-grid-column);
+    }
+
+    .cast-list {
+        grid-row: var(--main_media_queries__min_1600-cast-list-grid-row);
+        grid-column: var(--main_media_queries__min_1600-cast-list-grid-column);
+    }
+
+    .review-container {
+        grid-column-start: var(--main_media_queries__min_1600-review-container-grid-column-start);
+        grid-column-end: var(--main_media_queries__min_1600-review-container-grid-column-end);
+    }
 }

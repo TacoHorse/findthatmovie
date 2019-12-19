@@ -51,6 +51,8 @@ header {
 
 footer {
     text-align: var(--main-footer-text-align);
+    position: absolute;
+    bottom: 0px;
 }
 
 .search-results {

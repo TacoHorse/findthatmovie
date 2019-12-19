@@ -1,4 +1,8 @@
 /* TMDB Reviews Partial Component Configuration */
+.tmdb-reviews {
+    max-height: 700px;
+    overflow-y: scroll;
+}
 .tmdb-review-item {
     margin-bottom: var(--main_components_partials_tmdb_reviews-tmdb-review-item-margin-bottom);
 }

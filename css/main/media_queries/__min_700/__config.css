@@ -17,6 +17,7 @@
     .cast-list {
         grid-column-start: var(--main_media_queries__min_700-cast-list-grid-column-start);
         grid-column-end: var(--main_media_queries__min_700-cast-list-grid-column-end);
+        padding: var(--main_media_queries__min_700-cast-list-padding);
     }
 
     .review-container {
@@ -24,6 +25,7 @@
         grid-template-columns: var(--main_media_queries__min_700-review-container-grid-template-columns);
         grid-column-start: var(--main_media_queries__min_700-review-container-grid-column-start);
         grid-column-end: var(--main_media_queries__min_700-review-container-grid-column-end);
+        padding: var(--main_media_queries__min_700-review-container-padding);
     }
 
     .movie-poster {
@@ -31,6 +33,7 @@
         max-width: var(--main_media_queries__min_700-movie-poster-max-width);
         margin-left: var(--main_media_queries__min_700-movie-poster-margin-left);
         margin-right: var(--main_media_queries__min_700-movie-poster-margin-right);
+        padding-top: var(--main_media_queries__min_700-movie-poster-padding-top);
     }
 
     .search-results-grid {

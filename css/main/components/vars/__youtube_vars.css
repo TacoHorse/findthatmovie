@@ -1,7 +1,7 @@
 /* YouTube Component Variables */
 :root {
     /* --main_components_youtube-youtube-reviews- */
-    --main_components_youtube-youtube-reviews-max-height: 500px;
+    --main_components_youtube-youtube-reviews-max-height: 700px;
     --main_components_youtube-youtube-reviews-overflow-y: scroll;
     --main_components_youtube-youtube-reviews-padding: 20px;
 
@@ -13,4 +13,7 @@
 
     /* --main_components_youtube-youtube-review-title-container- */
     --main_components_youtube-youtube-review-title-container-padding: 0px 10px 10px 10px;
+
+    /* --main_components_youtube-youtube-review-title-container-p- */
+    --main_components_youtube-youtube-review-title-container-p-word-break: break-all;
 }

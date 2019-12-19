@@ -15,18 +15,21 @@
     /* --main_media_queries__min_700-cast-list- */
     --main_media_queries__min_700-cast-list-grid-column-start: 1;
     --main_media_queries__min_700-cast-list-grid-column-end: 3;
+    --main_media_queries__min_700-cast-list-padding: 10px;
 
     /* --main_media_queries__min_700-review-container- */
     --main_media_queries__min_700-review-container-display: grid;
     --main_media_queries__min_700-review-container-grid-template-columns: repeat(2, 50%);
     --main_media_queries__min_700-review-container-grid-column-start: 1;
     --main_media_queries__min_700-review-container-grid-column-end: 3;
+    --main_media_queries__min_700-review-container-padding: 10px;
 
     /* --main_media_queries__min_700-movie-poster- */
     --main_media_queries__min_700-movie-poster-width: 180px;
     --main_media_queries__min_700-movie-poster-max-width: 100%;
     --main_media_queries__min_700-movie-poster-margin-left: 10px;
     --main_media_queries__min_700-movie-poster-margin-right: 10px;
+    --main_media_queries__min_700-movie-poster-padding-top: 10px;
 
     /* --main_media_queries__min_700-search-results-grid- */
     --main_media_queries__min_700-search-results-grid-display: grid;
