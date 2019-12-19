@@ -33,4 +33,5 @@
 @import url('__user_rating.css');
 
 /* Top Navigation */
+@import url('vars/__top_nav_vars.css');
 @import url('__top_nav.css');
