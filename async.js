@@ -103,8 +103,8 @@ async function getMovieList(genre, year = getYear(), newPage = false, keyword) {
     let queryString = "";
     // currentSearchPage is used to keep a client-side record of what page - if any, they are on for search results //
     //  While these results will be displayed by AJAX on page scroll, the JSON resposne is paginated                //
-    if (newPage === false) { // If newPage is false, then ensure the global page count variable is 0, and then begin GET request.  
-        userData.currentSearchPage = 0;
+    if (newPage === false) { // If newPage is false, then ensure the global page count variable is 1, and then begin GET request.  
+        userData.currentSearchPage = 1;
     } else { // If newPage is true, then incremenet the global page count variable by 1 and fetch new data.
         userData.currentSearchPage++;
     }

@@ -65,14 +65,14 @@ function observerForResults() { // Watches for when new movie results need to be
                     observer.unobserve(document.querySelector(`.movie-list-end-${userData.asyncTrigCount - 1}`));
 
                     if (userData.year != '0000' && userData.genre != '00') { // If the user has entered both year and genre then perform the search
-                        Promise.all([getMovieList(userData.genre, userData.year, userData.currentSearchPage)])
+                        Promise.all([getMovieList(userData.genre, userData.year, true)])
                             .then(responseData => {
                                 displayMovieList(responseData);
 
                             });
                     }
                     if (userData.genre != '00' && userData.year === '0000') { // Search by genre
-                        Promise.all([getMovieList(userData.genre, undefined, userData.currentSearchPage)])
+                        Promise.all([getMovieList(userData.genre, undefined, true)])
                             .then(responseData => {
                                 displayMovieList(responseData);
 
@@ -80,14 +80,14 @@ function observerForResults() { // Watches for when new movie results need to be
                     }
 
                     if (userData.year != '0000' && userData.genre === '00') { // Search by year
-                        Promise.all([getMovieList(undefined, userData.year, userData.currentSearchPage)])
+                        Promise.all([getMovieList(undefined, userData.year, true)])
                             .then(responseData => {
                                 displayMovieList(responseData);
 
                             });
                     }
                     if (userData.year === '0000' && userData.genre === '00') {
-                        Promise.all([getMovieList(undefined, undefined, userData.currentSearchPage)])
+                        Promise.all([getMovieList(undefined, undefined, true)])
                             .then(responseData => {
                                 displayMovieList(responseData);
                             });
