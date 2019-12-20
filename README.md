@@ -22,7 +22,7 @@ Barebones unstyled version for testing purposes.  Twitter API features were init
 
 ### Version 1.1
 
-This is the current version.  This version provides: Trailers, Movie Cast and Synopsis, and YouTube trailers for a movie of the user's choosing.  The user can find movies in one of the following ways:
+This is the current version.  This version provides: Trailers, Movie Cast and Synopsis, and YouTube reviews for a movie of the user's choosing.  The user can find movies in one of the following ways:
 
 1. By entering the movie title directly
 2. By selecting a particular genre and choosing from a list
