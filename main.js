@@ -51,8 +51,8 @@ function handleSubmitButton() { // Actions to perform when user hits submit butt
 
 function handleSubmitLogic(inputObject) {
     if (inputObject.name != '') { // If the user has entered a text query then search for that title, otherwise...
-        getAutocompleteMovieList(inputObject.name, true).then(autoCompletObj => {
-            let arr = Array.from(autoCompletObj.titles)
+        getAutocompleteMovieList(inputObject.name, true).then(autoCompleteObj => {
+            let arr = Array.from(autoCompleteObj.titles)
             let compare = inputObject.name;
             let map = arr.map(item => {
                 if (item.toLowerCase() === compare.toLowerCase()) {
@@ -61,7 +61,7 @@ function handleSubmitLogic(inputObject) {
                     return false;
                 }
             });
-            if (map.includes(true)) {
+            if (map.includes(true)) { // Compare autocomplete list against user text query - if match, display movie
                 displaySingleMovieResults(inputObject);
             } else { 
                 // Otherwise search by keyword and display results

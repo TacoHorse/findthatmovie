@@ -52,12 +52,12 @@ function displaySingleMovieInfo(inputObject) { // Displays the movie information
                 <div class="single-movie-budglength"><p class="budget-para">${formatBudget}</p><p class="budget-para"> <img class="runtime-icon js-runtime-icon" src="images/runtimeicon.png" alt="runtime">${reviewResponse[0].runtime} mins</p></div>
                     <div class="single-movie-info js-single-movie-info">
                         <div class="single-movie-text js-single-movie-text">
-                            <img class="movie-poster js-movie-poster" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseObject[0].poster}">
+                            <img class="movie-poster js-movie-poster" src="${responseObject[0].poster}">
                                 <p class="single-movie-description">${responseObject[0].description}</p>
                                 <div class="cast-list js-cast-list">`;
                     for (let i = 0; i < reviewResponse[0].cast.length; i++) {
                         output += `
-                                        <img src="https://image.tmdb.org/t/p/w500/${reviewResponse[0].cast[i].url}">
+                                        <img src="${reviewResponse[0].cast[i].url}">
                                         <p>${reviewResponse[0].cast[i].actor}</p>
                                         <p>${reviewResponse[0].cast[i].character}</p>
                                     `
@@ -140,7 +140,9 @@ function displayYouTubeReviews(movieTitle, vidLength, nextPageToken) { // Displa
                     </div>`;
                     $('.js-youtube-reviews').append(output); // Insert a complete review object into the DOM
                 }
-                observerForYouTubeReviews(); // Observer for async content fill
+                if (responseObjectPrimary[0].urls.length > 0) { // Only add observer for titles that actually have reviews
+                    observerForYouTubeReviews(); // Observer for async content fill
+                }
             });
         });
 
@@ -150,7 +152,7 @@ function displayMovieList(responseData) { // Insert a list of movie titles into 
     function handleMovieItemCount(currentSearchPage, i) {
         return i + 1 + (19 * currentSearchPage);
     }
-    if ($('.js-search-results-grid').length <= 0) {
+    if ($('.js-search-results-grid').length <= 0) { // If js-search-results-grid does not exist, then create it and add results
         let output = `<div class="search-results-grid js-search-results-grid">`;
         for (let i = 0; i < responseData[0].results.length; i++) {
             let intersect;
@@ -160,24 +162,24 @@ function displayMovieList(responseData) { // Insert a list of movie titles into 
             output += `<div class="multi-movie-result-item js-multi-movie-result-item ${intersect}" id="movie-item-${handleMovieItemCount(userData.currentSearchPage, i)}">
                         <div class="user-rating-container js-user-rating-container">
                             <div class="user-rating js-user-rating js-multi-click" name="${responseData[0].results[i].title}"><p class="inner-user-rating js-inner-user-rating"></p></div>
-                            <img class="movie-poster-search js-movie-poster-search" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseData[0].results[i].poster_path}">
+                            <img class="movie-poster-search js-movie-poster-search" src="${checkPoster(responseData[0].results[i].poster_path)}" alt="${responseData[0].results[i].title}">
                         </div>
                     </div>`;
         }
         output += `</div>`;
-        $(".js-search-results").append(output);
+        $(".js-search-results").append(output); // Display single movie tiles
         let childNodes = document.getElementsByClassName('js-multi-movie-result-item');
         
-        for (let i = 0; i < childNodes.length; i++) {
+        for (let i = 0; i < childNodes.length; i++) {  // Add user ratings to the newly create movie tiles
             Promise.all([getMovieInfoByName(childNodes[i].children[0].firstElementChild.getAttribute('name'))])
                 .then(returnObject => {
                     childNodes[i].children[0].firstElementChild.children[0].innerText = returnObject[0].rating + "/10";
                 });
         }
         if (responseData[0].results.length >= 15) {
-            observerForResults();
+            observerForResults(); // Attach observer to watch for when to insert new results into the DOM on user scroll
         }
-    } else {
+    } else {  // If js-search-results-grid already exists, then append the results directly into container element
         let output = ``;
         for (let i = 0; i < responseData[0].results.length; i++) {
             let intersect;
@@ -187,21 +189,21 @@ function displayMovieList(responseData) { // Insert a list of movie titles into 
             output += `<div class="multi-movie-result-item js-multi-movie-result-item ${intersect}" id="movie-item-${handleMovieItemCount(userData.currentSearchPage, i)}">
                         <div class="user-rating-container js-user-rating-container">
                             <div class="user-rating js-user-rating js-multi-click" name="${responseData[0].results[i].title}"><p class="inner-user-rating js-inner-user-rating"></p></div>
-                            <img class="movie-poster-search js-movie-poster-search" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${responseData[0].results[i].poster_path}">
+                            <img class="movie-poster-search js-movie-poster-search" src="${checkPoster(responseData[0].results[i].poster_path)}" alt="${responseData[0].results[i].title}">
                         </div>
                     </div>`;
         }
-        $(".js-search-results-grid").append(output);
+        $(".js-search-results-grid").append(output); // Display single movie tiles
         let childNodes = document.getElementsByClassName('js-multi-movie-result-item');
 
-        for (let i = 0; i < childNodes.length; i++) {
+        for (let i = 0; i < childNodes.length; i++) { // Add user ratings to the newly create movie tiles
             Promise.all([getMovieInfoByName(childNodes[i].children[0].firstElementChild.getAttribute('name'))])
                 .then(returnObject => {
                     childNodes[i].children[0].firstElementChild.children[0].innerText = returnObject[0].rating + "/10";
                 });
         }
         if (responseData[0].results.length >= 15) {
-            observerForResults();
+            observerForResults(); // Attach observer to watch for when to insert new results into the DOM on user scroll
         }
     }
 }

@@ -17,8 +17,13 @@ async function getMovieInfoByName(name) { // Searches for movie information by n
         id: requestData.results[0].id,
         description: requestData.results[0].overview,
         orig_release: requestData.results[0].release_date,
-        poster: requestData.results[0].poster_path,
         rating: requestData.results[0].vote_average
+    }
+
+    if (requestData.results[0].poster_path != null) {
+        returnObject.poster = "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + requestData.results[0].poster_path;
+    } else {
+        returnObject.poster = "images/not-found.jpg";
     }
 
     return returnObject;
@@ -71,14 +76,28 @@ async function getDetailedMovieInfo(id) { // Get more detailed information about
         returnObject.reviews.push(obj);
     });
 
-    (function() {
-        for (let i = 0; i <= 6; i++) {
-            let obj = {};
-            obj.character = requestDataCast.cast[i].character;
-            obj.actor = requestDataCast.cast[i].name;
-            obj.url = requestDataCast.cast[i].profile_path;
-            returnObject.cast.push(obj);
-        }})();
+    (function () {
+        if (requestDataCast.cast.length != 0) {
+            for (let i = 0; i < requestDataCast.cast.length && i <= 6; i++) {
+                let obj = {};
+                obj.character = requestDataCast.cast[i].character;
+                obj.actor = requestDataCast.cast[i].name;
+                if (requestDataCast.cast[i].profile_path != null) {
+                    obj.url = "https://image.tmdb.org/t/p/w500/" + requestDataCast.cast[i].profile_path;
+                } else {
+                    obj.url = "images/no-cast.png";
+                }
+                returnObject.cast.push(obj);
+            }
+        } else {
+            for (let i = 0; i <= 6; i++) {
+                obj.character = "No character information";
+                obj.actor = "No actor information";
+                obj.url = "images/no-cast.png";
+            }
+        }
+
+    })();
 
     return returnObject;
 
@@ -102,10 +121,10 @@ async function getMovieList(genre, year = getYear(), newPage = false, keyword) {
     const baseURL = "https://api.themoviedb.org/3/discover/movie?";
     let queryString = "";
     // currentSearchPage is used to keep a client-side record of what page - if any, they are on for search results //
-    //  While these results will be displayed by AJAX on page scroll, the JSON resposne is paginated                //
+    //  While these results will be displayed by AJAX on page scroll, the JSON response is paginated                //
     if (newPage === false) { // If newPage is false, then ensure the global page count variable is 1, and then begin GET request.  
         userData.currentSearchPage = 1;
-    } else { // If newPage is true, then incremenet the global page count variable by 1 and fetch new data.
+    } else { // If newPage is true, then increment the global page count variable by 1 and fetch new data.
         userData.currentSearchPage++;
     }
     if (keyword) {
@@ -197,9 +216,4 @@ async function getAutocompleteMovieList(input, finder = false) { // Gets a compl
     } else {
         return returnObject;
     }
-}
-
-async function getMovieRating(movie) {  // Gets the rating of a given movie
-    const baseURL = " ";
-
 }

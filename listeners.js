@@ -3,8 +3,8 @@
 function listenerForAutocompleteSelection() { // Watches for when the user selects an autocomplete option
     $('.js-search-form').on('change', 'input', e => {
         if (Array.from(e.target.classList).find(elem => elem === 'youtube-trailer-autoplay') != "youtube-trailer-autoplay") {
-            getAutocompleteMovieList($('.js-user-search').val(), true).then(autoCompletObj => {
-                let arr = Array.from(autoCompletObj.titles)
+            getAutocompleteMovieList($('.js-user-search').val(), true).then(autoCompleteObj => {
+                let arr = Array.from(autoCompleteObj.titles)
                 let compare = $('.js-user-search').val();
                 let map = arr.map(item => {
                     if (item.toLowerCase() === compare.toLowerCase()) {
